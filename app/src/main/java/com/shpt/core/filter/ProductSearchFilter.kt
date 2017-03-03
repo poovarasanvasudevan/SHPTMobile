@@ -36,6 +36,7 @@ class ProductSearchFilter(context: Context, @LayoutRes resource: Int) : ArrayAda
     override fun getItem(position: Int): ProductSearch = mProducts[position]
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
+        logMessage(mProducts[position].productName)
         val view = context.inflate(R.layout.product_search, parent!!,false)
         view.find<TextView>(R.id.productName).text = mProducts[position].productName
         return view
