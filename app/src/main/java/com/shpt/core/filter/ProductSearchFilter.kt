@@ -1,5 +1,27 @@
 package com.shpt.core.filter
 
+import android.content.Context
+import android.support.annotation.LayoutRes
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.TextView
+import com.google.gson.JsonArray
+import com.mcxiaoke.koi.ext.find
+import com.shpt.R
+import com.shpt.core.api.rest
+import com.shpt.core.config.Config
+import com.shpt.core.models.ProductSearch
+import com.shpt.core.parser
+import com.shpt.core.splitQuery
+import logMessage
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.layoutInflater
+import org.jetbrains.anko.uiThread
+import java.net.URL
+
 /**
  * Created by poovarasanv on 3/3/17.
  * @author poovarasanv
@@ -7,70 +29,59 @@ package com.shpt.core.filter
  * @on 3/3/17 at 4:06 PM
  */
 
-import android.content.Context
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Filterable
-import android.widget.TextView
-import org.jetbrains.anko.*
+class ProductSearchFilter(context: Context, @LayoutRes resource: Int) : ArrayAdapter<ProductSearch>(context, resource), Filterable {
+    var mProducts: MutableList<ProductSearch> = mutableListOf<ProductSearch>()
+    override fun getFilter(): Filter = MyFilter()
+    override fun getCount(): Int = mProducts.size
+    override fun getItem(position: Int): ProductSearch = mProducts[position]
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val view = context.layoutInflater.inflate(R.layout.product_search, parent!!,false)
+        view.find<TextView>(R.id.productName).text = mProducts[position].productName
+        return view
+    }
 
-abstract class ProductSearchFilter(ctx: Context, items: List<ProductListItem>) : ArrayAdapter<ProductListItem>(ctx, 0, items), Filterable {
-    // Reusable context allows adding multiple views, so it can be used in adapters without overhead
-    private val ankoContext = AnkoContext.createReusable(ctx, this)
 
-    protected abstract val listItemClasses: List<Class<out ProductListItem>>
+    inner class MyFilter : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            var filterResults = Filter.FilterResults()
 
-    private val types: Map<Class<out ProductListItem>, Int> by lazy {
-        listItemClasses.withIndex().fold(hashMapOf<Class<out ProductListItem>, Int>()) {
-            map, t ->
-            map.put(t.value, t.index); map
+            if (constraint != null && !constraint.isBlank() && constraint.length > 2) {
+                val term = constraint.toString()
+
+                doAsync {
+                    val result: JsonArray = parser.parse(context.rest.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
+
+                    uiThread {
+
+                        result.forEach {
+                            val productId: String? = splitQuery(URL(it.asJsonObject.get("href").asString.replace("amp;", "")))["product_id"]
+
+                            if (productId != null) {
+                                val productSearch = ProductSearch(productId.toInt(), it.asJsonObject.get("name").asString)
+                                mProducts.add(productSearch)
+                            }
+
+                        }
+
+                        filterResults.count = mProducts.count()
+                        filterResults.values = mProducts
+                    }
+                }
+            }
+
+            return filterResults
         }
-    }
 
-    override fun getViewTypeCount(): Int = types.size
-    override fun getItemViewType(position: Int) = types[getItem(position)?.javaClass as Class<out ProductListItem>] ?: 0
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-        val item = getItem(position)
-        if (item != null) {
-            val view = convertView ?: item.createView(ankoContext)
-            item.apply(view)
-            return view
-        } else return convertView
-    }
-}
-
-interface ProductListItem : AnkoComponent<ProductSearchFilter> {
-    fun apply(convertView: View)
-}
-
-internal open class TextListItem(val text: String) : ProductListItem {
-    protected inline fun createTextView(ui: AnkoContext<ProductSearchFilter>, init: TextView.() -> Unit) = ui.apply {
-        textView {
-            id = android.R.id.text1
-            text = "Text list item" // default text (for the preview)
-            init()
+            if (results != null) {
+                logMessage("changed"+results!!.count)
+                notifyDataSetChanged()
+            } else {
+                notifyDataSetInvalidated()
+            }
         }
-    }.view
 
-    override fun createView(ui: AnkoContext<ProductSearchFilter>) = createTextView(ui) {
-        gravity = Gravity.CENTER_VERTICAL
-        padding = ui.dip(20)
-        textSize = 18f
     }
 
-    private fun getHolder(convertView: View): Holder {
-        return (convertView.tag as? Holder) ?: Holder(convertView as TextView).apply {
-            convertView.tag = this
-        }
-    }
-
-    override fun apply(convertView: View) {
-        val h = getHolder(convertView)
-        h.textView.text = text
-    }
-
-    internal class Holder(val textView: TextView)
 }

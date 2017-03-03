@@ -8,6 +8,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Product"
+            android:textColor="#000"
             android:id="@+id/productName"
             android:layout_alignParentTop="true"
             android:padding="10dp"/>
