@@ -14,20 +14,28 @@ import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.Menu
 import android.view.View
+import android.widget.ListView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.flipkart.android.proteus.builder.LayoutBuilderFactory
 import com.flipkart.android.proteus.toolbox.Styles
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.mcxiaoke.koi.adapter.QuickAdapter
 import com.mcxiaoke.koi.ext.find
+import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.onTextChange
+import com.mcxiaoke.koi.ext.quickAdapterOf
 import com.mcxiaoke.koi.ext.toast
 import com.shpt.R
 import com.shpt.core.*
+import com.shpt.core.api.rest
 import com.shpt.core.callback.EventCallback
+import com.shpt.core.config.Config
 import com.shpt.core.db.database
 import com.shpt.core.models.Layout
+import com.shpt.core.models.ProductSearch
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
 import logMessage
@@ -40,14 +48,24 @@ import org.jetbrains.anko.db.parseSingle
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.navigationView
 import org.jetbrains.anko.support.v4.drawerLayout
+import java.net.URL
 
 
 class Home : AppCompatActivity() {
 
     var menuJson: JsonObject = JsonObject()
+    lateinit var productSearchList: ListView
+    lateinit var productSearchAdapter: QuickAdapter<ProductSearch>
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        productSearchAdapter = quickAdapterOf<ProductSearch>(android.R.layout.simple_list_item_1) {
+            binder, data ->
+            binder.setText(android.R.id.text1, data.productName)
+        }
 
         relativeLayout {
 
@@ -84,9 +102,19 @@ class Home : AppCompatActivity() {
                             hint = "Search for Books,CD,DVD..."
                             background = null
                             compoundDrawablePadding = dip(10)
-
                             onTextChange { text, start, before, count ->
-                                if (count > 2) {
+                                if (isConnected() && count > 2) {
+                                    productSearchList.visibility = View.VISIBLE
+//                                    if(find<RelativeLayout>(R.id.mainLayout1) !=null){
+//                                        find<RelativeLayout>(R.id.mainLayout1).visibility = View.GONE
+//                                    }
+
+                                    updateSearch(text.toString())
+                                } else {
+                                    productSearchList.visibility = View.GONE
+//                                    if(find<RelativeLayout>(R.id.mainLayout1) !=null){
+//                                        find<RelativeLayout>(R.id.mainLayout1).visibility = View.VISIBLE
+//                                    }
 
                                 }
                             }
@@ -116,6 +144,15 @@ class Home : AppCompatActivity() {
                         height = dip(45)
                     }
                     relativeLayout {
+
+                        productSearchList = listView {
+                            adapter = productSearchAdapter
+                            visibility = View.GONE
+                        }.lparams {
+                            width = matchParent
+                            height = matchParent
+                        }
+
                         relativeLayout {
                             id = R.id.mainLayout1
 
@@ -248,7 +285,22 @@ class Home : AppCompatActivity() {
 
 
     fun updateSearch(term: String) {
+        doAsync {
+            val result: JsonArray = parser.parse(rest.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
+            uiThread {
 
+                var productList = mutableListOf<ProductSearch>()
+                result.forEach {
+                    val productId: String? = splitQuery(URL(it.asJsonObject.get("href").asString.replace("amp;", "")))["product_id"]
+                    if (productId != null) {
+                        val productSearch = ProductSearch(productId.toInt(), it.asJsonObject.get("name").asString)
+                        productList.add(productSearch)
+                    }
+                }
+
+                productSearchAdapter.addAll(productList)
+            }
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
