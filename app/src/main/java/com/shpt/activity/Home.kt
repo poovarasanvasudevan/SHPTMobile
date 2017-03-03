@@ -21,12 +21,12 @@ import com.flipkart.android.proteus.toolbox.Styles
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.find
+import com.mcxiaoke.koi.ext.onTextChange
 import com.mcxiaoke.koi.ext.toast
 import com.shpt.R
 import com.shpt.core.*
 import com.shpt.core.callback.EventCallback
 import com.shpt.core.db.database
-import com.shpt.core.filter.ProductSearchFilter
 import com.shpt.core.models.Layout
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
@@ -80,12 +80,17 @@ class Home : AppCompatActivity() {
                             height = matchParent
                         }
 
-                        autoCompleteTextView {
+                        editText {
                             hint = "Search for Books,CD,DVD..."
                             background = null
                             compoundDrawablePadding = dip(10)
 
-                            setAdapter(ProductSearchFilter(applicationContext, android.R.layout.simple_dropdown_item_1line))
+                            onTextChange { text, start, before, count ->
+                                if (count > 2) {
+
+                                }
+                            }
+
                         }.lparams {
                             width = matchParent
                             weight = 1f
@@ -238,6 +243,11 @@ class Home : AppCompatActivity() {
         } catch (e: Exception) {
             toast(e.cause.toString())
         }
+
+    }
+
+
+    fun updateSearch(term: String) {
 
     }
 
