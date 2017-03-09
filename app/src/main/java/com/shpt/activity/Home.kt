@@ -217,10 +217,7 @@ class Home : AppCompatActivity() {
         setSupportActionBar(find<Toolbar>(R.id.toolbar))
         supportActionBar!!.elevation = 0f
         try {
-
-
             doAsync {
-
                 database.use {
                     select("Layout").where("page = {pageName}", "pageName" to "home").exec {
                         val rowParser = classParser<Layout>()
