@@ -15,7 +15,6 @@ object Config {
     val GET_PRODUCT = "$BASE?route=mobile/api/product"
     val SEARCH_PRODUCT = "$BASE?route=product/search/ajax"
 
-
     val LAYOUT_BASE = "http://localhost:8081/api/v1/layout"
 
     val WEB_USER_AGENT = "Mozilla/5.0 (Linux; U; Android 2.0; en-us; Droid Build/ESD20) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17"
