@@ -193,9 +193,9 @@ class SRCMLogin : AppCompatActivity() {
         override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
             val alertDialog = alert("Error : " + error!!.description) {
 
-                noButton {
+                negativeButton("No", {
                     finish()
-                }
+                })
             }.show()
 
             super.onReceivedError(view, request, error)

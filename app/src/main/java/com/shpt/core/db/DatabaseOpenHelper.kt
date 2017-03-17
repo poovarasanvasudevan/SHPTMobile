@@ -30,39 +30,39 @@ class DatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "mydb", nu
     override fun onCreate(db: SQLiteDatabase?) {
 
         //stores all the layout regarding to all the changes made in server
-        db?.createTable("Layout", true,
-                "_id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+        db?.createTable("layout", true,
+                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                 "page" to TEXT,
                 "structure" to TEXT
         )
 
         //stores online configurations
-        db?.createTable("Settings", true,
-                "_id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+        db?.createTable("settings", true,
+                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                 "group" to TEXT,
                 "settingkey" to TEXT,
                 "settingvalue" to TEXT
         )
 
         //stores recently viewed products
-        db?.createTable("RecentlyViewed", true,
-                "_id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+        db?.createTable("recentlyviewed", true,
+                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                 "productid" to INTEGER,
                 "productname" to TEXT,
                 "viewedtime" to TEXT
         )
 
         //stores recently searched products
-        db?.createTable("RecentlySearched", true,
-                "_id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+        db?.createTable("recentlysearched", true,
+                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                 "productid" to INTEGER,
                 "productname" to TEXT,
                 "searchtime" to TEXT
         )
 
         //stores all the notification that received from our system
-        db?.createTable("Notifications", true,
-                "_id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+        db?.createTable("notifications", true,
+                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                 "title" to TEXT,
                 "message" to TEXT,
                 "operation" to TEXT,
@@ -73,8 +73,8 @@ class DatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "mydb", nu
         )
 
         //stores location in realtime
-        db?.createTable("Location", true,
-                "_id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+        db?.createTable("location", true,
+                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                 "lat" to TEXT,
                 "lng" to TEXT,
                 "updated" to TEXT

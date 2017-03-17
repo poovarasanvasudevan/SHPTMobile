@@ -173,13 +173,10 @@ open class BigProductView : LinearLayout {
                                         width = matchParent
                                         height = matchParent
                                     }
-                                }.lparams {
-                                    width = matchParent
-                                    height = matchParent
+
+                                    lparams(width = matchParent, height = matchParent)
                                 }
-                            }.lparams {
-                                width = matchParent
-                                height = matchParent
+
                             }
                         }.lparams {
                             margin = dip(5)
