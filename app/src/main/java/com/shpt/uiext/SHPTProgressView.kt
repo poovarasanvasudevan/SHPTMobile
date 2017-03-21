@@ -2,8 +2,8 @@ package com.shpt.uiext
 
 import android.content.Context
 import android.util.AttributeSet
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import android.view.View
+import com.flipkart.android.proteus.ProteusView
 import com.shpt.mobile.widget.ProgressWheel
 
 /**
@@ -17,8 +17,11 @@ import com.shpt.mobile.widget.ProgressWheel
  */
 
 class SHPTProgressView : ProgressWheel, ProteusView {
+    override fun getAsView(): View {
+        return this
+    }
 
-    private var viewManager: ProteusViewManager? = null
+    private var viewManager: ProteusView.Manager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
@@ -27,11 +30,11 @@ class SHPTProgressView : ProgressWheel, ProteusView {
         super.setCircleRadius(530)
     }
 
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getViewManager(): ProteusView.Manager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
+    override fun setViewManager(proteusViewManager: ProteusView.Manager) {
         this.viewManager = proteusViewManager
     }
 }

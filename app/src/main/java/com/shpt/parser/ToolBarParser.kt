@@ -2,15 +2,13 @@ package com.shpt.parser
 
 import android.support.v7.widget.Toolbar
 import android.view.ViewGroup
-import com.flipkart.android.proteus.parser.Attributes
-import com.flipkart.android.proteus.parser.Parser
-import com.flipkart.android.proteus.parser.WrappableParser
+import com.flipkart.android.proteus.ProteusContext
+import com.flipkart.android.proteus.ProteusView
+import com.flipkart.android.proteus.ViewTypeParser
 import com.flipkart.android.proteus.processor.DimensionAttributeProcessor
 import com.flipkart.android.proteus.processor.StringAttributeProcessor
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
+import com.flipkart.android.proteus.value.Layout
+import com.flipkart.android.proteus.value.ObjectValue
 import com.shpt.uiext.SHPTToolBar
 
 /**
@@ -23,33 +21,37 @@ import com.shpt.uiext.SHPTToolBar
  * @on 17/1/17 at 2:06 PM
  */
 
-class ToolBarParser(wrappedParser: Parser<Toolbar>) : WrappableParser<Toolbar>(wrappedParser) {
+class ToolBarParser : ViewTypeParser<Toolbar>() {
+    override fun addAttributeProcessors() {
+        addAttributeProcessor("title", object : StringAttributeProcessor<Toolbar>() {
+            override fun setString(view: Toolbar?, value: String?) {
+                view?.title = value
+            }
+        })
 
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
-        return SHPTToolBar(viewGroup.context)
+        addAttributeProcessor("subtitle", object : StringAttributeProcessor<Toolbar>() {
+            override fun setString(view: Toolbar?, value: String?) {
+                view?.subtitle = value
+            }
+        })
+
+
+        addAttributeProcessor("elevation", object : DimensionAttributeProcessor<Toolbar>() {
+            override fun setDimension(view: Toolbar?, dimension: Float) {
+                view?.elevation = dimension
+            }
+        })
     }
 
-    override fun prepareHandlers() {
-        super.prepareHandlers()
+    override fun createView(context: ProteusContext, layout: Layout, data: ObjectValue, parent: ViewGroup?, dataIndex: Int): ProteusView {
+        return SHPTToolBar(context.applicationContext)
+    }
 
-        addHandler(Attributes.Attribute("title"), object : StringAttributeProcessor<Toolbar>() {
-            override fun handle(s: String, s1: String, progressWheel: Toolbar) {
-                progressWheel.title = s1
-            }
-        })
+    override fun getType(): String {
+        return "SHPTToolbar"
+    }
 
-
-        addHandler(Attributes.Attribute("subtitle"), object : StringAttributeProcessor<Toolbar>() {
-            override fun handle(s: String, s1: String, progressWheel: Toolbar) {
-                progressWheel.subtitle = s1
-            }
-        })
-
-        addHandler(Attributes.Attribute("elevation"),object : DimensionAttributeProcessor<Toolbar>() {
-            override fun setDimension(p0: Float, p1: Toolbar?, p2: String?, p3: JsonElement?) {
-                p1!!.elevation = p0
-            }
-
-        })
+    override fun getParentType(): String? {
+        return "View"
     }
 }

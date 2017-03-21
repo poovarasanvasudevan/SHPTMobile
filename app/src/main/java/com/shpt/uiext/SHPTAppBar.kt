@@ -2,9 +2,8 @@ package com.shpt.uiext
 
 import android.content.Context
 import android.support.design.widget.AppBarLayout
-import android.util.AttributeSet
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import android.view.View
+import com.flipkart.android.proteus.ProteusView
 
 /**
  * Created by poovarasanv on 17/1/17.
@@ -16,20 +15,19 @@ import com.flipkart.android.proteus.view.manager.ProteusViewManager
  * @on 17/1/17 at 2:01 PM
  */
 
-class SHPTAppBar : AppBarLayout, ProteusView {
-    private var viewManager: ProteusViewManager? = null
+class SHPTAppBar(context: Context?) : AppBarLayout(context), ProteusView {
+    private var viewManager: ProteusView.Manager? = null
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
-
-    constructor(context: Context) : super(context) {
-
+    override fun getViewManager(): ProteusView.Manager {
+        return viewManager!!
     }
 
-    override fun getViewManager(): ProteusViewManager? {
-        return viewManager
+    override fun getAsView(): View {
+        return this
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
-        this.viewManager = proteusViewManager
+    override fun setViewManager(manager: ProteusView.Manager?) {
+        this.viewManager = manager
     }
+
 }

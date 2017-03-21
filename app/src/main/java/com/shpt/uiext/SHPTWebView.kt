@@ -3,9 +3,8 @@ package com.shpt.uiext
 import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebSettings
-import com.flipkart.android.proteus.view.ProteusView
+import com.flipkart.android.proteus.ProteusView
 import com.flipkart.android.proteus.view.ProteusWebView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
 
 /**
  * Created by poovarasanv on 17/1/17.
@@ -18,7 +17,7 @@ import com.flipkart.android.proteus.view.manager.ProteusViewManager
  */
 
 class SHPTWebView : ProteusWebView, ProteusView {
-    private var viewManager: ProteusViewManager? = null
+    private var viewManager: ProteusView.Manager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
@@ -28,11 +27,11 @@ class SHPTWebView : ProteusWebView, ProteusView {
         init()
     }
 
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getViewManager(): ProteusView.Manager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
+    override fun setViewManager(proteusViewManager: ProteusView.Manager) {
         this.viewManager = proteusViewManager
     }
 

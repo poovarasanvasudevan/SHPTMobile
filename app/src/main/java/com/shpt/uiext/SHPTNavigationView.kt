@@ -3,11 +3,8 @@ package com.shpt.uiext
 import android.content.Context
 import android.support.design.widget.NavigationView
 import android.util.AttributeSet
-import android.view.Gravity
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import android.view.View
+import com.flipkart.android.proteus.ProteusView
 
 
 /**
@@ -21,7 +18,11 @@ import com.flipkart.android.proteus.view.manager.ProteusViewManager
  */
 
 class SHPTNavigationView : NavigationView, ProteusView {
-    private var viewManager: ProteusViewManager? = null
+    override fun getAsView(): View {
+        return this
+    }
+
+    private var viewManager: ProteusView.Manager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
@@ -30,11 +31,11 @@ class SHPTNavigationView : NavigationView, ProteusView {
 
     }
 
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getViewManager(): ProteusView.Manager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
+    override fun setViewManager(proteusViewManager: ProteusView.Manager) {
         this.viewManager = proteusViewManager
     }
 }

@@ -2,34 +2,28 @@ package com.shpt.core
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.NavigationView
-import android.support.v4.view.ViewPager
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.widget.CardView
-import android.support.v7.widget.Toolbar
+import android.app.Activity
+import android.content.Context
 import android.view.View
 import android.view.ViewManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.flipkart.android.proteus.builder.LayoutBuilder
-import com.flipkart.android.proteus.parser.Parser
+import com.flipkart.android.proteus.Proteus
+import com.flipkart.android.proteus.ProteusContext
+import com.flipkart.android.proteus.Styles
+import com.flipkart.android.proteus.value.Layout
 import com.mikepenz.iconics.view.IconicsButton
-import com.mikepenz.iconics.view.IconicsImageView
 import com.shpt.R
+import com.shpt.core.app.ViewBuilder
 import com.shpt.core.config.Config
-import com.shpt.mobile.widget.ProgressWheel
-import com.shpt.mobile.widget.Ripple
-import com.shpt.parser.*
 import com.shpt.uiext.SHPTAddToCartButton
 import com.shpt.uiext.SHPTProgressView
 import com.shpt.uiext.SHPTRipple
 import com.shpt.uiext.SHPTWebView
-import com.shpt.widget.BigProductView
-import com.shpt.widget.JustifiedTextView
 import com.shpt.widget.Shadow
 import org.jetbrains.anko.custom.ankoView
+
 
 /**
  * Created by poovarasanv on 17/1/17.
@@ -40,57 +34,7 @@ import org.jetbrains.anko.custom.ankoView
  * *
  * @on 17/1/17 at 1:59 PM
  */
-fun registerCustomView(builder: LayoutBuilder) {
-    val progressParser = builder.getHandler("FrameLayout") as Parser<ProgressWheel>
-    builder.registerHandler("ProgressWheel", ProgressWheelParser(progressParser))
 
-
-    val AppbarParser = builder.getHandler("FrameLayout") as Parser<AppBarLayout>
-    builder.registerHandler("Appbar", AppBarParser(AppbarParser))
-
-
-    val ToolbarParser = builder.getHandler("FrameLayout") as Parser<Toolbar>
-    builder.registerHandler("Toolbar", ToolBarParser(ToolbarParser))
-
-
-    val rippleParser = builder.getHandler("FrameLayout") as Parser<Ripple>
-    builder.registerHandler("Ripple", RippleParser(rippleParser))
-
-
-    val cardviewParser = builder.getHandler("FrameLayout") as Parser<CardView>
-    builder.registerHandler("CardView", CardViewParser(cardviewParser))
-
-
-    val webviewParser = builder.getHandler("FrameLayout") as Parser<SHPTWebView>
-    builder.registerHandler("Web", WebViewParser(webviewParser))
-
-
-    val imageviewParser = builder.getHandler("FrameLayout") as Parser<ImageView>
-    builder.registerHandler("Image", ImageViewParser(imageviewParser))
-
-
-    val justifiedviewParser = builder.getHandler("FrameLayout") as Parser<JustifiedTextView>
-    builder.registerHandler("JustifiedTextView", JustifiedTextViewParser(justifiedviewParser))
-
-
-    val iconParser = builder.getHandler("FrameLayout") as Parser<IconicsImageView>
-    builder.registerHandler("Icon", IconParser(iconParser))
-
-    val navViewParser = builder.getHandler("FrameLayout") as Parser<NavigationView>
-    builder.registerHandler("NavigationView", NavigationViewParser(navViewParser))
-
-    val drawerViewParser = builder.getHandler("FrameLayout") as Parser<DrawerLayout>
-    builder.registerHandler("DrawerLayout", DrawerLayoutParser(drawerViewParser))
-
-
-    val viewPagerParser = builder.getHandler("FrameLayout") as Parser<ViewPager>
-    builder.registerHandler("Pager", ViewPagerParser(viewPagerParser))
-
-
-    val bigProductParser = builder.getHandler("FrameLayout") as Parser<BigProductView>
-    builder.registerHandler("BigProduct", BigProductViewParser(bigProductParser))
-
-}
 
 fun postEvent(tv: TextView, bgColor: Int, msg: String) {
     tv.text = msg
@@ -166,6 +110,11 @@ fun ImageView.setSHPTImageURL(imageURL: String, imageSize: ImageSize = ImageSize
 
 
 }
+
+val Context.proteus: Proteus
+    get() = ViewBuilder.getProteusInstance()
+
+fun Activity.proteusContext(style: Styles, layout: MutableMap<String, Layout>): ProteusContext = ViewBuilder.getProteusContext(this, style, layout)
 
 inline fun ViewManager.progressLine(theme: Int = 0) = progressLine(theme) {}
 inline fun ViewManager.progressLine(theme: Int = 0, init: SHPTProgressView.() -> Unit) = ankoView(::SHPTProgressView, theme, init)

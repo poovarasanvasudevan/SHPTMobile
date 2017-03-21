@@ -5,15 +5,15 @@ import android.support.v4.content.ContextCompat
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.flipkart.android.proteus.parser.Attributes
-import com.flipkart.android.proteus.parser.Parser
-import com.flipkart.android.proteus.parser.WrappableParser
+import com.flipkart.android.proteus.ProteusContext
+import com.flipkart.android.proteus.ProteusView
+import com.flipkart.android.proteus.ViewTypeParser
 import com.flipkart.android.proteus.processor.DrawableResourceProcessor
 import com.flipkart.android.proteus.processor.StringAttributeProcessor
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
-import com.google.gson.JsonObject
+import com.flipkart.android.proteus.value.Layout
+import com.flipkart.android.proteus.value.ObjectValue
 import com.shpt.R
+import com.shpt.core.setImageURL
 import com.shpt.uiext.SHPTImageView
 
 /**
@@ -26,37 +26,34 @@ import com.shpt.uiext.SHPTImageView
  * @on 17/1/17 at 2:06 PM
  */
 
-class ImageViewParser(wrappedParser: Parser<ImageView>) : WrappableParser<ImageView>(wrappedParser) {
+class ImageViewParser : ViewTypeParser<ImageView>() {
+    override fun addAttributeProcessors() {
+        addAttributeProcessor("imageUrl", object : StringAttributeProcessor<ImageView>() {
+            override fun setString(view: ImageView?, value: String?) {
+                view?.setImageURL(value!!)
+            }
+        })
 
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
-        return SHPTImageView(viewGroup.context)
+        addAttributeProcessor("imageSrc", object : DrawableResourceProcessor<ImageView>() {
+            override fun setDrawable(view: ImageView?, drawable: Drawable?) {
+                Glide.with(view?.context)
+                        .load(drawable)
+                        .error(ContextCompat.getDrawable(view?.context, R.drawable.no_image))
+                        .animate(R.anim.zoomin)
+                        .into(view)
+            }
+        })
     }
 
-    override fun prepareHandlers() {
-        super.prepareHandlers()
+    override fun getParentType(): String? {
+        return "View"
+    }
 
-        addHandler(Attributes.Attribute("imageUrl"), object : StringAttributeProcessor<ImageView>() {
-            override fun handle(p0: String?, p1: String?, p2: ImageView?) {
-                p2!!.setImageDrawable(null)
-                Glide.with(p2.context)
-                        .load(p1)
-                        .error(ContextCompat.getDrawable(p2.context, R.drawable.no_image))
-                        .animate(R.anim.zoomin)
-                        .into(p2)
-            }
-        })
+    override fun getType(): String {
+        return "Image"
+    }
 
-        addHandler(Attributes.Attribute("imageSrc"), object : DrawableResourceProcessor<ImageView>() {
-            override fun setDrawable(p0: ImageView?, p1: Drawable?) {
-                p0!!.setImageDrawable(null)
-
-                Glide.with(p0.context)
-                        .load(p1)
-                        .error(ContextCompat.getDrawable(p0.context, R.drawable.no_image))
-                        .animate(R.anim.zoomin)
-                        .into(p0)
-
-            }
-        })
+    override fun createView(context: ProteusContext, layout: Layout, data: ObjectValue, parent: ViewGroup?, dataIndex: Int): ProteusView {
+        return SHPTImageView(context.applicationContext)
     }
 }

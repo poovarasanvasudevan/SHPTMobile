@@ -9,25 +9,23 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.*
 import android.widget.TextView
-import com.flipkart.android.proteus.builder.LayoutBuilderFactory
-import com.flipkart.android.proteus.toolbox.Styles
+import com.flipkart.android.proteus.ProteusContext
+import com.flipkart.android.proteus.ProteusLayoutInflater
+import com.flipkart.android.proteus.Styles
+import com.flipkart.android.proteus.gson.ProteusTypeAdapterFactory
+import com.flipkart.android.proteus.value.Layout
+import com.flipkart.android.proteus.value.ObjectValue
 import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.startActivity
 import com.mcxiaoke.koi.ext.toast
 import com.mcxiaoke.koi.log.logi
 import com.shpt.R
-import com.shpt.core.callback.EventCallback
+import com.shpt.core.*
 import com.shpt.core.config.Config
 import com.shpt.core.data.Constant
 import com.shpt.core.db.database
-import com.shpt.core.getBackIcon
-import com.shpt.core.handleConnectionError
-import com.shpt.core.handleMenu
-import com.shpt.core.models.Layout
 import com.shpt.core.prefs.Prefs
-import com.shpt.core.registerCustomView
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.uiext.SHPTProgressView
@@ -44,15 +42,20 @@ import org.jetbrains.anko.db.select
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
+
 class SRCMLogin : AppCompatActivity() {
 
     var menuJson: JsonObject = JsonObject()
     var loginWeb: Int = 0
     lateinit var loginWebView: SHPTWebView
     lateinit var loginProgress: SHPTProgressView
-
     lateinit var menuTop: Menu
+    lateinit var layout: Layout
 
+    lateinit var styles: Styles
+    lateinit var layouts: MutableMap<String, Layout>
+    lateinit var pcontext: ProteusContext
+    lateinit var layoutInflater: ProteusLayoutInflater
 
     override fun onStart() {
         super.onStart()
@@ -86,28 +89,25 @@ class SRCMLogin : AppCompatActivity() {
                 select("Layout").where("page = {pageTitle}", "pageTitle" to "srcmlogin").exec {
 
                     val rowParser = classParser<Layout>()
-                    val row = parseSingle(rowParser)
+                    layout = parseSingle(rowParser)
 
                     uiThread {
-                        val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
-                        layoutBuilder.listener = EventCallback(this@SRCMLogin)
+
+                        pcontext = this@SRCMLogin.proteusContext(styles, layouts)
+                        layoutInflater = pcontext.getInflater()
+                        ProteusTypeAdapterFactory.PROTEUS_INSTANCE_HOLDER.setProteus(proteus);
                         mainLayout.removeAllViews()
-                        registerCustomView(layoutBuilder)
+                        val view: View = layoutInflater.inflate(layout, ObjectValue(), mainLayout, 0).asView
+                        mainLayout.addView(view)
 
+//                        if (parser.parse(row.structure).asJsonObject.has("menu")) {
+//                            menuJson = parser.parse(row.structure).asJsonObject.getAsJsonObject("menu")
+//                            invalidateOptionsMenu()
+//                        } else {
+//                            menuJson = JsonObject()
+//                        }
 
-                        val parser = JsonParser()
-                        val view = layoutBuilder.build(mainLayout, parser.parse(row.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, Styles())
-
-                        mainLayout.addView(view as View)
-
-                        if (parser.parse(row.structure).asJsonObject.has("menu")) {
-                            menuJson = parser.parse(row.structure).asJsonObject.getAsJsonObject("menu")
-                            invalidateOptionsMenu()
-                        } else {
-                            menuJson = JsonObject()
-                        }
-
-                        val toolbarid = layoutBuilder.getUniqueViewId("toolbar")
+                        val toolbarid = layoutInflater.getUniqueViewId("toolbar")
                         if (view.findViewById(toolbarid) != null) {
                             val toolbar = view.find<SHPTToolBar>(toolbarid)
                             setSupportActionBar(toolbar)
@@ -117,14 +117,14 @@ class SRCMLogin : AppCompatActivity() {
                         }
 
 
-                        loginWeb = layoutBuilder.getUniqueViewId("loginWeb")
+                        loginWeb = layoutInflater.getUniqueViewId("loginWeb")
                         if (loginWeb != 0 && view.findViewById(loginWeb) != null) {
                             loginWebView = view.find<SHPTWebView>(loginWeb)
                             loginWebView.setWebViewClient(SHPTWebViewClient())
                         }
 
 
-                        val loginProgressId = layoutBuilder.getUniqueViewId("loginProgress")
+                        val loginProgressId = layoutInflater.getUniqueViewId("loginProgress")
                         if (view.findViewById(loginProgressId) != null) {
                             loginProgress = view.find<SHPTProgressView>(loginProgressId)
                         }

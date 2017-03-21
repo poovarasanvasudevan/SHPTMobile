@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import android.view.View
+import com.flipkart.android.proteus.ProteusView
 import com.shpt.R
 
 /**
@@ -16,7 +16,11 @@ import com.shpt.R
  */
 
 class SHPTToolBar : Toolbar, ProteusView {
-    private var viewManager: ProteusViewManager? = null
+    override fun getAsView(): View {
+        return this
+    }
+
+    private var viewManager: ProteusView.Manager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
@@ -25,11 +29,11 @@ class SHPTToolBar : Toolbar, ProteusView {
         super.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light)
     }
 
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getViewManager(): ProteusView.Manager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
+    override fun setViewManager(proteusViewManager: ProteusView.Manager) {
         this.viewManager = proteusViewManager
     }
 }

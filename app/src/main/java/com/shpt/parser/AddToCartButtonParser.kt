@@ -1,13 +1,12 @@
 package com.shpt.parser
 
 import android.view.ViewGroup
-import com.flipkart.android.proteus.parser.Attributes
-import com.flipkart.android.proteus.parser.Parser
-import com.flipkart.android.proteus.parser.WrappableParser
+import com.flipkart.android.proteus.ProteusContext
+import com.flipkart.android.proteus.ProteusView
+import com.flipkart.android.proteus.ViewTypeParser
 import com.flipkart.android.proteus.processor.StringAttributeProcessor
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
-import com.google.gson.JsonObject
+import com.flipkart.android.proteus.value.Layout
+import com.flipkart.android.proteus.value.ObjectValue
 import com.shpt.uiext.SHPTAddToCartButton
 import com.shpt.widget.AddTocardButton
 
@@ -22,20 +21,26 @@ import com.shpt.widget.AddTocardButton
  * @on 17/1/17 at 2:06 PM
  */
 
-class AddToCartButtonParser(wrappedParser: Parser<AddTocardButton>) : WrappableParser<AddTocardButton>(wrappedParser) {
-
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
-        return SHPTAddToCartButton(viewGroup.context)
+class AddToCartButtonParser() : ViewTypeParser<AddTocardButton>() {
+    override fun createView(context: ProteusContext, layout: Layout, data: ObjectValue, parent: ViewGroup?, dataIndex: Int): ProteusView {
+        return SHPTAddToCartButton(context.applicationContext);
     }
 
-    override fun prepareHandlers() {
-        super.prepareHandlers()
+    override fun addAttributeProcessors() {
 
-
-        addHandler(Attributes.Attribute("productid"), object : StringAttributeProcessor<AddTocardButton>() {
-            override fun handle(p0: String?, p1: String?, p2: AddTocardButton?) {
-                p2!!.addToCartProduct(p1!!.toInt())
+        addAttributeProcessor("productid", object : StringAttributeProcessor<AddTocardButton>() {
+            override fun setString(view: AddTocardButton?, value: String?) {
+                view!!.addToCartProduct(value!!.toInt())
             }
         })
     }
+
+    override fun getType(): String {
+        return "AddToCartButton"
+    }
+
+    override fun getParentType(): String? {
+        return "View"
+    }
+
 }

@@ -1,8 +1,8 @@
 package com.shpt.uiext
 
 import android.content.Context
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import android.view.View
+import com.flipkart.android.proteus.ProteusView
 import com.shpt.widget.JustifiedTextView
 
 /**
@@ -16,12 +16,16 @@ import com.shpt.widget.JustifiedTextView
  */
 
 class SHPTJustifiedTextView(context: Context?) : JustifiedTextView(context), ProteusView {
-    private var viewManager: ProteusViewManager? = null
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getAsView(): View {
+        return this
+    }
+
+    private var viewManager: ProteusView.Manager? = null
+    override fun getViewManager(): ProteusView.Manager? {
         return viewManager
     }
 
-    override fun setViewManager(p0: ProteusViewManager?) {
+    override fun setViewManager(p0: ProteusView.Manager?) {
         this.viewManager = p0
     }
 

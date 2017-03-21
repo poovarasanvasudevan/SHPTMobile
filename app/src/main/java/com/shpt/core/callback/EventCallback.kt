@@ -1,18 +1,15 @@
 package com.shpt.core.callback
 
 import android.app.Activity
-import android.support.annotation.Nullable
-import android.support.v4.view.PagerAdapter
-import android.util.Log
-import android.view.View
-import android.widget.Adapter
-import com.flipkart.android.proteus.EventType
-import com.flipkart.android.proteus.builder.LayoutBuilderCallback
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
-import org.jetbrains.anko.longToast
+import com.flipkart.android.proteus.ProteusContext
+import com.flipkart.android.proteus.ProteusLayoutInflater
+import com.flipkart.android.proteus.ProteusView
+import com.flipkart.android.proteus.toolbox.EventType
+import com.flipkart.android.proteus.value.Layout
+import com.flipkart.android.proteus.value.ObjectValue
+import com.flipkart.android.proteus.value.Value
+import com.mcxiaoke.koi.ext.longToast
+import com.mcxiaoke.koi.ext.toast
 
 /**
  * Created by poovarasanv on 20/1/17.
@@ -24,64 +21,41 @@ import org.jetbrains.anko.longToast
  * @on 20/1/17 at 2:40 PM
  */
 
-class EventCallback(activity: Activity) : LayoutBuilderCallback {
-
+class EventCallback(activity: Activity) : ProteusLayoutInflater.Callback {
     private var act = activity
-
-    override fun onUnknownAttribute(attribute: String, value: JsonElement, view: ProteusView) {
-        Log.i("unknown-attribute", attribute + " in " + view.viewManager.layout.toString())
+    override fun onUnknownViewType(context: ProteusContext?, type: String?, layout: Layout?, data: ObjectValue?, index: Int): ProteusView {
+        return null!!;
     }
 
-    @Nullable
-    override fun onUnknownViewType(type: String, parent: View, layout: JsonObject, data: JsonObject, index: Int, styles: Styles): ProteusView? {
-        return null
-    }
-
-    override fun onLayoutRequired(type: String, parent: ProteusView): JsonObject? {
-        return null
-    }
-
-    override fun onViewBuiltFromViewProvider(view: ProteusView, parent: View, type: String, index: Int) {
-
-    }
-
-    override fun onEvent(view: ProteusView, value: JsonElement, eventType: EventType): View {
+    override fun onEvent(view: ProteusView?, eventType: EventType?, value: Value?) {
         when (eventType) {
             EventType.OnClick -> {
-                val action = value.asJsonObject
-                val actionItems = action.getAsJsonArray("event");
 
-                actionItems.forEach {
-                    val task: JsonObject = it.asJsonObject
-
-                    val className = Class.forName("com.shpt.core.event.${task.get("event").asString}")
-                    val obj = className.newInstance()
-
-                    val beforeExecute = className.getDeclaredMethod("beforeExecute", Activity::class.java, JsonObject::class.java)
-                    val execute = className.getDeclaredMethod("execute", Activity::class.java, JsonObject::class.java)
-                    val afterExecute = className.getDeclaredMethod("afterExecute", Activity::class.java, JsonObject::class.java, JsonObject::class.java)
-
-
-                    val before: Boolean = beforeExecute.invoke(obj, act, task) as Boolean
-                    if (before) {
-                        val op: JsonObject = execute.invoke(obj, act, task) as JsonObject
-                        afterExecute.invoke(obj, act, task, op)
-                    }
-                }
+                act.toast(value!!.asString)
+//                val action = value.isObject
+//                val actionItems = action.get("event");
+//
+//                actionItems.forEach {
+//                    val task: JsonObject = it.asJsonObject
+//
+//                    val className = Class.forName("com.shpt.core.event.${task.get("event").asString}")
+//                    val obj = className.newInstance()
+//
+//                    val beforeExecute = className.getDeclaredMethod("beforeExecute", Activity::class.java, JsonObject::class.java)
+//                    val execute = className.getDeclaredMethod("execute", Activity::class.java, JsonObject::class.java)
+//                    val afterExecute = className.getDeclaredMethod("afterExecute", Activity::class.java, JsonObject::class.java, JsonObject::class.java)
+//
+//
+//                    val before: Boolean = beforeExecute.invoke(obj, act, task) as Boolean
+//                    if (before) {
+//                        val op: JsonObject = execute.invoke(obj, act, task) as JsonObject
+//                        afterExecute.invoke(obj, act, task, op)
+//                    }
+//                }
             }
             else -> {
                 act.longToast("Event Type Not Registered")
             }
         }
-        Log.d("event", value.toString())
-        return view as View
-    }
-
-    override fun onPagerAdapterRequired(parent: ProteusView, children: List<ProteusView>, layout: JsonObject): PagerAdapter? {
-        return null
-    }
-
-    override fun onAdapterRequired(parent: ProteusView, children: List<ProteusView>, layout: JsonObject): Adapter? {
-        return null
     }
 }

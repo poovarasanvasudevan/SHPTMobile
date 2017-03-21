@@ -2,11 +2,11 @@ package com.shpt.parser
 
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.ViewGroup
-import com.flipkart.android.proteus.parser.Parser
-import com.flipkart.android.proteus.parser.WrappableParser
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
-import com.google.gson.JsonObject
+import com.flipkart.android.proteus.ProteusContext
+import com.flipkart.android.proteus.ProteusView
+import com.flipkart.android.proteus.ViewTypeParser
+import com.flipkart.android.proteus.value.Layout
+import com.flipkart.android.proteus.value.ObjectValue
 import com.shpt.uiext.SHPTPullToRefresh
 
 /**
@@ -16,13 +16,20 @@ import com.shpt.uiext.SHPTPullToRefresh
  * @on 17/1/17 at 2:06 PM
  */
 
-class PullToRefreshParser(wrappedParser: Parser<SwipeRefreshLayout>) : WrappableParser<SwipeRefreshLayout>(wrappedParser) {
-
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
-        return SHPTPullToRefresh(viewGroup.context)
+class PullToRefreshParser : ViewTypeParser<SwipeRefreshLayout>() {
+    override fun getParentType(): String? {
+        return "View"
     }
 
-    override fun prepareHandlers() {
-        super.prepareHandlers()
+    override fun getType(): String {
+        return "Refresh"
+    }
+
+    override fun createView(context: ProteusContext, layout: Layout, data: ObjectValue, parent: ViewGroup?, dataIndex: Int): ProteusView {
+        return SHPTPullToRefresh(context.applicationContext)
+    }
+
+    override fun addAttributeProcessors() {
+        //need to add Pull operations
     }
 }

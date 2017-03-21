@@ -3,13 +3,12 @@ package com.shpt.parser
 import android.support.v4.widget.DrawerLayout
 import android.view.Gravity
 import android.view.ViewGroup
-import com.flipkart.android.proteus.parser.Attributes
-import com.flipkart.android.proteus.parser.Parser
-import com.flipkart.android.proteus.parser.WrappableParser
+import com.flipkart.android.proteus.ProteusContext
+import com.flipkart.android.proteus.ProteusView
+import com.flipkart.android.proteus.ViewTypeParser
 import com.flipkart.android.proteus.processor.StringAttributeProcessor
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
-import com.google.gson.JsonObject
+import com.flipkart.android.proteus.value.Layout
+import com.flipkart.android.proteus.value.ObjectValue
 import com.shpt.uiext.SHPTDrawerLayout
 
 
@@ -23,35 +22,37 @@ import com.shpt.uiext.SHPTDrawerLayout
  * @on 17/1/17 at 2:06 PM
  */
 
-class DrawerLayoutParser(wrappedParser: Parser<DrawerLayout>) : WrappableParser<DrawerLayout>(wrappedParser) {
-
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
-        return SHPTDrawerLayout(viewGroup.context)
+class DrawerLayoutParser : ViewTypeParser<DrawerLayout>() {
+    override fun createView(context: ProteusContext, layout: Layout, data: ObjectValue, parent: ViewGroup?, dataIndex: Int): ProteusView {
+        return SHPTDrawerLayout(context.applicationContext)
     }
 
-    override fun prepareHandlers() {
-        super.prepareHandlers()
-
-        addHandler(Attributes.Attribute("openDrawer"), object : StringAttributeProcessor<DrawerLayout>() {
-            override fun handle(s: String, s1: String, nav: DrawerLayout) {
-
-                when (s1) {
-                    "start" -> nav.openDrawer(Gravity.START)
-                    "top" -> nav.openDrawer(Gravity.TOP)
-                    "end" -> nav.openDrawer(Gravity.END)
-                    "center" -> nav.openDrawer(Gravity.CENTER)
+    override fun addAttributeProcessors() {
+        addAttributeProcessor("openDrawer", object : StringAttributeProcessor<DrawerLayout>() {
+            override fun setString(view: DrawerLayout?, value: String?) {
+                when (value) {
+                    "start" -> view!!.openDrawer(Gravity.START)
+                    "top" -> view!!.openDrawer(Gravity.TOP)
+                    "end" -> view!!.openDrawer(Gravity.END)
+                    "center" -> view!!.openDrawer(Gravity.CENTER)
                 }
             }
         })
 
-
-
-        addHandler(Attributes.Attribute("fitsSystemWindows"), object : StringAttributeProcessor<DrawerLayout>() {
-            override fun handle(s: String, s1: String, nav: DrawerLayout) {
-                if(s1 == "true"){
-                    nav.setFitsSystemWindows(true)
+        addAttributeProcessor("fitsSystemWindows", object : StringAttributeProcessor<DrawerLayout>() {
+            override fun setString(view: DrawerLayout?, value: String?) {
+                if (value == "true") {
+                    view!!.fitsSystemWindows = true
                 }
             }
         })
+    }
+
+    override fun getType(): String {
+        return "Drawer"
+    }
+
+    override fun getParentType(): String? {
+        return "View"
     }
 }

@@ -3,8 +3,8 @@ package com.shpt.uiext
 import android.content.Context
 import android.support.v4.widget.DrawerLayout
 import android.util.AttributeSet
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import android.view.View
+import com.flipkart.android.proteus.ProteusView
 
 /**
  * Created by poovarasanv on 17/1/17.
@@ -17,7 +17,11 @@ import com.flipkart.android.proteus.view.manager.ProteusViewManager
  */
 
 class SHPTDrawerLayout : DrawerLayout, ProteusView {
-    private var viewManager: ProteusViewManager? = null
+    override fun getAsView(): View {
+        return this
+    }
+
+    private var viewManager: ProteusView.Manager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
@@ -26,11 +30,11 @@ class SHPTDrawerLayout : DrawerLayout, ProteusView {
 //        super.openDrawer(GravityCompat.START)
     }
 
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getViewManager(): ProteusView.Manager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
+    override fun setViewManager(proteusViewManager: ProteusView.Manager) {
         this.viewManager = proteusViewManager
     }
 }

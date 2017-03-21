@@ -1,11 +1,11 @@
 package com.shpt.parser
 
 import android.view.ViewGroup
-import com.flipkart.android.proteus.parser.Parser
-import com.flipkart.android.proteus.parser.WrappableParser
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
-import com.google.gson.JsonObject
+import com.flipkart.android.proteus.ProteusContext
+import com.flipkart.android.proteus.ProteusView
+import com.flipkart.android.proteus.ViewTypeParser
+import com.flipkart.android.proteus.value.Layout
+import com.flipkart.android.proteus.value.ObjectValue
 import com.shpt.mobile.widget.Ripple
 import com.shpt.uiext.SHPTRipple
 
@@ -20,13 +20,20 @@ import com.shpt.uiext.SHPTRipple
  * @on 17/1/17 at 2:06 PM
  */
 
-class RippleParser(wrappedParser: Parser<Ripple>) : WrappableParser<Ripple>(wrappedParser) {
+class RippleParser : ViewTypeParser<Ripple>() {
+    override fun addAttributeProcessors() {
 
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
-        return SHPTRipple(viewGroup.context)
     }
 
-    override fun prepareHandlers() {
-        super.prepareHandlers()
+    override fun getParentType(): String? {
+        return "View"
+    }
+
+    override fun createView(context: ProteusContext, layout: Layout, data: ObjectValue, parent: ViewGroup?, dataIndex: Int): ProteusView {
+        return SHPTRipple(context.applicationContext)
+    }
+
+    override fun getType(): String {
+        return "Ripple"
     }
 }
