@@ -3,8 +3,8 @@ package com.shpt.uiext
 import android.content.Context
 import android.support.v4.widget.DrawerLayout
 import android.util.AttributeSet
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.manager.ProteusViewManager
 
 /**
  * Created by poovarasanv on 17/1/17.

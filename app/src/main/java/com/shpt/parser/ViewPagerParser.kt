@@ -2,15 +2,15 @@ package com.shpt.parser
 
 import android.support.v4.view.ViewPager
 import android.view.ViewGroup
-import com.flipkart.android.proteus.parser.Attributes
-import com.flipkart.android.proteus.parser.Parser
-import com.flipkart.android.proteus.parser.WrappableParser
-import com.flipkart.android.proteus.processor.StringAttributeProcessor
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.toast
+import com.poovarasan.blade.parser.Attributes
+import com.poovarasan.blade.parser.Parser
+import com.poovarasan.blade.parser.WrappableParser
+import com.poovarasan.blade.processor.StringAttributeProcessor
+import com.poovarasan.blade.toolbox.Styles
+import com.poovarasan.blade.view.ProteusView
 import com.shpt.core.adapter.SHPTPagerAdapter
 import com.shpt.core.api.getAdapter
 import com.shpt.core.processor.JsonObjectProcessor

@@ -13,10 +13,10 @@ import android.view.ViewManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.flipkart.android.proteus.builder.LayoutBuilder
-import com.flipkart.android.proteus.parser.Parser
 import com.mikepenz.iconics.view.IconicsButton
 import com.mikepenz.iconics.view.IconicsImageView
+import com.poovarasan.blade.builder.LayoutBuilder
+import com.poovarasan.blade.parser.Parser
 import com.shpt.R
 import com.shpt.core.config.Config
 import com.shpt.mobile.widget.ProgressWheel

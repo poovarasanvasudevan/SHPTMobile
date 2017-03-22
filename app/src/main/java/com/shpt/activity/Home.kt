@@ -17,8 +17,6 @@ import android.view.View
 import android.widget.ListView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import com.flipkart.android.proteus.builder.LayoutBuilderFactory
-import com.flipkart.android.proteus.toolbox.Styles
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -28,6 +26,8 @@ import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.onTextChange
 import com.mcxiaoke.koi.ext.quickAdapterOf
 import com.mcxiaoke.koi.ext.toast
+import com.poovarasan.blade.builder.LayoutBuilderFactory
+import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.*
 import com.shpt.core.api.rest
@@ -217,10 +217,7 @@ class Home : AppCompatActivity() {
         setSupportActionBar(find<Toolbar>(R.id.toolbar))
         supportActionBar!!.elevation = 0f
         try {
-
-
             doAsync {
-
                 database.use {
                     select("Layout").where("page = {pageName}", "pageName" to "home").exec {
                         val rowParser = classParser<Layout>()

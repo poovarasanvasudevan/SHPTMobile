@@ -6,13 +6,11 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.flipkart.android.proteus.builder.DataParsingLayoutBuilder
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.find
+import com.poovarasan.blade.builder.DataParsingLayoutBuilder
 import com.shpt.R
 import org.jetbrains.anko.searchManager
-
-
 
 
 /**

@@ -9,14 +9,14 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.*
 import android.widget.TextView
-import com.flipkart.android.proteus.builder.LayoutBuilderFactory
-import com.flipkart.android.proteus.toolbox.Styles
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.startActivity
 import com.mcxiaoke.koi.ext.toast
 import com.mcxiaoke.koi.log.logi
+import com.poovarasan.blade.builder.LayoutBuilderFactory
+import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.callback.EventCallback
 import com.shpt.core.config.Config

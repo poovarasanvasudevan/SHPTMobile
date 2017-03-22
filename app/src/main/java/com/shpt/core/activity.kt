@@ -2,6 +2,7 @@ package com.shpt.core
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.startActivity
@@ -29,12 +30,13 @@ fun Context.isServiceRunning(serviceClass: Class<*>): Boolean = activityManager.
 fun Context.handleConnectionError() {
 
     val alert1 = alert("Not Connected to Internet. Retry again?") {
-        yesButton {
+
+        positiveButton("Yes", {
             handleConnectionError()
-        }
-        noButton {
-            dismiss()
-        }
+        })
+
+        negativeButton("No", DialogInterface::dismiss)
+
     }
     if (!isConnected()) alert1.show() else alert1.dismiss()
 }

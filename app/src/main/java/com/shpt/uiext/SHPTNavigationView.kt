@@ -3,11 +3,8 @@ package com.shpt.uiext
 import android.content.Context
 import android.support.design.widget.NavigationView
 import android.util.AttributeSet
-import android.view.Gravity
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.manager.ProteusViewManager
 
 
 /**

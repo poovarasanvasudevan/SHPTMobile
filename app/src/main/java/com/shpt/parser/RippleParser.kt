@@ -1,11 +1,11 @@
 package com.shpt.parser
 
 import android.view.ViewGroup
-import com.flipkart.android.proteus.parser.Parser
-import com.flipkart.android.proteus.parser.WrappableParser
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
 import com.google.gson.JsonObject
+import com.poovarasan.blade.parser.Parser
+import com.poovarasan.blade.parser.WrappableParser
+import com.poovarasan.blade.toolbox.Styles
+import com.poovarasan.blade.view.ProteusView
 import com.shpt.mobile.widget.Ripple
 import com.shpt.uiext.SHPTRipple
 
