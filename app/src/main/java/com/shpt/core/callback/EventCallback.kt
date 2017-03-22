@@ -6,12 +6,12 @@ import android.support.v4.view.PagerAdapter
 import android.util.Log
 import android.view.View
 import android.widget.Adapter
-import com.flipkart.android.proteus.EventType
-import com.flipkart.android.proteus.builder.LayoutBuilderCallback
-import com.flipkart.android.proteus.toolbox.Styles
-import com.flipkart.android.proteus.view.ProteusView
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import com.poovarasan.blade.EventType
+import com.poovarasan.blade.builder.LayoutBuilderCallback
+import com.poovarasan.blade.toolbox.Styles
+import com.poovarasan.blade.view.ProteusView
 import org.jetbrains.anko.longToast
 
 /**

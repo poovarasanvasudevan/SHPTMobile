@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import com.flipkart.android.proteus.builder.LayoutBuilderFactory
-import com.flipkart.android.proteus.toolbox.Styles
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.poovarasan.blade.builder.LayoutBuilderFactory
+import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.registerCustomView
 import logMessage

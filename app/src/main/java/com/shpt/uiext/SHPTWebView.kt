@@ -3,9 +3,9 @@ package com.shpt.uiext
 import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebSettings
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.ProteusWebView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.ProteusWebView
+import com.poovarasan.blade.view.manager.ProteusViewManager
 
 /**
  * Created by poovarasanv on 17/1/17.

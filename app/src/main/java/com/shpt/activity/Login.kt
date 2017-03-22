@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
-import com.flipkart.android.proteus.builder.LayoutBuilderFactory
-import com.flipkart.android.proteus.toolbox.Styles
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.toast
+import com.poovarasan.blade.builder.LayoutBuilderFactory
+import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.callback.EventCallback
 import com.shpt.core.db.database
@@ -28,16 +28,12 @@ import org.jetbrains.anko.uiThread
 
 class Login : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         try {
-
             doAsync {
-
                 database.use {
                     select("Layout").where("page = {pageName}", "pageName" to "login").exec {
                         val rowParser = classParser<Layout>()

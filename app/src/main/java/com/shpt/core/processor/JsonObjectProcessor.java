@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 
 import android.view.View;
 
-import com.flipkart.android.proteus.processor.AttributeProcessor;
+import com.poovarasan.blade.processor.AttributeProcessor;
 
 /**
  * Created by poovarasanv on 13/2/17.

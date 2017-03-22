@@ -39,7 +39,7 @@ class DatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "mydb", nu
         //stores online configurations
         db?.createTable("Settings", true,
                 "_id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
-                "group" to TEXT,
+                "settinggroup" to TEXT,
                 "settingkey" to TEXT,
                 "settingvalue" to TEXT
         )

@@ -1,8 +1,8 @@
 package com.shpt.uiext
 
 import android.content.Context
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.manager.ProteusViewManager
 import com.shpt.widget.JustifiedTextView
 
 /**

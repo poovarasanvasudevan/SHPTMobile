@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
-import com.flipkart.android.proteus.view.ProteusView
-import com.flipkart.android.proteus.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.manager.ProteusViewManager
 import com.shpt.R
 
 /**
