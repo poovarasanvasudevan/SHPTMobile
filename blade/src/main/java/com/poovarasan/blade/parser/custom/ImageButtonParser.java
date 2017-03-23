@@ -24,11 +24,11 @@ import android.widget.ImageButton;
 import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusImageButton;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeImageButton;
+import com.poovarasan.blade.view.BladeView;
 
 /**
- * Created by kirankumar on 25/11/14.
+ * Created by Poovarasan Vasudevan on 25/11/14.
  */
 public class ImageButtonParser<T extends ImageButton> extends WrappableParser<T> {
 
@@ -37,7 +37,7 @@ public class ImageButtonParser<T extends ImageButton> extends WrappableParser<T>
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusImageButton(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeImageButton(parent.getContext());
     }
 }

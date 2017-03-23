@@ -53,7 +53,7 @@ public class ColorUtils {
         } else if (value.isJsonObject()) {
             handleElement(context, value.getAsJsonObject(), colorCallback, colorStateListCallback);
         } else {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, "Could not color for : " + value.toString());
             }
         }
@@ -80,7 +80,7 @@ public class ColorUtils {
                     colorCallback.onReceiveValue(color);
                 }
             } catch (Exception ex) {
-                if (ProteusConstants.isLoggingEnabled()) {
+                if (BladeConstants.isLoggingEnabled()) {
                     Log.e(TAG, "Could not load local resource " + attributeValue);
                 }
             }

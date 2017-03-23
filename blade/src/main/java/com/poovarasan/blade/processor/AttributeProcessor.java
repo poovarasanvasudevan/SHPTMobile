@@ -19,8 +19,8 @@ package com.poovarasan.blade.processor;
 import com.google.gson.JsonElement;
 
 /**
- * @author kirankumar
- * @author aditya.sharat
+ * @author Poovarasan Vasudevan
+ * @author Poovarasan Vasudevan
  */
 public abstract class AttributeProcessor<V> {
 

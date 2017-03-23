@@ -33,11 +33,11 @@ import com.poovarasan.blade.processor.DimensionAttributeProcessor;
 import com.poovarasan.blade.processor.DrawableResourceProcessor;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusLinearLayout;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeLinearLayout;
+import com.poovarasan.blade.view.BladeView;
 
 /**
- * Created by kiran.kumar on 12/05/14.
+ * Created by Poovarasan Vasudevan on 12/05/14.
  */
 public class LinearLayoutParser<T extends LinearLayout> extends WrappableParser<T> {
 
@@ -46,8 +46,8 @@ public class LinearLayoutParser<T extends LinearLayout> extends WrappableParser<
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusLinearLayout(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeLinearLayout(parent.getContext());
     }
 
     @Override
@@ -57,9 +57,9 @@ public class LinearLayoutParser<T extends LinearLayout> extends WrappableParser<
             @Override
             public void handle(String attributeKey, String attributeValue, T view) {
                 if ("horizontal".equals(attributeValue)) {
-                    view.setOrientation(ProteusLinearLayout.HORIZONTAL);
+                    view.setOrientation(BladeLinearLayout.HORIZONTAL);
                 } else {
-                    view.setOrientation(ProteusLinearLayout.VERTICAL);
+                    view.setOrientation(BladeLinearLayout.VERTICAL);
                 }
             }
         });

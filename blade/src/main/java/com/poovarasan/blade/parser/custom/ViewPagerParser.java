@@ -25,11 +25,11 @@ import android.view.ViewGroup;
 import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusView;
-import com.poovarasan.blade.view.ProteusViewPager;
+import com.poovarasan.blade.view.BladeView;
+import com.poovarasan.blade.view.BladeViewPager;
 
 /**
- * Created by kiran.kumar on 13/05/14.
+ * Created by Poovarasan Vasudevan on 13/05/14.
  */
 public class ViewPagerParser<T extends ViewPager> extends WrappableParser<T> {
 
@@ -38,7 +38,7 @@ public class ViewPagerParser<T extends ViewPager> extends WrappableParser<T> {
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusViewPager(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeViewPager(parent.getContext());
     }
 }

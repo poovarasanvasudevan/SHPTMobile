@@ -44,11 +44,11 @@ import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 
 import com.poovarasan.blade.parser.ParseHelper;
+import com.poovarasan.blade.toolbox.BladeConstants;
 import com.poovarasan.blade.toolbox.ColorUtils;
 import com.poovarasan.blade.toolbox.NetworkDrawableHelper;
-import com.poovarasan.blade.toolbox.ProteusConstants;
-import com.poovarasan.blade.view.ProteusView;
-import com.poovarasan.blade.view.manager.ProteusViewManager;
+import com.poovarasan.blade.view.BladeView;
+import com.poovarasan.blade.view.manager.BladeViewManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +101,7 @@ public abstract class DrawableResourceProcessor<V extends View> extends Attribut
         } else if (value.isJsonObject()) {
             handleElement(key, value, view);
         } else {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, "Resource for key: " + key + " must be a primitive or an object. value -> " + value.toString());
             }
         }
@@ -214,7 +214,7 @@ public abstract class DrawableResourceProcessor<V extends View> extends Attribut
      * Any string based drawables are handled here. Color, local resource and remote image urls.
      */
     protected void handleString(String attributeKey, final String attributeValue, final V view) {
-        ProteusViewManager viewManager = ((ProteusView) view).getViewManager();
+        BladeViewManager viewManager = ((BladeView) view).getViewManager();
         boolean synchronousRendering = viewManager.getLayoutBuilder().isSynchronousRendering();
 
         if (ParseHelper.isLocalResourceAttribute(attributeValue)) {

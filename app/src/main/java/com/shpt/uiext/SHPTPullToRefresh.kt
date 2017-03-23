@@ -3,8 +3,8 @@ package com.shpt.uiext
 import android.content.Context
 import android.support.v4.widget.SwipeRefreshLayout
 import android.util.AttributeSet
-import com.poovarasan.blade.view.ProteusView
-import com.poovarasan.blade.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.BladeView
+import com.poovarasan.blade.view.manager.BladeViewManager
 
 /**
  * Created by poovarasanv on 23/1/17.
@@ -16,9 +16,9 @@ import com.poovarasan.blade.view.manager.ProteusViewManager
  * @on 23/1/17 at 12:29 PM
  */
 
-class SHPTPullToRefresh : SwipeRefreshLayout, ProteusView {
+class SHPTPullToRefresh : SwipeRefreshLayout, BladeView {
 
-    private var viewManager: ProteusViewManager? = null
+    private var viewManager: BladeViewManager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
@@ -26,11 +26,11 @@ class SHPTPullToRefresh : SwipeRefreshLayout, ProteusView {
 
     }
 
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getViewManager(): BladeViewManager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
-        this.viewManager = proteusViewManager
+    override fun setViewManager(BladeViewManager: BladeViewManager) {
+        this.viewManager = BladeViewManager
     }
 }

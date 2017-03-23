@@ -26,11 +26,11 @@ import com.poovarasan.blade.parser.LayoutHandler;
 import com.poovarasan.blade.toolbox.BitmapLoader;
 import com.poovarasan.blade.toolbox.IdGenerator;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeView;
 
 /**
- * @author kirankumar
- * @author aditya.sharat
+ * @author Poovarasan Vasudevan
+ * @author Poovarasan Vasudevan
  */
 public interface LayoutBuilder {
 
@@ -64,10 +64,10 @@ public interface LayoutBuilder {
      * @param view The view to handle the attribute on.
      * @return true if the attribute is processed false otherwise.
      */
-    boolean handleAttribute(LayoutHandler handler, ProteusView view, String attribute, JsonElement value);
+    boolean handleAttribute(LayoutHandler handler, BladeView view, String attribute, JsonElement value);
 
     /**
-     * This methods builds a {@link ProteusView} from a layout {@link JsonObject} and data {@link
+     * This methods builds a {@link BladeView} from a layout {@link JsonObject} and data {@link
      * JsonObject}.
      *
      * @param parent The intended parent view for the {@link View} that will be built.
@@ -77,10 +77,10 @@ public interface LayoutBuilder {
      *               the {@link View}.
      * @param index  The index of this view in its parent. Pass 0 if it has no parent.
      * @param styles The styles to be applied to the view.
-     * @return A {@link ProteusView} with the built view, an array of its children and optionally
+     * @return A {@link BladeView} with the built view, an array of its children and optionally
      * its bindings.
      */
-    ProteusView build(ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles);
+    BladeView build(ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles);
 
     /**
      * Give the View ID for this string. This will generally be given by the instance of ID
@@ -141,4 +141,5 @@ public interface LayoutBuilder {
      * remote resources like remote images are to be downloaded synchronously or not
      */
     void setSynchronousRendering(boolean isSynchronousRendering);
+
 }

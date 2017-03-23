@@ -26,12 +26,12 @@ import android.widget.Adapter;
 
 import com.poovarasan.blade.EventType;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeView;
 
 import java.util.List;
 
 /**
- * @author kiran.kumar
+ * @author Poovarasan Vasudevan
  */
 public interface LayoutBuilderCallback {
 
@@ -41,27 +41,27 @@ public interface LayoutBuilderCallback {
      * @param attribute attribute that is being parsed
      * @param view      corresponding view for current attribute that is being parsed
      */
-    void onUnknownAttribute(String attribute, JsonElement value, ProteusView view);
+    void onUnknownAttribute(String attribute, JsonElement value, BladeView view);
 
     /**
      * called when the builder encounters a view type which it cannot understand.
      */
     @Nullable
-    ProteusView onUnknownViewType(String type, View parent, JsonObject layout, JsonObject data, int index, Styles styles);
+    BladeView onUnknownViewType(String type, View parent, JsonObject layout, JsonObject data, int index, Styles styles);
 
-    JsonObject onLayoutRequired(String type, ProteusView parent);
+    JsonObject onLayoutRequired(String type, BladeView parent);
 
-    void onViewBuiltFromViewProvider(ProteusView view, View parent, String type, int index);
+    void onViewBuiltFromViewProvider(BladeView view, View parent, String type, int index);
 
     /**
      * called when any click occurs on views
      *
      * @param view The view that triggered the event
      */
-    View onEvent(ProteusView view, JsonElement value, EventType eventType);
+    View onEvent(BladeView view, JsonElement value, EventType eventType);
 
-    PagerAdapter onPagerAdapterRequired(ProteusView parent, final List<ProteusView> children, JsonObject layout);
+    PagerAdapter onPagerAdapterRequired(BladeView parent, final List<BladeView> children, JsonObject layout);
 
-    Adapter onAdapterRequired(ProteusView parent, final List<ProteusView> children, JsonObject layout);
+    Adapter onAdapterRequired(BladeView parent, final List<BladeView> children, JsonObject layout);
 
 }

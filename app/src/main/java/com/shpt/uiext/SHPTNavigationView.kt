@@ -3,8 +3,8 @@ package com.shpt.uiext
 import android.content.Context
 import android.support.design.widget.NavigationView
 import android.util.AttributeSet
-import com.poovarasan.blade.view.ProteusView
-import com.poovarasan.blade.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.BladeView
+import com.poovarasan.blade.view.manager.BladeViewManager
 
 
 /**
@@ -17,8 +17,8 @@ import com.poovarasan.blade.view.manager.ProteusViewManager
  * @on 17/1/17 at 2:01 PM
  */
 
-class SHPTNavigationView : NavigationView, ProteusView {
-    private var viewManager: ProteusViewManager? = null
+class SHPTNavigationView : NavigationView, BladeView {
+    private var viewManager: BladeViewManager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
@@ -27,11 +27,11 @@ class SHPTNavigationView : NavigationView, ProteusView {
 
     }
 
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getViewManager(): BladeViewManager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
-        this.viewManager = proteusViewManager
+    override fun setViewManager(BladeViewManager: BladeViewManager) {
+        this.viewManager = BladeViewManager
     }
 }

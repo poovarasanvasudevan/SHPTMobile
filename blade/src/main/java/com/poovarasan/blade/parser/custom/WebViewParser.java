@@ -26,11 +26,11 @@ import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusView;
-import com.poovarasan.blade.view.ProteusWebView;
+import com.poovarasan.blade.view.BladeView;
+import com.poovarasan.blade.view.BladeWebView;
 
 /**
- * Created by kiran.kumar on 12/05/14.
+ * Created by Poovarasan Vasudevan on 12/05/14.
  */
 public class WebViewParser<T extends WebView> extends WrappableParser<T> {
     public WebViewParser(Parser<T> wrappedParser) {
@@ -38,8 +38,8 @@ public class WebViewParser<T extends WebView> extends WrappableParser<T> {
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusWebView(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeWebView(parent.getContext());
     }
 
     @Override

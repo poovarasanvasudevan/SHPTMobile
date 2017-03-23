@@ -28,13 +28,13 @@ import android.view.ViewGroup;
 import com.poovarasan.blade.DataContext;
 import com.poovarasan.blade.parser.LayoutHandler;
 import com.poovarasan.blade.toolbox.BitmapLoader;
+import com.poovarasan.blade.toolbox.BladeConstants;
 import com.poovarasan.blade.toolbox.IdGenerator;
-import com.poovarasan.blade.toolbox.ProteusConstants;
 import com.poovarasan.blade.toolbox.Styles;
 import com.poovarasan.blade.toolbox.Utils;
-import com.poovarasan.blade.view.ProteusView;
-import com.poovarasan.blade.view.manager.ProteusViewManager;
-import com.poovarasan.blade.view.manager.ProteusViewManagerImpl;
+import com.poovarasan.blade.view.BladeView;
+import com.poovarasan.blade.view.manager.BladeViewManager;
+import com.poovarasan.blade.view.manager.BladeViewManagerImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,8 +80,8 @@ public class SimpleLayoutBuilder implements LayoutBuilder {
 
     @Override
     @Nullable
-    public ProteusView build(ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles) {
-        String type = Utils.getPropertyAsString(layout, ProteusConstants.TYPE);
+    public BladeView build(ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles) {
+        String type = Utils.getPropertyAsString(layout, BladeConstants.TYPE);
 
         if (type == null) {
             throw new IllegalArgumentException("'type' missing in layout: " + layout.toString());
@@ -95,13 +95,13 @@ public class SimpleLayoutBuilder implements LayoutBuilder {
         /**
          * View creation.
          */
-        final ProteusView view;
+        final BladeView view;
 
         onBeforeCreateView(handler, parent, layout, data, index, styles);
         view = createView(handler, parent, layout, data, index, styles);
         onAfterCreateView(handler, view, parent, layout, data, index, styles);
 
-        ProteusViewManager viewManager = createViewManager(handler, parent, layout, data, index, styles);
+        BladeViewManager viewManager = createViewManager(handler, parent, layout, data, index, styles);
         viewManager.setView((View) view);
         view.setViewManager(viewManager);
 
@@ -112,7 +112,7 @@ public class SimpleLayoutBuilder implements LayoutBuilder {
         String attribute;
 
         for (Map.Entry<String, JsonElement> entry : layout.entrySet()) {
-            if (ProteusConstants.TYPE.equals(entry.getKey())) {
+            if (BladeConstants.TYPE.equals(entry.getKey())) {
                 continue;
             }
 
@@ -133,21 +133,21 @@ public class SimpleLayoutBuilder implements LayoutBuilder {
         handler.onBeforeCreateView(parent, layout, data, styles, index);
     }
 
-    protected ProteusView createView(LayoutHandler handler, ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles) {
+    protected BladeView createView(LayoutHandler handler, ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles) {
         return handler.createView(parent, layout, data, styles, index);
     }
 
-    protected void onAfterCreateView(LayoutHandler handler, ProteusView view, ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles) {
+    protected void onAfterCreateView(LayoutHandler handler, BladeView view, ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles) {
         //noinspection unchecked
         handler.onAfterCreateView((View) view, parent, layout, data, styles, index);
     }
 
-    protected ProteusViewManager createViewManager(LayoutHandler handler, View parent, JsonObject layout, JsonObject data, int index, Styles styles) {
-        if (ProteusConstants.isLoggingEnabled()) {
-            Log.d(TAG, "ProteusView created with " + Utils.getLayoutIdentifier(layout));
+    protected BladeViewManager createViewManager(LayoutHandler handler, View parent, JsonObject layout, JsonObject data, int index, Styles styles) {
+        if (BladeConstants.isLoggingEnabled()) {
+            Log.d(TAG, "BladeView created with " + Utils.getLayoutIdentifier(layout));
         }
 
-        ProteusViewManagerImpl viewManager = new ProteusViewManagerImpl();
+        BladeViewManagerImpl viewManager = new BladeViewManagerImpl();
         DataContext dataContext = new DataContext();
         dataContext.setData(data);
         dataContext.setIndex(index);
@@ -161,23 +161,23 @@ public class SimpleLayoutBuilder implements LayoutBuilder {
         return viewManager;
     }
 
-    public boolean handleAttribute(LayoutHandler handler, ProteusView view, String attribute, JsonElement value) {
-        if (ProteusConstants.isLoggingEnabled()) {
+    public boolean handleAttribute(LayoutHandler handler, BladeView view, String attribute, JsonElement value) {
+        if (BladeConstants.isLoggingEnabled()) {
             Log.d(TAG, "Handle '" + attribute + "' : " + value.toString() + " for view with " + Utils.getLayoutIdentifier(view.getViewManager().getLayout()));
         }
         //noinspection unchecked
         return handler.handleAttribute((View) view, attribute, value);
     }
 
-    protected void onUnknownAttributeEncountered(String attribute, JsonElement value, ProteusView view) {
+    protected void onUnknownAttributeEncountered(String attribute, JsonElement value, BladeView view) {
         if (listener != null) {
             listener.onUnknownAttribute(attribute, value, view);
         }
     }
 
     @Nullable
-    protected ProteusView onUnknownViewEncountered(String type, ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles) {
-        if (ProteusConstants.isLoggingEnabled()) {
+    protected BladeView onUnknownViewEncountered(String type, ViewGroup parent, JsonObject layout, JsonObject data, int index, Styles styles) {
+        if (BladeConstants.isLoggingEnabled()) {
             Log.d(TAG, "No LayoutHandler for: " + type);
         }
         if (listener != null) {
@@ -227,4 +227,5 @@ public class SimpleLayoutBuilder implements LayoutBuilder {
     public void setSynchronousRendering(boolean isSynchronousRendering) {
         this.isSynchronousRendering = isSynchronousRendering;
     }
+
 }

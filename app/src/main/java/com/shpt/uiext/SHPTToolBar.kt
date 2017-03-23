@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
-import com.poovarasan.blade.view.ProteusView
-import com.poovarasan.blade.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.BladeView
+import com.poovarasan.blade.view.manager.BladeViewManager
 import com.shpt.R
 
 /**
@@ -15,8 +15,8 @@ import com.shpt.R
  * @on 17/1/17 at 2:01 PM
  */
 
-class SHPTToolBar : Toolbar, ProteusView {
-    private var viewManager: ProteusViewManager? = null
+class SHPTToolBar : Toolbar, BladeView {
+    private var viewManager: BladeViewManager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
@@ -25,11 +25,11 @@ class SHPTToolBar : Toolbar, ProteusView {
         super.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light)
     }
 
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getViewManager(): BladeViewManager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
-        this.viewManager = proteusViewManager
+    override fun setViewManager(BladeViewManager: BladeViewManager) {
+        this.viewManager = BladeViewManager
     }
 }

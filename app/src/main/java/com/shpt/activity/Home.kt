@@ -26,12 +26,10 @@ import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.onTextChange
 import com.mcxiaoke.koi.ext.quickAdapterOf
 import com.mcxiaoke.koi.ext.toast
-import com.poovarasan.blade.builder.LayoutBuilderFactory
 import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.*
 import com.shpt.core.api.rest
-import com.shpt.core.callback.EventCallback
 import com.shpt.core.config.Config
 import com.shpt.core.db.database
 import com.shpt.core.models.Layout
@@ -56,7 +54,6 @@ class Home : AppCompatActivity() {
     var menuJson: JsonObject = JsonObject()
     lateinit var productSearchList: ListView
     lateinit var productSearchAdapter: QuickAdapter<ProductSearch>
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -224,12 +221,7 @@ class Home : AppCompatActivity() {
                         val row = parseSingle(rowParser)
                         uiThread {
 
-                            val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
-                            layoutBuilder.listener = EventCallback(this@Home)
-
-
-                            registerCustomView(layoutBuilder)
-
+                            val layoutBuilder = LAYOUT_BUILDER_FACTORY
 
                             val parser = JsonParser()
                             val view = layoutBuilder.build(find<RelativeLayout>(R.id.mainLayout1), parser.parse(row.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, Styles())

@@ -10,7 +10,7 @@ import com.poovarasan.blade.parser.WrappableParser
 import com.poovarasan.blade.processor.DimensionAttributeProcessor
 import com.poovarasan.blade.processor.StringAttributeProcessor
 import com.poovarasan.blade.toolbox.Styles
-import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.BladeView
 import com.shpt.uiext.SHPTToolBar
 
 /**
@@ -25,7 +25,7 @@ import com.shpt.uiext.SHPTToolBar
 
 class ToolBarParser(wrappedParser: Parser<Toolbar>) : WrappableParser<Toolbar>(wrappedParser) {
 
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
+    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): BladeView {
         return SHPTToolBar(viewGroup.context)
     }
 

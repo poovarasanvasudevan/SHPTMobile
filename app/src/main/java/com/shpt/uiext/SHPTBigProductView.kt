@@ -2,8 +2,8 @@ package com.shpt.uiext
 
 import android.content.Context
 import android.util.AttributeSet
-import com.poovarasan.blade.view.ProteusView
-import com.poovarasan.blade.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.BladeView
+import com.poovarasan.blade.view.manager.BladeViewManager
 import com.shpt.widget.BigProductView
 
 /**
@@ -16,18 +16,19 @@ import com.shpt.widget.BigProductView
  * @on 17/1/17 at 2:01 PM
  */
 
-class SHPTBigProductView : BigProductView, ProteusView {
-    private var viewManager: ProteusViewManager? = null
+class SHPTBigProductView : BigProductView, BladeView {
+    private var viewManager: BladeViewManager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
     constructor(context: Context) : super(context) {}
     constructor(context: Context, productid: Int) : super(context, productid) {}
-    override fun getViewManager(): ProteusViewManager? {
+
+    override fun getViewManager(): BladeViewManager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
-        this.viewManager = proteusViewManager
+    override fun setViewManager(BladeViewManager: BladeViewManager) {
+        this.viewManager = BladeViewManager
     }
 }

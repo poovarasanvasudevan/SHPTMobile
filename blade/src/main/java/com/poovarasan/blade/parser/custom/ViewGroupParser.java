@@ -30,13 +30,13 @@ import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.processor.AttributeProcessor;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
-import com.poovarasan.blade.toolbox.ProteusConstants;
+import com.poovarasan.blade.toolbox.BladeConstants;
 import com.poovarasan.blade.toolbox.Result;
 import com.poovarasan.blade.toolbox.Styles;
 import com.poovarasan.blade.toolbox.Utils;
-import com.poovarasan.blade.view.ProteusAspectRatioFrameLayout;
-import com.poovarasan.blade.view.ProteusView;
-import com.poovarasan.blade.view.manager.ProteusViewManager;
+import com.poovarasan.blade.view.BladeAspectRatioFrameLayout;
+import com.poovarasan.blade.view.BladeView;
+import com.poovarasan.blade.view.manager.BladeViewManager;
 
 public class ViewGroupParser<T extends ViewGroup> extends WrappableParser<T> {
 
@@ -48,8 +48,8 @@ public class ViewGroupParser<T extends ViewGroup> extends WrappableParser<T> {
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusAspectRatioFrameLayout(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeAspectRatioFrameLayout(parent.getContext());
     }
 
     @Override
@@ -95,24 +95,24 @@ public class ViewGroupParser<T extends ViewGroup> extends WrappableParser<T> {
         addHandler(Attributes.ViewGroup.Children, new AttributeProcessor<T>() {
             @Override
             public void handle(String key, JsonElement value, T view) {
-                handleChildren((ProteusView) view);
+                handleChildren((BladeView) view);
             }
         });
     }
 
     @Override
-    public boolean handleChildren(ProteusView view) {
-        ProteusViewManager viewManager = view.getViewManager();
+    public boolean handleChildren(BladeView view) {
+        BladeViewManager viewManager = view.getViewManager();
         LayoutBuilder builder = viewManager.getLayoutBuilder();
         JsonObject layout = viewManager.getLayout();
-        JsonElement children = layout.get(ProteusConstants.CHILDREN);
+        JsonElement children = layout.get(BladeConstants.CHILDREN);
         JsonObject data = viewManager.getDataContext().getData();
         int dataIndex = viewManager.getDataContext().getIndex();
         Styles styles = view.getViewManager().getStyles();
 
         if (null != children && !children.isJsonNull()) {
             if (children.isJsonArray()) {
-                ProteusView child;
+                BladeView child;
                 for (JsonElement jsonElement : children.getAsJsonArray()) {
                     child = builder.build((ViewGroup) view, jsonElement.getAsJsonObject(), data, dataIndex, styles);
                     addView(view, child);
@@ -125,15 +125,15 @@ public class ViewGroupParser<T extends ViewGroup> extends WrappableParser<T> {
         return true;
     }
 
-    private void handleDataDrivenChildren(LayoutBuilder builder, ProteusView parent, ProteusViewManager viewManager, JsonObject children, JsonObject data, Styles styles, int dataIndex) {
+    private void handleDataDrivenChildren(LayoutBuilder builder, BladeView parent, BladeViewManager viewManager, JsonObject children, JsonObject data, Styles styles, int dataIndex) {
 
-        String dataPath = children.get(ProteusConstants.DATA).getAsString().substring(1);
+        String dataPath = children.get(BladeConstants.DATA).getAsString().substring(1);
         viewManager.setDataPathForChildren(dataPath);
 
         Result result = Utils.readJson(dataPath, data, dataIndex);
         JsonElement element = result.isSuccess() ? result.element : null;
 
-        JsonObject childLayout = children.getAsJsonObject(ProteusConstants.LAYOUT);
+        JsonObject childLayout = children.getAsJsonObject(BladeConstants.LAYOUT);
 
         viewManager.setChildLayout(childLayout);
 
@@ -143,7 +143,7 @@ public class ViewGroupParser<T extends ViewGroup> extends WrappableParser<T> {
 
         int length = element.getAsJsonArray().size();
 
-        ProteusView child;
+        BladeView child;
         for (int index = 0; index < length; index++) {
             child = builder.build((ViewGroup) parent, childLayout, data, index, styles);
             if (child != null) {
@@ -153,7 +153,7 @@ public class ViewGroupParser<T extends ViewGroup> extends WrappableParser<T> {
     }
 
     @Override
-    public boolean addView(ProteusView parent, ProteusView view) {
+    public boolean addView(BladeView parent, BladeView view) {
         if (parent instanceof ViewGroup) {
             ((ViewGroup) parent).addView((View) view);
             return true;

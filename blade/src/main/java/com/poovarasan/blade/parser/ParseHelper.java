@@ -38,7 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.poovarasan.blade.R;
-import com.poovarasan.blade.toolbox.ProteusConstants;
+import com.poovarasan.blade.toolbox.BladeConstants;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author kiran.kumar
+ * @author Poovarasan Vasudevan
  */
 public class ParseHelper {
 
@@ -194,13 +194,13 @@ public class ParseHelper {
 
     public static int parseInt(String attributeValue) {
         int number;
-        if (ProteusConstants.DATA_NULL.equals(attributeValue)) {
+        if (BladeConstants.DATA_NULL.equals(attributeValue)) {
             return 0;
         }
         try {
             number = Integer.parseInt(attributeValue);
         } catch (NumberFormatException e) {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, attributeValue + " is NAN. Error: " + e.getMessage());
             }
             number = 0;
@@ -210,13 +210,13 @@ public class ParseHelper {
 
     public static float parseFloat(String attributeValue) {
         float number;
-        if (ProteusConstants.DATA_NULL.equals(attributeValue)) {
+        if (BladeConstants.DATA_NULL.equals(attributeValue)) {
             return 0;
         }
         try {
             number = Float.parseFloat(attributeValue);
         } catch (NumberFormatException e) {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, attributeValue + " is NAN. Error: " + e.getMessage());
             }
             number = 0;
@@ -226,13 +226,13 @@ public class ParseHelper {
 
     public static double parseDouble(String attributeValue) {
         double number;
-        if (ProteusConstants.DATA_NULL.equals(attributeValue)) {
+        if (BladeConstants.DATA_NULL.equals(attributeValue)) {
             return 0;
         }
         try {
             number = Double.parseDouble(attributeValue);
         } catch (NumberFormatException e) {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, attributeValue + " is NAN. Error: " + e.getMessage());
             }
             number = 0;
@@ -270,7 +270,7 @@ public class ParseHelper {
             returnValue = sVisibilityMode.get(attributeValue);
             if (null == returnValue && (attributeValue.isEmpty() ||
                     FALSE.equals(attributeValue) ||
-                    ProteusConstants.DATA_NULL.equals(attributeValue))) {
+                    BladeConstants.DATA_NULL.equals(attributeValue))) {
                 returnValue = View.GONE;
             }
         } else if (element.isJsonNull()) {
@@ -286,7 +286,7 @@ public class ParseHelper {
             returnValue = sVisibilityMode.get(attributeValue);
             if (null == returnValue && (attributeValue.isEmpty() ||
                     FALSE.equals(attributeValue) ||
-                    ProteusConstants.DATA_NULL.equals(attributeValue))) {
+                    BladeConstants.DATA_NULL.equals(attributeValue))) {
                 returnValue = View.VISIBLE;
             }
         } else if (element.isJsonNull()) {
@@ -323,7 +323,7 @@ public class ParseHelper {
                 int resourceId = context.getResources().getIdentifier(dimension, "dimen", context.getPackageName());
                 value = (int) context.getResources().getDimension(resourceId);
             } catch (Exception e) {
-                if (ProteusConstants.isLoggingEnabled()) {
+                if (BladeConstants.isLoggingEnabled()) {
                     Log.e(TAG, "could not find a dimension with name " + dimension + ". Error: " + e.getMessage());
                 }
                 value = 0;
@@ -352,7 +352,7 @@ public class ParseHelper {
                 value = a.getDimensionPixelSize(0, 0);
                 a.recycle();
             } catch (Exception e) {
-                if (ProteusConstants.isLoggingEnabled()) {
+                if (BladeConstants.isLoggingEnabled()) {
                     Log.e(TAG, "could not find a dimension with name " + dimension + ". Error: " + e.getMessage());
                 }
                 value = 0;
@@ -399,15 +399,15 @@ public class ParseHelper {
                 }
 
             } catch (ClassNotFoundException e) {
-                if (ProteusConstants.isLoggingEnabled()) {
+                if (BladeConstants.isLoggingEnabled()) {
                     Log.e(TAG, e.getMessage() + "");
                 }
             } catch (NoSuchFieldException e) {
-                if (ProteusConstants.isLoggingEnabled()) {
+                if (BladeConstants.isLoggingEnabled()) {
                     Log.e(TAG, e.getMessage() + "");
                 }
             } catch (IllegalAccessException e) {
-                if (ProteusConstants.isLoggingEnabled()) {
+                if (BladeConstants.isLoggingEnabled()) {
                     Log.e(TAG, e.getMessage() + "");
                 }
             }
@@ -423,7 +423,7 @@ public class ParseHelper {
         try {
             return Color.parseColor(color);
         } catch (IllegalArgumentException ex) {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, "Invalid color : " + color + ". Using #000000");
             }
             return Color.BLACK;
@@ -431,13 +431,13 @@ public class ParseHelper {
     }
 
     public static Integer parseId(String id) {
-        if (ProteusConstants.DATA_NULL.equals(id)) {
+        if (BladeConstants.DATA_NULL.equals(id)) {
             return null;
         }
         try {
             return Integer.valueOf(id);
         } catch (NumberFormatException ex) {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, id + " is not a valid resource ID.");
             }
         }
@@ -459,7 +459,7 @@ public class ParseHelper {
             params.addRule(verb, anchor);
             view.setLayoutParams(params);
         } else {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, "cannot add relative layout rules when container is not relative");
             }
         }

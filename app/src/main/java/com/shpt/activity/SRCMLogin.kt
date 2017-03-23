@@ -15,10 +15,9 @@ import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.startActivity
 import com.mcxiaoke.koi.ext.toast
 import com.mcxiaoke.koi.log.logi
-import com.poovarasan.blade.builder.LayoutBuilderFactory
 import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
-import com.shpt.core.callback.EventCallback
+import com.shpt.core.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.config.Config
 import com.shpt.core.data.Constant
 import com.shpt.core.db.database
@@ -27,7 +26,6 @@ import com.shpt.core.handleConnectionError
 import com.shpt.core.handleMenu
 import com.shpt.core.models.Layout
 import com.shpt.core.prefs.Prefs
-import com.shpt.core.registerCustomView
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.uiext.SHPTProgressView
@@ -89,11 +87,8 @@ class SRCMLogin : AppCompatActivity() {
                     val row = parseSingle(rowParser)
 
                     uiThread {
-                        val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
-                        layoutBuilder.listener = EventCallback(this@SRCMLogin)
+                        val layoutBuilder = LAYOUT_BUILDER_FACTORY
                         mainLayout.removeAllViews()
-                        registerCustomView(layoutBuilder)
-
 
                         val parser = JsonParser()
                         val view = layoutBuilder.build(mainLayout, parser.parse(row.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, Styles())

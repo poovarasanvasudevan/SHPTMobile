@@ -38,11 +38,11 @@ import com.poovarasan.blade.processor.DimensionAttributeProcessor;
 import com.poovarasan.blade.processor.DrawableResourceProcessor;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusTextView;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeTextView;
+import com.poovarasan.blade.view.BladeView;
 
 /**
- * Created by kiran.kumar on 12/05/14.
+ * Created by Poovarasan Vasudevan on 12/05/14.
  */
 public class TextViewParser<T extends TextView> extends WrappableParser<T> {
 
@@ -51,8 +51,8 @@ public class TextViewParser<T extends TextView> extends WrappableParser<T> {
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusTextView(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeTextView(parent.getContext());
     }
 
     @Override

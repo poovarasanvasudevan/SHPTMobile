@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * An built in implementation of {@link IdGenerator} interface
  * </p>
  *
- * @author aditya.sharat
+ * @author Poovarasan Vasudevan
  */
 public class IdGeneratorImpl implements IdGenerator {
     public final static Creator<IdGeneratorImpl> CREATOR = new Creator<IdGeneratorImpl>() {

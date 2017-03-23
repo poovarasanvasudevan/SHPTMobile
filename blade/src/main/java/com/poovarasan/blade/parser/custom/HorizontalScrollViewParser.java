@@ -27,11 +27,11 @@ import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusHorizontalScrollView;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeHorizontalScrollView;
+import com.poovarasan.blade.view.BladeView;
 
 /**
- * Created by kiran.kumar on 12/05/14.
+ * Created by Poovarasan Vasudevan on 12/05/14.
  */
 public class HorizontalScrollViewParser<T extends HorizontalScrollView> extends WrappableParser<T> {
 
@@ -40,8 +40,8 @@ public class HorizontalScrollViewParser<T extends HorizontalScrollView> extends 
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusHorizontalScrollView(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeHorizontalScrollView(parent.getContext());
     }
 
     @Override

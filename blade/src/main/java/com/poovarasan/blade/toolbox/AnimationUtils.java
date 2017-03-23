@@ -93,7 +93,7 @@ public class AnimationUtils {
         } else if (value.isJsonObject()) {
             anim = handleElement(context, value.getAsJsonObject());
         } else {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, "Could not load animation for : " + value.toString());
             }
         }
@@ -153,7 +153,7 @@ public class AnimationUtils {
         } else if (value.isJsonObject()) {
             interpolator = handleElementInterpolator(context, value.getAsJsonObject());
         } else {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, "Could not load interpolator for : " + value.toString());
             }
         }
@@ -201,7 +201,7 @@ public class AnimationUtils {
         } else if (PATH_INTERPOLATOR.equalsIgnoreCase(interpolatorType)) {
             interpolatorProperties = sGson.fromJson(value, PathInterpolatorProperties.class);
         } else {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, "Unknown interpolator name: " + interpolatorType);
             }
             throw new RuntimeException("Unknown interpolator name: " + interpolatorType);

@@ -1,1 +1,1 @@
-include ':app', ':blade', ':blade-appcompat'
+include ':app', ':blade', ':blade-appcompat', ':blade-cardview', ':blade-design'

@@ -28,11 +28,11 @@ import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusRelativeLayout;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeRelativeLayout;
+import com.poovarasan.blade.view.BladeView;
 
 /**
- * Created by kirankumar on 10/07/14.
+ * Created by Poovarasan Vasudevan on 10/07/14.
  */
 public class RelativeLayoutParser<T extends RelativeLayout> extends WrappableParser<T> {
 
@@ -41,8 +41,8 @@ public class RelativeLayoutParser<T extends RelativeLayout> extends WrappablePar
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusRelativeLayout(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeRelativeLayout(parent.getContext());
     }
 
     @Override

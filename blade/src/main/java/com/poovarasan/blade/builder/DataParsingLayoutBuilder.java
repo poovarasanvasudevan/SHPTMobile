@@ -29,15 +29,15 @@ import android.view.View;
 import com.poovarasan.blade.DataContext;
 import com.poovarasan.blade.binding.Binding;
 import com.poovarasan.blade.parser.LayoutHandler;
+import com.poovarasan.blade.toolbox.BladeConstants;
 import com.poovarasan.blade.toolbox.Formatter;
 import com.poovarasan.blade.toolbox.IdGenerator;
-import com.poovarasan.blade.toolbox.ProteusConstants;
 import com.poovarasan.blade.toolbox.Result;
 import com.poovarasan.blade.toolbox.Styles;
 import com.poovarasan.blade.toolbox.Utils;
-import com.poovarasan.blade.view.ProteusView;
-import com.poovarasan.blade.view.manager.ProteusViewManager;
-import com.poovarasan.blade.view.manager.ProteusViewManagerImpl;
+import com.poovarasan.blade.view.BladeView;
+import com.poovarasan.blade.view.manager.BladeViewManager;
+import com.poovarasan.blade.view.manager.BladeViewManagerImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,13 +57,13 @@ public class DataParsingLayoutBuilder extends SimpleLayoutBuilder {
     }
 
     @Override
-    protected ProteusViewManager createViewManager(LayoutHandler handler, View parent, JsonObject layout, JsonObject data, int index, Styles styles) {
-        ProteusViewManagerImpl viewManager = new ProteusViewManagerImpl();
+    protected BladeViewManager createViewManager(LayoutHandler handler, View parent, JsonObject layout, JsonObject data, int index, Styles styles) {
+        BladeViewManagerImpl viewManager = new BladeViewManagerImpl();
         DataContext dataContext, parentDataContext = null;
-        JsonElement scope = layout.get(ProteusConstants.DATA_CONTEXT);
+        JsonElement scope = layout.get(BladeConstants.DATA_CONTEXT);
 
-        if (parent instanceof ProteusView) {
-            parentDataContext = ((ProteusView) parent).getViewManager().getDataContext();
+        if (parent instanceof BladeView) {
+            parentDataContext = ((BladeView) parent).getViewManager().getDataContext();
         }
 
         if (scope == null || scope.isJsonNull()) {
@@ -94,9 +94,9 @@ public class DataParsingLayoutBuilder extends SimpleLayoutBuilder {
     }
 
     @Override
-    public boolean handleAttribute(LayoutHandler handler, ProteusView view, String attribute, JsonElement value) {
+    public boolean handleAttribute(LayoutHandler handler, BladeView view, String attribute, JsonElement value) {
 
-        if (ProteusConstants.DATA_CONTEXT.equals(attribute)) {
+        if (BladeConstants.DATA_CONTEXT.equals(attribute)) {
             return true;
         }
         String stringValue = isDataPath(value);
@@ -106,11 +106,11 @@ public class DataParsingLayoutBuilder extends SimpleLayoutBuilder {
         return super.handleAttribute(handler, view, attribute, value);
     }
 
-    private JsonElement findAndReplaceValues(LayoutHandler handler, ProteusView view, String attribute, String stringValue, JsonElement value) {
-        ProteusViewManager viewManager = view.getViewManager();
+    private JsonElement findAndReplaceValues(LayoutHandler handler, BladeView view, String attribute, String stringValue, JsonElement value) {
+        BladeViewManager viewManager = view.getViewManager();
         DataContext dataContext = viewManager.getDataContext();
 
-        if (ProteusConstants.isLoggingEnabled()) {
+        if (BladeConstants.isLoggingEnabled()) {
             Log.d(TAG, "Find '" + stringValue + "' for " + attribute + " for view with " + Utils.getLayoutIdentifier(viewManager.getLayout()));
         }
 
@@ -118,7 +118,7 @@ public class DataParsingLayoutBuilder extends SimpleLayoutBuilder {
         String dataPath;
         Result result;
         switch (firstChar) {
-            case ProteusConstants.DATA_PREFIX:
+            case BladeConstants.DATA_PREFIX:
                 JsonElement elementFromData;
                 dataPath = stringValue.substring(1);
                 result = Utils.readJson(dataPath, viewManager.getDataContext().getData(), viewManager.getDataContext().getIndex());
@@ -126,7 +126,7 @@ public class DataParsingLayoutBuilder extends SimpleLayoutBuilder {
                 if (result.isSuccess()) {
                     elementFromData = result.element;
                 } else {
-                    elementFromData = new JsonPrimitive(ProteusConstants.DATA_NULL);
+                    elementFromData = new JsonPrimitive(BladeConstants.DATA_NULL);
                 }
 
                 if (elementFromData != null) {
@@ -134,8 +134,8 @@ public class DataParsingLayoutBuilder extends SimpleLayoutBuilder {
                 }
                 addBinding(viewManager, dataPath, attribute, stringValue, false);
                 break;
-            case ProteusConstants.REGEX_PREFIX:
-                Matcher regexMatcher = ProteusConstants.REGEX_PATTERN.matcher(stringValue);
+            case BladeConstants.REGEX_PREFIX:
+                Matcher regexMatcher = BladeConstants.REGEX_PATTERN.matcher(stringValue);
                 String finalValue = stringValue;
                 while (regexMatcher.find()) {
                     String matchedString = regexMatcher.group(0);
@@ -189,13 +189,13 @@ public class DataParsingLayoutBuilder extends SimpleLayoutBuilder {
         }
         String attributeValue = element.getAsString();
         if (attributeValue != null && !"".equals(attributeValue) &&
-                (attributeValue.charAt(0) == ProteusConstants.DATA_PREFIX || attributeValue.charAt(0) == ProteusConstants.REGEX_PREFIX)) {
+                (attributeValue.charAt(0) == BladeConstants.DATA_PREFIX || attributeValue.charAt(0) == BladeConstants.REGEX_PREFIX)) {
             return attributeValue;
         }
         return null;
     }
 
-    private void addBinding(ProteusViewManager viewManager, String bindingName, String attributeName, String attributeValue, boolean hasRegEx) {
+    private void addBinding(BladeViewManager viewManager, String bindingName, String attributeName, String attributeValue, boolean hasRegEx) {
         // check if the view is in update mode if not that means that the update flow
         // is running and we must not add more bindings for they will be duplicates
         if (!viewManager.isViewUpdating()) {
@@ -213,8 +213,8 @@ public class DataParsingLayoutBuilder extends SimpleLayoutBuilder {
     }
 
     @Nullable
-    protected JsonObject onLayoutRequired(String type, ProteusView parent) {
-        if (ProteusConstants.isLoggingEnabled()) {
+    protected JsonObject onLayoutRequired(String type, BladeView parent) {
+        if (BladeConstants.isLoggingEnabled()) {
             Log.d(TAG, "Fetching child layout: " + type);
         }
         if (listener != null) {

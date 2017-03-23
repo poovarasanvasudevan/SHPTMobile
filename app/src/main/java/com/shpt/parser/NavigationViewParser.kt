@@ -11,7 +11,7 @@ import com.poovarasan.blade.parser.Parser
 import com.poovarasan.blade.parser.WrappableParser
 import com.poovarasan.blade.processor.StringAttributeProcessor
 import com.poovarasan.blade.toolbox.Styles
-import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.BladeView
 import com.shpt.uiext.SHPTNavigationView
 
 
@@ -27,7 +27,7 @@ import com.shpt.uiext.SHPTNavigationView
 
 class NavigationViewParser(wrappedParser: Parser<NavigationView>) : WrappableParser<NavigationView>(wrappedParser) {
 
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
+    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): BladeView {
         return SHPTNavigationView(viewGroup.context)
     }
 

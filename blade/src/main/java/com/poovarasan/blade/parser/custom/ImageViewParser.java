@@ -29,12 +29,12 @@ import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.processor.DrawableResourceProcessor;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusImageView;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeImageView;
+import com.poovarasan.blade.view.BladeView;
 
 
 /**
- * Created by kiran.kumar on 12/05/14.
+ * Created by Poovarasan Vasudevan on 12/05/14.
  */
 public class ImageViewParser<T extends ImageView> extends WrappableParser<T> {
 
@@ -43,8 +43,8 @@ public class ImageViewParser<T extends ImageView> extends WrappableParser<T> {
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusImageView(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeImageView(parent.getContext());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ImageViewParser<T extends ImageView> extends WrappableParser<T> {
         addHandler(Attributes.ImageView.ScaleType, new StringAttributeProcessor<T>() {
             @Override
             public void handle(String attributeKey, String attributeValue, T view) {
-                ProteusImageView.ScaleType scaleType = null;
+                BladeImageView.ScaleType scaleType = null;
                 scaleType = ParseHelper.parseScaleType(attributeValue);
                 if (scaleType != null)
                     view.setScaleType(scaleType);

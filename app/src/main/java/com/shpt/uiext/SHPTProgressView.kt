@@ -2,8 +2,8 @@ package com.shpt.uiext
 
 import android.content.Context
 import android.util.AttributeSet
-import com.poovarasan.blade.view.ProteusView
-import com.poovarasan.blade.view.manager.ProteusViewManager
+import com.poovarasan.blade.view.BladeView
+import com.poovarasan.blade.view.manager.BladeViewManager
 import com.shpt.mobile.widget.ProgressWheel
 
 /**
@@ -16,9 +16,9 @@ import com.shpt.mobile.widget.ProgressWheel
  * @on 17/1/17 at 12:53 PM
  */
 
-class SHPTProgressView : ProgressWheel, ProteusView {
+class SHPTProgressView : ProgressWheel, BladeView {
 
-    private var viewManager: ProteusViewManager? = null
+    private var viewManager: BladeViewManager? = null
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
@@ -27,11 +27,11 @@ class SHPTProgressView : ProgressWheel, ProteusView {
         super.setCircleRadius(530)
     }
 
-    override fun getViewManager(): ProteusViewManager? {
+    override fun getViewManager(): BladeViewManager? {
         return viewManager
     }
 
-    override fun setViewManager(proteusViewManager: ProteusViewManager) {
-        this.viewManager = proteusViewManager
+    override fun setViewManager(BladeViewManager: BladeViewManager) {
+        this.viewManager = BladeViewManager
     }
 }

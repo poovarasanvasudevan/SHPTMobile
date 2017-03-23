@@ -12,7 +12,7 @@ import com.poovarasan.blade.processor.ColorResourceProcessor
 import com.poovarasan.blade.processor.DimensionAttributeProcessor
 import com.poovarasan.blade.processor.StringAttributeProcessor
 import com.poovarasan.blade.toolbox.Styles
-import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.BladeView
 import com.shpt.uiext.SHPTIcon
 
 /**
@@ -24,7 +24,7 @@ import com.shpt.uiext.SHPTIcon
 
 class IconParser(wrappedParser: Parser<IconicsImageView>) : WrappableParser<IconicsImageView>(wrappedParser) {
 
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
+    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): BladeView {
         return SHPTIcon(viewGroup.context)
     }
 

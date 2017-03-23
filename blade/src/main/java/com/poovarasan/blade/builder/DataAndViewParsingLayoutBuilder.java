@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 import com.poovarasan.blade.toolbox.IdGenerator;
 import com.poovarasan.blade.toolbox.Styles;
 import com.poovarasan.blade.toolbox.Utils;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeView;
 
 import java.util.Map;
 
@@ -48,7 +48,7 @@ public class DataAndViewParsingLayoutBuilder extends DataParsingLayoutBuilder {
     }
 
     @Override
-    protected ProteusView onUnknownViewEncountered(String type, ViewGroup parent, JsonObject source, JsonObject data, int index, Styles styles) {
+    protected BladeView onUnknownViewEncountered(String type, ViewGroup parent, JsonObject source, JsonObject data, int index, Styles styles) {
         JsonElement element = null;
         if (layouts != null) {
             element = layouts.get(type);
@@ -56,14 +56,14 @@ public class DataAndViewParsingLayoutBuilder extends DataParsingLayoutBuilder {
         if (element != null && !element.isJsonNull()) {
             JsonObject layout = element.getAsJsonObject();
             layout = Utils.mergeLayouts(layout, source);
-            ProteusView view = build(parent, layout, data, index, styles);
+            BladeView view = build(parent, layout, data, index, styles);
             onViewBuiltFromViewProvider(view, type, parent, index);
             return view;
         }
         return super.onUnknownViewEncountered(type, parent, source, data, index, styles);
     }
 
-    private void onViewBuiltFromViewProvider(ProteusView view, String type, View parent, int childIndex) {
+    private void onViewBuiltFromViewProvider(BladeView view, String type, View parent, int childIndex) {
         if (listener != null) {
             listener.onViewBuiltFromViewProvider(view, parent, type, childIndex);
         }

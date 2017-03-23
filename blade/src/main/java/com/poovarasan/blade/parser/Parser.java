@@ -26,9 +26,9 @@ import android.view.ViewGroup;
 
 import com.poovarasan.blade.R;
 import com.poovarasan.blade.processor.AttributeProcessor;
-import com.poovarasan.blade.toolbox.ProteusConstants;
+import com.poovarasan.blade.toolbox.BladeConstants;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -42,8 +42,8 @@ import java.util.Map;
  * method  to specify a callback for an attribute.
  * This class also creates an instance of the view with the first constructor.
  *
- * @author kiran.kumar
- * @author aditya.sharat
+ * @author Poovarasan Vasudevan
+ * @author Poovarasan Vasudevan
  */
 public abstract class Parser<V extends View> implements LayoutHandler<V> {
 
@@ -63,7 +63,7 @@ public abstract class Parser<V extends View> implements LayoutHandler<V> {
             ViewGroup.LayoutParams layoutParams = generateDefaultLayoutParams(parent);
             view.setLayoutParams(layoutParams);
         } catch (Exception e) {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, "#createView() : " + e.getMessage());
             }
         }
@@ -83,12 +83,12 @@ public abstract class Parser<V extends View> implements LayoutHandler<V> {
     }
 
     @Override
-    public boolean handleChildren(ProteusView view) {
+    public boolean handleChildren(BladeView view) {
         return false;
     }
 
     @Override
-    public boolean addView(ProteusView parent, ProteusView view) {
+    public boolean addView(BladeView parent, BladeView view) {
         return false;
     }
 

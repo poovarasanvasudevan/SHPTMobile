@@ -16,6 +16,7 @@
 
 package com.poovarasan.blade.view.custom;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -36,8 +37,9 @@ import android.widget.RatingBar;
 /**
  * Rating bar code is full of bugs. For width of rating bar to be set correctly, sample tile width
  * should be set But since tilefy method is private and we are doing tile-fication ourselves, sample
- * tile should be maintained by us Created by kirankumar on 04/12/14.
+ * tile should be maintained by us Created by Poovarasan Vasudevan on 04/12/14.
  */
+@SuppressLint("AppCompatCustomView")
 public class FixedRatingBar extends RatingBar {
     private Bitmap sampleTile;
 

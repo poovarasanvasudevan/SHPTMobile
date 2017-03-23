@@ -39,18 +39,18 @@ import com.poovarasan.blade.processor.EventProcessor;
 import com.poovarasan.blade.processor.JsonDataProcessor;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.processor.TweenAnimationResourceProcessor;
-import com.poovarasan.blade.toolbox.ProteusConstants;
+import com.poovarasan.blade.toolbox.BladeConstants;
 import com.poovarasan.blade.toolbox.Styles;
 import com.poovarasan.blade.toolbox.Utils;
-import com.poovarasan.blade.view.ProteusAndroidView;
-import com.poovarasan.blade.view.ProteusView;
-import com.poovarasan.blade.view.manager.ProteusViewManager;
+import com.poovarasan.blade.view.BladeAndroidView;
+import com.poovarasan.blade.view.BladeView;
+import com.poovarasan.blade.view.manager.BladeViewManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author kiran.kumar
+ * @author Poovarasan Vasudevan
  */
 public class ViewParser<V extends View> extends Parser<V> {
 
@@ -61,8 +61,8 @@ public class ViewParser<V extends View> extends Parser<V> {
     private static final String ID_STRING_NORMALIZED_PATTERN = ":id/";
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusAndroidView(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeAndroidView(parent.getContext());
     }
 
     protected void prepareHandlers() {
@@ -73,7 +73,7 @@ public class ViewParser<V extends View> extends Parser<V> {
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fireEvent((ProteusView) view, EventType.OnClick, attributeValue);
+                        fireEvent((BladeView) view, EventType.OnClick, attributeValue);
                     }
                 });
             }
@@ -118,7 +118,7 @@ public class ViewParser<V extends View> extends Parser<V> {
                     layoutParams.weight = ParseHelper.parseFloat(attributeValue);
                     view.setLayoutParams(layoutParams);
                 } else {
-                    if (ProteusConstants.isLoggingEnabled()) {
+                    if (BladeConstants.isLoggingEnabled()) {
                         Log.e(TAG, attributeKey + " is only supported for LinearLayouts");
                     }
                 }
@@ -139,7 +139,7 @@ public class ViewParser<V extends View> extends Parser<V> {
                     linearLayoutParams.gravity = ParseHelper.parseGravity(attributeValue);
                     view.setLayoutParams(layoutParams);
                 } else {
-                    if (ProteusConstants.isLoggingEnabled()) {
+                    if (BladeConstants.isLoggingEnabled()) {
                         Log.e(TAG, attributeKey + " is only supported for LinearLayout and FrameLayout");
                     }
                 }
@@ -184,7 +184,7 @@ public class ViewParser<V extends View> extends Parser<V> {
                     layoutParams.setMargins((int) dimension, (int) dimension, (int) dimension, (int) dimension);
                     view.setLayoutParams(layoutParams);
                 } else {
-                    if (ProteusConstants.isLoggingEnabled()) {
+                    if (BladeConstants.isLoggingEnabled()) {
                         Log.e(TAG, "margins can only be applied to views with parent ViewGroup");
                     }
                 }
@@ -199,7 +199,7 @@ public class ViewParser<V extends View> extends Parser<V> {
                     layoutParams.setMargins((int) dimension, layoutParams.topMargin, layoutParams.rightMargin, layoutParams.bottomMargin);
                     view.setLayoutParams(layoutParams);
                 } else {
-                    if (ProteusConstants.isLoggingEnabled()) {
+                    if (BladeConstants.isLoggingEnabled()) {
                         Log.e(TAG, "margins can only be applied to views with parent ViewGroup");
                     }
                 }
@@ -214,7 +214,7 @@ public class ViewParser<V extends View> extends Parser<V> {
                     layoutParams.setMargins(layoutParams.leftMargin, (int) dimension, layoutParams.rightMargin, layoutParams.bottomMargin);
                     view.setLayoutParams(layoutParams);
                 } else {
-                    if (ProteusConstants.isLoggingEnabled()) {
+                    if (BladeConstants.isLoggingEnabled()) {
                         Log.e(TAG, "margins can only be applied to views with parent ViewGroup");
                     }
                 }
@@ -229,7 +229,7 @@ public class ViewParser<V extends View> extends Parser<V> {
                     layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin, (int) dimension, layoutParams.bottomMargin);
                     view.setLayoutParams(layoutParams);
                 } else {
-                    if (ProteusConstants.isLoggingEnabled()) {
+                    if (BladeConstants.isLoggingEnabled()) {
                         Log.e(TAG, "margins can only be applied to views with parent ViewGroup");
                     }
                 }
@@ -244,7 +244,7 @@ public class ViewParser<V extends View> extends Parser<V> {
                     layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin, layoutParams.rightMargin, (int) dimension);
                     view.setLayoutParams(layoutParams);
                 } else {
-                    if (ProteusConstants.isLoggingEnabled()) {
+                    if (BladeConstants.isLoggingEnabled()) {
                         Log.e(TAG, "margins can only be applied to views with parent ViewGroup");
                     }
                 }
@@ -296,8 +296,8 @@ public class ViewParser<V extends View> extends Parser<V> {
         addHandler(Attributes.View.Id, new StringAttributeProcessor<V>() {
             @Override
             public void handle(String attributeKey, String attributeValue, final V view) {
-                if (view instanceof ProteusView) {
-                    view.setId(((ProteusView) view).getViewManager().getUniqueViewId(attributeValue));
+                if (view instanceof BladeView) {
+                    view.setId(((BladeView) view).getViewManager().getUniqueViewId(attributeValue));
                 }
 
                 // set view id resource name
@@ -376,28 +376,28 @@ public class ViewParser<V extends View> extends Parser<V> {
         addHandler(Attributes.View.Style, new StringAttributeProcessor<V>() {
             @Override
             public void handle(String attributeKey, String attributeValue, V view) {
-                ProteusViewManager viewManager = ((ProteusView) view).getViewManager();
+                BladeViewManager viewManager = ((BladeView) view).getViewManager();
                 Styles styles = viewManager.getStyles();
 
-                LayoutHandler handler = viewManager.getLayoutBuilder().getHandler(Utils.getPropertyAsString(viewManager.getLayout(), ProteusConstants.TYPE));
+                LayoutHandler handler = viewManager.getLayoutBuilder().getHandler(Utils.getPropertyAsString(viewManager.getLayout(), BladeConstants.TYPE));
                 if (styles == null) {
                     return;
                 }
 
-                String[] styleSet = attributeValue.split(ProteusConstants.STYLE_DELIMITER);
+                String[] styleSet = attributeValue.split(BladeConstants.STYLE_DELIMITER);
                 for (String styleName : styleSet) {
                     if (styles.contains(styleName)) {
-                        process(styles.getStyle(styleName), viewManager.getLayout(), (ProteusView) view, (handler != null ? handler : ViewParser.this), viewManager.getLayoutBuilder());
+                        process(styles.getStyle(styleName), viewManager.getLayout(), (BladeView) view, (handler != null ? handler : ViewParser.this), viewManager.getLayoutBuilder());
                     }
                 }
             }
 
-            private void process(Map<String, JsonElement> style, JsonObject layout, ProteusView proteusView, LayoutHandler handler, LayoutBuilder builder) {
+            private void process(Map<String, JsonElement> style, JsonObject layout, BladeView BladeView, LayoutHandler handler, LayoutBuilder builder) {
                 for (Map.Entry<String, JsonElement> attribute : style.entrySet()) {
                     if (layout.has(attribute.getKey())) {
                         continue;
                     }
-                    builder.handleAttribute(handler, proteusView, attribute.getKey(), attribute.getValue());
+                    builder.handleAttribute(handler, BladeView, attribute.getKey(), attribute.getValue());
                 }
             }
         });
@@ -497,8 +497,8 @@ public class ViewParser<V extends View> extends Parser<V> {
         StringAttributeProcessor<V> relativeLayoutProcessor = new StringAttributeProcessor<V>() {
             @Override
             public void handle(String attributeKey, String attributeValue, V view) {
-                if (view instanceof ProteusView) {
-                    int id = ((ProteusView) view).getViewManager().getUniqueViewId(attributeValue);
+                if (view instanceof BladeView) {
+                    int id = ((BladeView) view).getViewManager().getUniqueViewId(attributeValue);
                     Integer rule = relativeLayoutParams.get(attributeKey);
                     if (rule != null) {
                         ParseHelper.addRelativeLayoutRule(view, rule, id);
@@ -568,12 +568,12 @@ public class ViewParser<V extends View> extends Parser<V> {
     }
 
     @Override
-    public boolean handleChildren(ProteusView view) {
+    public boolean handleChildren(BladeView view) {
         return false;
     }
 
     @Override
-    public boolean addView(ProteusView parent, ProteusView view) {
+    public boolean addView(BladeView parent, BladeView view) {
         return false;
     }
 }

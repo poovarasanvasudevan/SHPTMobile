@@ -5,7 +5,7 @@ import com.google.gson.JsonObject
 import com.poovarasan.blade.parser.Parser
 import com.poovarasan.blade.parser.WrappableParser
 import com.poovarasan.blade.toolbox.Styles
-import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.BladeView
 import com.shpt.mobile.widget.Ripple
 import com.shpt.uiext.SHPTRipple
 
@@ -22,7 +22,7 @@ import com.shpt.uiext.SHPTRipple
 
 class RippleParser(wrappedParser: Parser<Ripple>) : WrappableParser<Ripple>(wrappedParser) {
 
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
+    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): BladeView {
         return SHPTRipple(viewGroup.context)
     }
 

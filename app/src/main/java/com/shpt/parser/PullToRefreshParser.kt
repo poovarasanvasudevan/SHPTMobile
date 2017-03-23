@@ -6,7 +6,7 @@ import com.google.gson.JsonObject
 import com.poovarasan.blade.parser.Parser
 import com.poovarasan.blade.parser.WrappableParser
 import com.poovarasan.blade.toolbox.Styles
-import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.BladeView
 import com.shpt.uiext.SHPTPullToRefresh
 
 /**
@@ -18,7 +18,7 @@ import com.shpt.uiext.SHPTPullToRefresh
 
 class PullToRefreshParser(wrappedParser: Parser<SwipeRefreshLayout>) : WrappableParser<SwipeRefreshLayout>(wrappedParser) {
 
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): ProteusView {
+    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): BladeView {
         return SHPTPullToRefresh(viewGroup.context)
     }
 

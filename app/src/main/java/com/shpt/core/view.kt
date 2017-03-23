@@ -2,12 +2,10 @@ package com.shpt.core
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.support.design.widget.AppBarLayout
+import android.app.Activity
 import android.support.design.widget.NavigationView
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
-import android.support.v7.widget.CardView
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.ViewManager
 import android.widget.ImageView
@@ -15,9 +13,16 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.mikepenz.iconics.view.IconicsButton
 import com.mikepenz.iconics.view.IconicsImageView
+import com.poovarasan.blade.builder.DataParsingLayoutBuilder
 import com.poovarasan.blade.builder.LayoutBuilder
+import com.poovarasan.blade.builder.LayoutBuilderFactory
+import com.poovarasan.blade.module.Module
 import com.poovarasan.blade.parser.Parser
+import com.poovarasan.bladeappcompat.AppCompatModule
+import com.poovarasan.bladecardview.CardViewModule
+import com.poovarasan.bladedesign.DesignModule
 import com.shpt.R
+import com.shpt.core.callback.EventCallback
 import com.shpt.core.config.Config
 import com.shpt.mobile.widget.ProgressWheel
 import com.shpt.mobile.widget.Ripple
@@ -44,21 +49,8 @@ fun registerCustomView(builder: LayoutBuilder) {
     val progressParser = builder.getHandler("FrameLayout") as Parser<ProgressWheel>
     builder.registerHandler("ProgressWheel", ProgressWheelParser(progressParser))
 
-
-    val AppbarParser = builder.getHandler("FrameLayout") as Parser<AppBarLayout>
-    builder.registerHandler("Appbar", AppBarParser(AppbarParser))
-
-
-    val ToolbarParser = builder.getHandler("FrameLayout") as Parser<Toolbar>
-    builder.registerHandler("Toolbar", ToolBarParser(ToolbarParser))
-
-
     val rippleParser = builder.getHandler("FrameLayout") as Parser<Ripple>
     builder.registerHandler("Ripple", RippleParser(rippleParser))
-
-
-    val cardviewParser = builder.getHandler("FrameLayout") as Parser<CardView>
-    builder.registerHandler("CardView", CardViewParser(cardviewParser))
 
 
     val webviewParser = builder.getHandler("FrameLayout") as Parser<SHPTWebView>
@@ -184,3 +176,26 @@ inline fun ViewManager.iconButton(theme: Int = 0, init: IconicsButton.() -> Unit
 
 inline fun ViewManager.shadow(theme: Int) = shadow(theme) {}
 inline fun ViewManager.shadow(theme: Int = 0, init: Shadow.() -> Unit) = ankoView(::Shadow, theme, init)
+
+
+fun getLayoutBuilder(act: Activity): DataParsingLayoutBuilder {
+    val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
+    layoutBuilder.listener = EventCallback(act)
+
+    val appCompatModule: Module = AppCompatModule()
+    appCompatModule.register(layoutBuilder)
+
+    val cardViewModule: Module = CardViewModule()
+    cardViewModule.register(layoutBuilder)
+
+    val designModule: Module = DesignModule()
+    designModule.register(layoutBuilder)
+
+
+    registerCustomView(builder = layoutBuilder)
+    return layoutBuilder
+}
+
+
+val Activity.LAYOUT_BUILDER_FACTORY: DataParsingLayoutBuilder
+    get() = getLayoutBuilder(this)

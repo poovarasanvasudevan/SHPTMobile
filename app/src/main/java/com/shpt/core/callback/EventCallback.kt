@@ -11,7 +11,7 @@ import com.google.gson.JsonObject
 import com.poovarasan.blade.EventType
 import com.poovarasan.blade.builder.LayoutBuilderCallback
 import com.poovarasan.blade.toolbox.Styles
-import com.poovarasan.blade.view.ProteusView
+import com.poovarasan.blade.view.BladeView
 import org.jetbrains.anko.longToast
 
 /**
@@ -28,24 +28,24 @@ class EventCallback(activity: Activity) : LayoutBuilderCallback {
 
     private var act = activity
 
-    override fun onUnknownAttribute(attribute: String, value: JsonElement, view: ProteusView) {
+    override fun onUnknownAttribute(attribute: String, value: JsonElement, view: BladeView) {
         Log.i("unknown-attribute", attribute + " in " + view.viewManager.layout.toString())
     }
 
     @Nullable
-    override fun onUnknownViewType(type: String, parent: View, layout: JsonObject, data: JsonObject, index: Int, styles: Styles): ProteusView? {
+    override fun onUnknownViewType(type: String, parent: View, layout: JsonObject, data: JsonObject, index: Int, styles: Styles): BladeView? {
         return null
     }
 
-    override fun onLayoutRequired(type: String, parent: ProteusView): JsonObject? {
+    override fun onLayoutRequired(type: String, parent: BladeView): JsonObject? {
         return null
     }
 
-    override fun onViewBuiltFromViewProvider(view: ProteusView, parent: View, type: String, index: Int) {
+    override fun onViewBuiltFromViewProvider(view: BladeView, parent: View, type: String, index: Int) {
 
     }
 
-    override fun onEvent(view: ProteusView, value: JsonElement, eventType: EventType): View {
+    override fun onEvent(view: BladeView, value: JsonElement, eventType: EventType): View {
         when (eventType) {
             EventType.OnClick -> {
                 val action = value.asJsonObject
@@ -77,11 +77,11 @@ class EventCallback(activity: Activity) : LayoutBuilderCallback {
         return view as View
     }
 
-    override fun onPagerAdapterRequired(parent: ProteusView, children: List<ProteusView>, layout: JsonObject): PagerAdapter? {
+    override fun onPagerAdapterRequired(parent: BladeView, children: List<BladeView>, layout: JsonObject): PagerAdapter? {
         return null
     }
 
-    override fun onAdapterRequired(parent: ProteusView, children: List<ProteusView>, layout: JsonObject): Adapter? {
+    override fun onAdapterRequired(parent: BladeView, children: List<BladeView>, layout: JsonObject): Adapter? {
         return null
     }
 }

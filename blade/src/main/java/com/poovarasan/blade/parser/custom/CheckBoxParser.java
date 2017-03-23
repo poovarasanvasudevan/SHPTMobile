@@ -28,8 +28,8 @@ import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.processor.DrawableResourceProcessor;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusCheckBox;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeCheckBox;
+import com.poovarasan.blade.view.BladeView;
 
 /**
  * Created by prateek.dixit on 1/8/15.
@@ -41,8 +41,8 @@ public class CheckBoxParser<T extends CheckBox> extends WrappableParser<T> {
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusCheckBox(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeCheckBox(parent.getContext());
     }
 
     @Override

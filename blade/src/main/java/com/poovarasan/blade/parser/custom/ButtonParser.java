@@ -25,11 +25,11 @@ import android.widget.Button;
 import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusButton;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeButton;
+import com.poovarasan.blade.view.BladeView;
 
 /**
- * Created by kiran.kumar on 12/05/14.
+ * Created by Poovarasan Vasudevan on 12/05/14.
  */
 public class ButtonParser<T extends Button> extends WrappableParser<T> {
 
@@ -38,8 +38,8 @@ public class ButtonParser<T extends Button> extends WrappableParser<T> {
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusButton(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeButton(parent.getContext());
     }
 
     @Override

@@ -23,7 +23,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 /**
- * Created by kiran.kumar on 13/05/14.
+ * Created by Poovarasan Vasudevan on 13/05/14.
  */
 public class AspectRatioFrameLayout extends FrameLayout {
 

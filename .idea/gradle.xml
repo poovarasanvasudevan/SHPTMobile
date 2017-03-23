@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/blade" />
             <option value="$PROJECT_DIR$/blade-appcompat" />
+            <option value="$PROJECT_DIR$/blade-cardview" />
+            <option value="$PROJECT_DIR$/blade-design" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

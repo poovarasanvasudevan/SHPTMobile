@@ -24,16 +24,16 @@ import android.view.ViewGroup;
 
 import com.poovarasan.blade.processor.AttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeView;
 
 /**
- * @author kiran.kumar
+ * @author Poovarasan Vasudevan
  */
 public interface LayoutHandler<V extends View> {
 
     void onBeforeCreateView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index);
 
-    ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index);
+    BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index);
 
     void onAfterCreateView(V view, ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index);
 
@@ -43,7 +43,7 @@ public interface LayoutHandler<V extends View> {
 
     boolean handleAttribute(V view, String attribute, JsonElement value);
 
-    boolean handleChildren(ProteusView view);
+    boolean handleChildren(BladeView view);
 
-    boolean addView(ProteusView parent, ProteusView view);
+    boolean addView(BladeView parent, BladeView view);
 }

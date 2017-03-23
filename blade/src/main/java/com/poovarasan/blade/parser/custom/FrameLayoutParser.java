@@ -26,13 +26,13 @@ import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusAspectRatioFrameLayout;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeAspectRatioFrameLayout;
+import com.poovarasan.blade.view.BladeView;
 import com.poovarasan.blade.view.custom.AspectRatioFrameLayout;
 
 
 /**
- * Created by kiran.kumar on 12/05/14.
+ * Created by Poovarasan Vasudevan on 12/05/14.
  */
 public class FrameLayoutParser<T extends AspectRatioFrameLayout> extends WrappableParser<T> {
 
@@ -41,8 +41,8 @@ public class FrameLayoutParser<T extends AspectRatioFrameLayout> extends Wrappab
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusAspectRatioFrameLayout(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeAspectRatioFrameLayout(parent.getContext());
     }
 
     @Override

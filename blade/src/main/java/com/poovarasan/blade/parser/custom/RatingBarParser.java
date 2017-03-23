@@ -30,12 +30,12 @@ import com.poovarasan.blade.processor.DimensionAttributeProcessor;
 import com.poovarasan.blade.processor.DrawableResourceProcessor;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
-import com.poovarasan.blade.view.ProteusFixedRatingBar;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeFixedRatingBar;
+import com.poovarasan.blade.view.BladeView;
 import com.poovarasan.blade.view.custom.FixedRatingBar;
 
 /**
- * Created by kiran.kumar on 12/05/14.
+ * Created by Poovarasan Vasudevan on 12/05/14.
  */
 public class RatingBarParser<T extends FixedRatingBar> extends WrappableParser<T> {
 
@@ -44,8 +44,8 @@ public class RatingBarParser<T extends FixedRatingBar> extends WrappableParser<T
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusFixedRatingBar(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeFixedRatingBar(parent.getContext());
     }
 
     @Override

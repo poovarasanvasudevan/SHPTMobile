@@ -17,8 +17,8 @@
 package com.poovarasan.blade.binding;
 
 /**
- * @author kirankumar
- * @author aditya.sharat
+ * @author Poovarasan Vasudevan
+ * @author Poovarasan Vasudevan
  */
 public class Binding {
 

@@ -20,7 +20,7 @@ import com.google.gson.JsonElement;
 
 import com.poovarasan.blade.EventType;
 import com.poovarasan.blade.builder.LayoutBuilderCallback;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeView;
 
 /**
  * Use this as the base processor for handling events like OnClick , OnLongClick , OnTouch etc.
@@ -39,7 +39,7 @@ public abstract class EventProcessor<T> extends AttributeProcessor<T> {
     /**
      * This delegates Event with required attributes to client
      */
-    public void fireEvent(ProteusView view, EventType eventType, JsonElement attributeValue) {
+    public void fireEvent(BladeView view, EventType eventType, JsonElement attributeValue) {
         LayoutBuilderCallback layoutBuilderCallback = view.getViewManager().getLayoutBuilder().getListener();
         layoutBuilderCallback.onEvent(view, attributeValue, eventType);
     }

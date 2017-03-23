@@ -23,7 +23,7 @@ import com.google.gson.JsonPrimitive;
 
 import android.support.annotation.Nullable;
 
-import com.poovarasan.blade.toolbox.ProteusConstants;
+import com.poovarasan.blade.toolbox.BladeConstants;
 import com.poovarasan.blade.toolbox.Result;
 import com.poovarasan.blade.toolbox.Utils;
 
@@ -75,7 +75,7 @@ public class DataContext {
             Result result = Utils.readJson(value, data, dataContext.getIndex());
             JsonElement element = result.isSuccess() ? result.element : new JsonObject();
             newData.add(key, element);
-            String unAliasedValue = value.replace(ProteusConstants.INDEX, String.valueOf(dataContext.getIndex()));
+            String unAliasedValue = value.replace(BladeConstants.INDEX, String.valueOf(dataContext.getIndex()));
             reverseScope.add(unAliasedValue, new JsonPrimitive(key));
         }
 
@@ -94,9 +94,9 @@ public class DataContext {
     public static String getAliasedDataPath(String dataPath, JsonObject reverseScope, boolean isBindingPath) {
         String[] segments;
         if (isBindingPath) {
-            segments = dataPath.split(ProteusConstants.DATA_PATH_DELIMITER);
+            segments = dataPath.split(BladeConstants.DATA_PATH_DELIMITER);
         } else {
-            segments = dataPath.split(ProteusConstants.DATA_PATH_SIMPLE_DELIMITER);
+            segments = dataPath.split(BladeConstants.DATA_PATH_SIMPLE_DELIMITER);
         }
 
         if (reverseScope == null) {

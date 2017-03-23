@@ -41,8 +41,8 @@ import com.poovarasan.blade.processor.JsonDataProcessor;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
 import com.poovarasan.blade.toolbox.Utils;
-import com.poovarasan.blade.view.ProteusProgressBar;
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeProgressBar;
+import com.poovarasan.blade.view.BladeView;
 
 /**
  * @author Aditya Sharat
@@ -54,8 +54,8 @@ public class ProgressBarParser<T extends ProgressBar> extends WrappableParser<T>
     }
 
     @Override
-    public ProteusView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
-        return new ProteusProgressBar(parent.getContext());
+    public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
+        return new BladeProgressBar(parent.getContext());
     }
 
     @Override

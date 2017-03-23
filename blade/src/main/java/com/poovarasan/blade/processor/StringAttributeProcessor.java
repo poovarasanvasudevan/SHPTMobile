@@ -25,8 +25,8 @@ import android.view.View;
 import com.poovarasan.blade.parser.ParseHelper;
 
 /**
- * @author kirankumar
- * @author aditya.sharat
+ * @author Poovarasan Vasudevan
+ * @author Poovarasan Vasudevan
  */
 public abstract class StringAttributeProcessor<V extends View> extends AttributeProcessor<V> {
     /**

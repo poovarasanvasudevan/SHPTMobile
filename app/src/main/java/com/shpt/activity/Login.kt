@@ -8,15 +8,13 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.toast
-import com.poovarasan.blade.builder.LayoutBuilderFactory
 import com.poovarasan.blade.toolbox.Styles
+import com.poovarasan.bladeappcompat.widget.AppToolbar
 import com.shpt.R
-import com.shpt.core.callback.EventCallback
+import com.shpt.core.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.db.database
 import com.shpt.core.models.Layout
-import com.shpt.core.registerCustomView
 import com.shpt.core.serviceevent.RetryServiceEvent
-import com.shpt.uiext.SHPTToolBar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.db.classParser
@@ -42,11 +40,8 @@ class Login : AppCompatActivity() {
 
                         uiThread {
 
-                            val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
-                            layoutBuilder.listener = EventCallback(this@Login)
+                            val layoutBuilder = LAYOUT_BUILDER_FACTORY
                             mainLayout.removeAllViews()
-                            registerCustomView(layoutBuilder)
-
 
                             val parser = JsonParser()
                             val view = layoutBuilder.build(mainLayout, parser.parse(row.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, Styles())
@@ -56,7 +51,7 @@ class Login : AppCompatActivity() {
                             //Add Toolbar specific
                             val toolbarid = layoutBuilder.getUniqueViewId("toolbar")
                             if (toolbarid != null && view.findViewById(toolbarid) != null) {
-                                val toolbar = view.find<SHPTToolBar>(toolbarid)
+                                val toolbar = view.find<AppToolbar>(toolbarid)
                                 setSupportActionBar(toolbar)
                             }
                         }

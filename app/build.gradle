@@ -59,6 +59,9 @@ dependencies {
     }
     testCompile 'junit:junit:4.12'
     compile project(':blade')
+    compile project(':blade-appcompat')
+    compile project(':blade-cardview')
+    compile project(':blade-design')
 }
 repositories {
     mavenCentral()

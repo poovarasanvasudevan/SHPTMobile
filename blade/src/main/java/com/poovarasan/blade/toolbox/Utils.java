@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
  */
 public class Utils {
 
-    public static final String LIB_NAME = "proteus";
+    public static final String LIB_NAME = "blade";
     public static final String VERSION = "4.1.0-SNAPSHOT";
 
     public static final String ATTRIBUTE_BORDER_WIDTH = "width";
@@ -49,11 +49,11 @@ public class Utils {
 
     public static Result readJson(String path, JsonObject data, int index) {
         // replace INDEX reference with index value
-        if (ProteusConstants.INDEX.equals(path)) {
-            path = path.replace(ProteusConstants.INDEX, String.valueOf(index));
+        if (BladeConstants.INDEX.equals(path)) {
+            path = path.replace(BladeConstants.INDEX, String.valueOf(index));
             return Result.success(new JsonPrimitive(path));
         } else {
-            StringTokenizer tokenizer = new StringTokenizer(path, ProteusConstants.DATA_PATH_DELIMITERS);
+            StringTokenizer tokenizer = new StringTokenizer(path, BladeConstants.DATA_PATH_DELIMITERS);
             JsonElement elementToReturn = data;
             JsonElement tempElement;
             JsonArray tempArray;
@@ -72,15 +72,15 @@ public class Utils {
                 if (elementToReturn.isJsonArray()) {
                     tempArray = elementToReturn.getAsJsonArray();
 
-                    if (ProteusConstants.INDEX.equals(segment)) {
+                    if (BladeConstants.INDEX.equals(segment)) {
                         if (index < tempArray.size()) {
                             elementToReturn = tempArray.get(index);
                         } else {
                             return Result.NO_SUCH_DATA_PATH_EXCEPTION;
                         }
-                    } else if (ProteusConstants.ARRAY_DATA_LENGTH_REFERENCE.equals(segment)) {
+                    } else if (BladeConstants.ARRAY_DATA_LENGTH_REFERENCE.equals(segment)) {
                         elementToReturn = new JsonPrimitive(tempArray.size());
-                    } else if (ProteusConstants.ARRAY_DATA_LAST_INDEX_REFERENCE.equals(segment)) {
+                    } else if (BladeConstants.ARRAY_DATA_LAST_INDEX_REFERENCE.equals(segment)) {
                         if (tempArray.size() == 0) {
                             return Result.NO_SUCH_DATA_PATH_EXCEPTION;
                         }
@@ -222,12 +222,12 @@ public class Utils {
         for (Map.Entry<String, JsonElement> entry : destination.entrySet()) {
             layout.add(entry.getKey(), entry.getValue());
         }
-        boolean hasType = layout.has(ProteusConstants.TYPE);
+        boolean hasType = layout.has(BladeConstants.TYPE);
         for (Map.Entry<String, JsonElement> entry : source.entrySet()) {
-            if (ProteusConstants.TYPE.equals(entry.getKey()) && hasType) {
+            if (BladeConstants.TYPE.equals(entry.getKey()) && hasType) {
                 continue;
             }
-            if (ProteusConstants.DATA_CONTEXT.equals(entry.getKey())) {
+            if (BladeConstants.DATA_CONTEXT.equals(entry.getKey())) {
                 continue;
             }
             layout.add(entry.getKey(), entry.getValue());
@@ -258,11 +258,11 @@ public class Utils {
         if (layout == null) {
             return noLayoutId;
         }
-        String value = Utils.getPropertyAsString(layout, ProteusConstants.ID);
+        String value = Utils.getPropertyAsString(layout, BladeConstants.ID);
         if (value != null) {
             return "ID: " + value + ".";
         }
-        value = Utils.getPropertyAsString(layout, ProteusConstants.TAG);
+        value = Utils.getPropertyAsString(layout, BladeConstants.TAG);
         if (value != null) {
             return "TAG: " + value + ".";
         }

@@ -28,7 +28,7 @@ import java.lang.annotation.RetentionPolicy;
  * Result class hold the return status and the data
  * found using {@link Utils#readJson(String, com.google.gson.JsonObject, int)}
  *
- * @author aditya.sharat
+ * @author Poovarasan Vasudevan
  */
 public class Result {
 

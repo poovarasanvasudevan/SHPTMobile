@@ -20,10 +20,10 @@ import com.google.gson.JsonElement;
 
 import android.view.View;
 
-import com.poovarasan.blade.view.ProteusView;
+import com.poovarasan.blade.view.BladeView;
 
 /**
- * @author kirankumar
+ * @author Poovarasan Vasudevan
  */
 public abstract class WrappableParser<V extends View> extends Parser<V> {
 
@@ -50,7 +50,7 @@ public abstract class WrappableParser<V extends View> extends Parser<V> {
     }
 
     @Override
-    public boolean handleChildren(ProteusView view) {
+    public boolean handleChildren(BladeView view) {
         boolean handled = super.handleChildren(view);
         if (wrappedParser != null && !handled) {
             handled = wrappedParser.handleChildren(view);
@@ -59,7 +59,7 @@ public abstract class WrappableParser<V extends View> extends Parser<V> {
     }
 
     @Override
-    public boolean addView(ProteusView parent, ProteusView view) {
+    public boolean addView(BladeView parent, BladeView view) {
         boolean handled = super.addView(parent, view);
         if (wrappedParser != null && !handled) {
             handled = wrappedParser.addView(parent, view);

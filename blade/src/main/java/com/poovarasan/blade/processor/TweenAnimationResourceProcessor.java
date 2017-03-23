@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.animation.Animation;
 
 import com.poovarasan.blade.toolbox.AnimationUtils;
-import com.poovarasan.blade.toolbox.ProteusConstants;
+import com.poovarasan.blade.toolbox.BladeConstants;
 
 /**
  * Use this as the base processor for references like @anim
@@ -38,7 +38,7 @@ public abstract class TweenAnimationResourceProcessor<V extends View> extends At
         if (null != animation) {
             setAnimation(view, animation);
         } else {
-            if (ProteusConstants.isLoggingEnabled()) {
+            if (BladeConstants.isLoggingEnabled()) {
                 Log.e(TAG, "Resource for key: " + key + " must be a primitive or an object. value -> " + value.toString());
             }
         }

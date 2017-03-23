@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author kirankumar
- * @author aditya.sharat
+ * @author Poovarasan Vasudevan
+ * @author Poovarasan Vasudevan
  */
 public class Attributes {
 
@@ -173,6 +173,13 @@ public class Attributes {
     public static class CheckBox {
         public static Attribute Checked = new Attribute("checked");
         public static Attribute Button = new Attribute("button");
+        public static Attribute OnCheck = new Attribute("OnCheck");
+    }
+
+    public static class RadioButton {
+        public static Attribute Checked = new Attribute("checked");
+        public static Attribute Button = new Attribute("button");
+        public static Attribute OnCheck = new Attribute("OnCheck");
     }
 
     public static class FrameLayout {

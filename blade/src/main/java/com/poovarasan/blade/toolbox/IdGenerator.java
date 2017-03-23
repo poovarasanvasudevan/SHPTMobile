@@ -24,7 +24,7 @@ import android.os.Parcelable;
  * Please ensure that all dynamic ID call go through this class to ensure uniqueness with other
  * dynamic IDs. </p>
  *
- * @author aditya.sharat
+ * @author Poovarasan Vasudevan
  */
 public interface IdGenerator extends Parcelable {
     /**
