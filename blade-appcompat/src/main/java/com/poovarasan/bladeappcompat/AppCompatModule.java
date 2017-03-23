@@ -4,7 +4,10 @@ import com.poovarasan.blade.builder.LayoutBuilder;
 import com.poovarasan.blade.module.Module;
 import com.poovarasan.blade.parser.ViewParser;
 import com.poovarasan.blade.parser.custom.ViewGroupParser;
+import com.poovarasan.bladeappcompat.parser.AppButtonParser;
 import com.poovarasan.bladeappcompat.parser.AppCheckboxParser;
+import com.poovarasan.bladeappcompat.parser.AppProgressBarParser;
+import com.poovarasan.bladeappcompat.parser.AppRadioButtonParser;
 import com.poovarasan.bladeappcompat.parser.AppToolbarParser;
 
 /**
@@ -25,5 +28,8 @@ public class AppCompatModule implements Module {
 
         layoutBuilder.registerHandler("Toolbar", new AppToolbarParser(viewParser));
         layoutBuilder.registerHandler("AppCompatCheckbox", new AppCheckboxParser(viewParser));
+        layoutBuilder.registerHandler("AppCompatButton", new AppButtonParser(viewParser));
+        layoutBuilder.registerHandler("AppCompatRadioButton", new AppRadioButtonParser(viewParser));
+        layoutBuilder.registerHandler("AppCompatProgressBar", new AppProgressBarParser(viewParser));
     }
 }

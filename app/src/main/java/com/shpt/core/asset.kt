@@ -1,5 +1,6 @@
-
 import android.content.Context
+import android.support.annotation.ColorRes
+import android.support.v4.content.ContextCompat
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.shpt.core.api.rest
@@ -18,4 +19,8 @@ fun Context.readProduct(productId: Int): JsonObject {
     val parser = JsonParser()
     return parser.parse(productDetail).asJsonObject
 
+}
+
+fun Context.color(@ColorRes color: Int): Int {
+    return ContextCompat.getColor(this, color)
 }

@@ -2,10 +2,7 @@ package com.shpt.core.rest
 
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
-import retrofit2.http.Streaming
-import retrofit2.http.Url
+import retrofit2.http.*
 
 /**
  * Created by poovarasanv on 6/2/17.
@@ -34,4 +31,9 @@ interface Rest {
     @GET
     @Streaming
     fun getProductSearch(@Url url: String, @Query("keyword") keyword: String): Call<ResponseBody>
+
+
+    @POST
+    @FormUrlEncoded
+    fun addToCart(@Url url: String, @Field("product_id") productid: Int, @Field("quantity") quantity: Int = 1): Call<ResponseBody>
 }

@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import color
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.startActivity
@@ -37,8 +38,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             progressLine {
-
-                setBarWidth(dip(3))
+                barColor = color(R.color.colorPrimary)
+                barWidth = dip(3)
             }.lparams {
                 width = dip(40)
                 height = dip(45)
@@ -101,7 +102,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
     @Subscribe fun retryServiceEvent(event: RetryServiceEvent) {
         find<TextView>(R.id.statusText).text = event.message

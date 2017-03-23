@@ -2,7 +2,12 @@ package com.shpt.core.app
 
 import android.app.Application
 import android.util.Log
+import com.birbit.android.jobqueue.JobManager
+import com.birbit.android.jobqueue.Params
+import com.birbit.android.jobqueue.config.Configuration
+import com.birbit.android.jobqueue.log.CustomLogger
 import com.shpt.core.mqtt.MQTT
+import com.shpt.job.Priority
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttToken
 import org.eclipse.paho.client.mqttv3.MqttException
@@ -19,6 +24,28 @@ import org.eclipse.paho.client.mqttv3.MqttException
  */
 
 class SHPTApplication : Application() {
+
+
+    companion object {
+        private var instance: SHPTApplication? = null
+        private var jobinstance: JobManager? = null
+
+        fun getApp(): SHPTApplication {
+            if (instance == null) {
+                instance = SHPTApplication()
+            }
+
+            return instance as SHPTApplication
+        }
+
+        fun getJobInstance(): JobManager {
+            if (jobinstance == null) {
+                jobinstance = JobManager(getApp().configureJobManager())
+            }
+
+            return jobinstance as JobManager
+        }
+    }
 
 
     override fun onCreate() {
@@ -58,4 +85,52 @@ class SHPTApplication : Application() {
 
     }
 
+    private fun configureJobManager(): Configuration {
+        val configuration = Configuration.Builder(this)
+                .customLogger(object : CustomLogger {
+                    override fun v(text: String, vararg args: Any?) {
+                        Log.d(TAG, String.format(text, *args))
+                    }
+
+                    private val TAG = "JOBS"
+                    override fun isDebugEnabled(): Boolean {
+                        return true
+                    }
+
+                    override fun d(text: String, vararg args: Any) {
+                        Log.d(TAG, String.format(text, *args))
+                    }
+
+                    override fun e(t: Throwable, text: String, vararg args: Any) {
+                        Log.e(TAG, String.format(text, *args), t)
+                    }
+
+                    override fun e(text: String, vararg args: Any) {
+                        Log.e(TAG, String.format(text, *args))
+                    }
+                })
+                .minConsumerCount(1)//always keep at least one consumer alive
+                .maxConsumerCount(3)//up to 3 consumers at a time
+                .loadFactor(3)//3 jobs per consumer
+                .consumerKeepAlive(120)//wait 2 minute
+                .build()
+
+        return configuration;
+    }
 }
+
+val jobManager: JobManager
+    get() = SHPTApplication.getJobInstance()
+
+val networkJobParams: Params
+    get() = Params(Priority.HIGH)
+            .requireNetwork()
+            .persist()
+            .groupBy("high_priority")
+
+val kernelUpdateParams: Params
+    get() = Params(Priority.HIGH)
+            .requireNetwork()
+            .persist()
+            .groupBy("kernel_update")
+            .setPersistent(true)

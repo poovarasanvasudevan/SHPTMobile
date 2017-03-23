@@ -2,10 +2,10 @@ package com.shpt.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import com.mcxiaoke.koi.ext.toast
 import com.mikepenz.iconics.view.IconicsButton
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import com.shpt.core.app.jobManager
+import com.shpt.core.app.networkJobParams
+import com.shpt.job.AddToCartJob
 
 /**
  * Created by poovarasanv on 2/3/17.
@@ -35,13 +35,11 @@ open class AddTocardButton : IconicsButton {
     fun init() {
         setOnClickListener {
             if (product != 0) {
-                doAsync {
-                    //do Add to cart logic
+                jobManager
+                        .addJobInBackground(AddToCartJob(productId = product, params = networkJobParams), {
+                            //need to implement callback of addtocart
+                        })
 
-                    uiThread {
-                        toast("Product Added to Cart")
-                    }
-                }
             }
         }
     }

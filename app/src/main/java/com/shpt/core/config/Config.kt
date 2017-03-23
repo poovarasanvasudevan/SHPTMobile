@@ -14,6 +14,7 @@ object Config {
     val LOGIN_URL = "$BASE?route=account/login"
     val GET_PRODUCT = "$BASE?route=mobile/api/product"
     val SEARCH_PRODUCT = "$BASE?route=product/search/ajax"
+    val ADD_TO_CART = "$BASE?route=checkout/cart/add"
 
     val LAYOUT_BASE = "http://localhost:8081/api/v1/layout"
 

@@ -16,6 +16,7 @@ import com.mcxiaoke.koi.ext.startActivity
 import com.mcxiaoke.koi.ext.toast
 import com.mcxiaoke.koi.log.logi
 import com.poovarasan.blade.toolbox.Styles
+import com.poovarasan.bladeappcompat.widget.AppProgressBar
 import com.shpt.R
 import com.shpt.core.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.config.Config
@@ -28,7 +29,6 @@ import com.shpt.core.models.Layout
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
-import com.shpt.uiext.SHPTProgressView
 import com.shpt.uiext.SHPTToolBar
 import com.shpt.uiext.SHPTWebView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,7 +47,7 @@ class SRCMLogin : AppCompatActivity() {
     var menuJson: JsonObject = JsonObject()
     var loginWeb: Int = 0
     lateinit var loginWebView: SHPTWebView
-    lateinit var loginProgress: SHPTProgressView
+    lateinit var loginProgress: AppProgressBar
 
     lateinit var menuTop: Menu
 
@@ -121,14 +121,13 @@ class SRCMLogin : AppCompatActivity() {
 
                         val loginProgressId = layoutBuilder.getUniqueViewId("loginProgress")
                         if (view.findViewById(loginProgressId) != null) {
-                            loginProgress = view.find<SHPTProgressView>(loginProgressId)
+                            loginProgress = view.find<AppProgressBar>(loginProgressId)
                         }
                     }
 
                 }
             }
         }
-
     }
 
     inner class SHPTWebViewClient : WebViewClient() {
