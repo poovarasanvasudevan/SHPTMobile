@@ -17,7 +17,7 @@ import com.poovarasan.bladecardview.parser.AppCardViewParser;
 public class CardViewModule implements Module {
     @Override
     public void register(LayoutBuilder layoutBuilder) {
-        ViewParser viewParser = new ViewParser();
+        ViewParser      viewParser      = new ViewParser();
         ViewGroupParser viewGroupParser = new ViewGroupParser(viewParser);
 
         layoutBuilder.registerHandler("CardView", new AppCardViewParser(viewGroupParser));

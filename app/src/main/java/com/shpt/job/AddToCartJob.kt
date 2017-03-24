@@ -2,12 +2,12 @@ package com.shpt.job
 
 import android.text.Html
 import com.birbit.android.jobqueue.Job
-import com.birbit.android.jobqueue.Params
 import com.birbit.android.jobqueue.RetryConstraint
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.toast
 import com.shpt.core.api.rest
 import com.shpt.core.config.Config
+import com.shpt.core.config.NETWORK_JOB_PARAMS
 import com.shpt.core.config.PARSER
 import logMessage
 
@@ -21,7 +21,7 @@ import logMessage
  * @on 23/3/17 at 4:45 PM
  */
 
-class AddToCartJob(params: Params, val productId: Int) : Job(params) {
+class AddToCartJob(val productId: Int) : Job(NETWORK_JOB_PARAMS) {
 
     override fun onRun() {
         val response: String = applicationContext.rest.addToCart(
