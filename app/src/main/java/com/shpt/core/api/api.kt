@@ -111,5 +111,3 @@ class CacheInterceptor : Interceptor {
 }
 
 
-val Context.rest: Rest
-    get() = getAdapter()

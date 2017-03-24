@@ -11,9 +11,9 @@ import android.widget.TextView
 import com.google.gson.JsonArray
 import com.mcxiaoke.koi.ext.find
 import com.shpt.R
-import com.shpt.core.api.rest
 import com.shpt.core.config.Config
 import com.shpt.core.config.PARSER
+import com.shpt.core.config.REST
 import com.shpt.core.models.ProductSearch
 import com.shpt.core.splitQuery
 import logMessage
@@ -43,13 +43,13 @@ class ProductSearchFilter(context: Context, @LayoutRes resource: Int) : ArrayAda
 
     inner class MyFilter : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            var filterResults = Filter.FilterResults()
+            val filterResults = Filter.FilterResults()
 
             if (constraint != null && !constraint.isBlank() && constraint.length > 2) {
                 val term = constraint.toString()
 
                 doAsync {
-                    val result: JsonArray = PARSER.parse(context.rest.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
+                    val result: JsonArray = PARSER.parse(REST.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
 
                     uiThread {
 

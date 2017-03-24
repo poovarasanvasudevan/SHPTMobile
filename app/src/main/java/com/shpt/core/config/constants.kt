@@ -5,10 +5,12 @@ import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.Params
 import com.google.gson.JsonParser
 import com.poovarasan.blade.builder.DataParsingLayoutBuilder
+import com.shpt.core.api.getAdapter
 import com.shpt.core.app.SHPTApplication
 import com.shpt.core.db.DatabaseOpenHelper
 import com.shpt.core.getLayoutBuilder
 import com.shpt.core.prefs.Prefs
+import com.shpt.core.rest.Rest
 import com.shpt.job.Priority
 import com.squareup.otto.Bus
 
@@ -19,11 +21,9 @@ import com.squareup.otto.Bus
  * @on 24/3/17 at 9:01 AM
  */
 
-fun config(key: String): String {
-    return Prefs
-            .with(CONTEXT)
-            .read(key)
-}
+fun config(key: String): String = Prefs
+        .with(CONTEXT)
+        .read(key)
 
 val CONFIG: Config
     get() = Config
@@ -59,3 +59,6 @@ val BUS: Bus
 
 val CONTEXT: Context
     get() = SHPTApplication.context
+
+val REST: Rest
+    get() = CONTEXT.getAdapter()

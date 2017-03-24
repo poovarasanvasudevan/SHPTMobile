@@ -29,7 +29,6 @@ import com.mcxiaoke.koi.ext.toast
 import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.*
-import com.shpt.core.api.rest
 import com.shpt.core.config.*
 import com.shpt.core.models.Layout
 import com.shpt.core.models.ProductSearch
@@ -273,7 +272,7 @@ class Home : AppCompatActivity() {
 
     fun updateSearch(term: String) {
         doAsync {
-            val result: JsonArray = PARSER.parse(rest.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
+            val result: JsonArray = PARSER.parse(REST.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
             uiThread {
 
                 val productList = mutableListOf<ProductSearch>()

@@ -5,10 +5,10 @@ import com.birbit.android.jobqueue.Job
 import com.birbit.android.jobqueue.RetryConstraint
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.toast
-import com.shpt.core.api.rest
 import com.shpt.core.config.Config
 import com.shpt.core.config.NETWORK_JOB_PARAMS
 import com.shpt.core.config.PARSER
+import com.shpt.core.config.REST
 import logMessage
 
 /**
@@ -24,7 +24,7 @@ import logMessage
 class AddToCartJob(val productId: Int) : Job(NETWORK_JOB_PARAMS) {
 
     override fun onRun() {
-        val response: String = applicationContext.rest.addToCart(
+        val response: String = REST.addToCart(
                 url = Config.ADD_TO_CART,
                 productid = productId,
                 quantity = 1

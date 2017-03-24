@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import com.mikepenz.iconics.view.IconicsButton
 import com.shpt.core.config.JOB_MANAGER
-import com.shpt.core.config.NETWORK_JOB_PARAMS
 import com.shpt.job.AddToCartJob
 
 /**
@@ -33,7 +32,7 @@ open class AddTocardButton : IconicsButton {
         setOnClickListener {
             if (product != 0) {
                 JOB_MANAGER
-                        .addJobInBackground(AddToCartJob(productId = product, params = NETWORK_JOB_PARAMS), {
+                        .addJobInBackground(AddToCartJob(productId = product), {
                             //need to implement callback of addtocart
                         })
 
