@@ -2,6 +2,7 @@ package com.shpt.core.api
 
 import android.content.Context
 import android.util.Log
+import com.shpt.core.app.BUS
 import com.shpt.core.config.Config
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.rest.Rest
@@ -9,7 +10,6 @@ import com.shpt.core.serviceevent.RetryServiceEvent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import org.greenrobot.eventbus.EventBus
 import retrofit2.Retrofit
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -89,7 +89,7 @@ class RetryInterceptor : Interceptor {
             Log.d("intercept", "Request is not successful - " + tryCount)
             tryCount++
 
-            EventBus.getDefault().post(RetryServiceEvent(true, "Retrying to server"))
+            BUS.post(RetryServiceEvent(true, "Retrying to server"))
             response = chain.proceed(request)
         }
         return response

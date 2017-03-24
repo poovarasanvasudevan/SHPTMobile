@@ -38,6 +38,7 @@ class KernelUpdateJobScheduler(val ctx: Context) : Job() {
             return Job.Result.RESCHEDULE
         }
 
+
         return Job.Result.SUCCESS
     }
 

@@ -8,6 +8,7 @@ import com.birbit.android.jobqueue.config.Configuration
 import com.birbit.android.jobqueue.log.CustomLogger
 import com.shpt.core.mqtt.MQTT
 import com.shpt.job.Priority
+import com.squareup.otto.Bus
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttToken
 import org.eclipse.paho.client.mqttv3.MqttException
@@ -29,6 +30,7 @@ class SHPTApplication : Application() {
     companion object {
         private var instance: SHPTApplication? = null
         private var jobinstance: JobManager? = null
+        private var bus: Bus? = null
 
         fun getApp(): SHPTApplication {
             if (instance == null) {
@@ -44,6 +46,14 @@ class SHPTApplication : Application() {
             }
 
             return jobinstance as JobManager
+        }
+
+        fun getEventBus(): Bus {
+            if (bus == null) {
+                bus = Bus()
+            }
+
+            return bus as Bus
         }
     }
 
@@ -134,3 +144,6 @@ val kernelUpdateParams: Params
             .persist()
             .groupBy("kernel_update")
             .setPersistent(true)
+
+val BUS: Bus
+    get() = SHPTApplication.getEventBus()

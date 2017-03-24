@@ -19,6 +19,7 @@ import com.poovarasan.blade.toolbox.Styles
 import com.poovarasan.bladeappcompat.widget.AppProgressBar
 import com.shpt.R
 import com.shpt.core.LAYOUT_BUILDER_FACTORY
+import com.shpt.core.app.BUS
 import com.shpt.core.config.Config
 import com.shpt.core.data.Constant
 import com.shpt.core.db.database
@@ -31,10 +32,9 @@ import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.uiext.SHPTToolBar
 import com.shpt.uiext.SHPTWebView
+import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
 import logMessage
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseSingle
@@ -54,11 +54,11 @@ class SRCMLogin : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        EventBus.getDefault().register(this);
+        BUS.register(this);
     }
 
     override fun onStop() {
-        EventBus.getDefault().unregister(this);
+        BUS.unregister(this);
         super.onStop()
     }
 

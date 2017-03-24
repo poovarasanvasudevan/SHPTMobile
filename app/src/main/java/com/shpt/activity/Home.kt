@@ -30,15 +30,15 @@ import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.*
 import com.shpt.core.api.rest
+import com.shpt.core.app.BUS
 import com.shpt.core.config.Config
 import com.shpt.core.db.database
 import com.shpt.core.models.Layout
 import com.shpt.core.models.ProductSearch
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
+import com.squareup.otto.Subscribe
 import logMessage
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.db.classParser
@@ -321,11 +321,11 @@ class Home : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        EventBus.getDefault().register(this);
+        BUS.register(this);
     }
 
     override fun onStop() {
-        EventBus.getDefault().unregister(this);
+        BUS.unregister(this);
         super.onStop()
     }
 
