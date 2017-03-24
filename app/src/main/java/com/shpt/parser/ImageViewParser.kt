@@ -14,6 +14,7 @@ import com.poovarasan.blade.processor.StringAttributeProcessor
 import com.poovarasan.blade.toolbox.Styles
 import com.poovarasan.blade.view.BladeView
 import com.shpt.R
+import com.shpt.core.config.CONTEXT
 import com.shpt.uiext.SHPTImageView
 
 /**
@@ -35,10 +36,11 @@ class ImageViewParser(wrappedParser: Parser<ImageView>) : WrappableParser<ImageV
     override fun prepareHandlers() {
         super.prepareHandlers()
 
+
         addHandler(Attributes.Attribute("imageUrl"), object : StringAttributeProcessor<ImageView>() {
             override fun handle(p0: String?, p1: String?, p2: ImageView?) {
                 p2!!.setImageDrawable(null)
-                Glide.with(p2.context)
+                Glide.with(CONTEXT)
                         .load(p1)
                         .error(ContextCompat.getDrawable(p2.context, R.drawable.no_image))
                         .animate(R.anim.zoomin)
@@ -50,7 +52,7 @@ class ImageViewParser(wrappedParser: Parser<ImageView>) : WrappableParser<ImageV
             override fun setDrawable(p0: ImageView?, p1: Drawable?) {
                 p0!!.setImageDrawable(null)
 
-                Glide.with(p0.context)
+                Glide.with(CONTEXT)
                         .load(p1)
                         .error(ContextCompat.getDrawable(p0.context, R.drawable.no_image))
                         .animate(R.anim.zoomin)

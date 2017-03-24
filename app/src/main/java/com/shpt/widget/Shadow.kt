@@ -17,6 +17,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import color
 import com.shpt.R
 
 
@@ -106,7 +107,7 @@ class Shadow : FrameLayout {
             mShadowRadius = attr.getDimension(R.styleable.ShadowLayout_sl_shadowRadius, resources.getDimension(R.dimen.default_shadow_radius))
             mDx = attr.getDimension(R.styleable.ShadowLayout_sl_dx, 0f)
             mDy = attr.getDimension(R.styleable.ShadowLayout_sl_dy, 0f)
-            mShadowColor = attr.getColor(R.styleable.ShadowLayout_sl_shadowColor, resources.getColor(R.color.default_shadow_color))
+            mShadowColor = attr.getColor(R.styleable.ShadowLayout_sl_shadowColor, context.color(R.color.default_shadow_color))
         } finally {
             attr.recycle()
         }

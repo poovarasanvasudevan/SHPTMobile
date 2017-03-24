@@ -2,7 +2,7 @@ package com.shpt.job
 
 import android.content.Context
 import com.evernote.android.job.Job
-import com.shpt.core.db.database
+import com.shpt.core.config.DATABASE
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.doAsync
@@ -24,7 +24,7 @@ class KernelUpdateJobScheduler(val ctx: Context) : Job() {
         try {
             doAsync {
                 val returnJson = ctx.readJson()
-                ctx.database.use {
+                DATABASE.use {
                     delete("Layout")
                     delete("Settings")
 
@@ -37,7 +37,6 @@ class KernelUpdateJobScheduler(val ctx: Context) : Job() {
         } catch (e: Exception) {
             return Job.Result.RESCHEDULE
         }
-
 
         return Job.Result.SUCCESS
     }

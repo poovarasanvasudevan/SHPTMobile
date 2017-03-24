@@ -30,9 +30,7 @@ import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.*
 import com.shpt.core.api.rest
-import com.shpt.core.app.BUS
-import com.shpt.core.config.Config
-import com.shpt.core.db.database
+import com.shpt.core.config.*
 import com.shpt.core.models.Layout
 import com.shpt.core.models.ProductSearch
 import com.shpt.core.serviceevent.ConnectionServiceEvent
@@ -215,7 +213,7 @@ class Home : AppCompatActivity() {
         supportActionBar!!.elevation = 0f
         try {
             doAsync {
-                database.use {
+                DATABASE.use {
                     select("Layout").where("page = {pageName}", "pageName" to "home").exec {
                         val rowParser = classParser<Layout>()
                         val row = parseSingle(rowParser)
@@ -275,10 +273,10 @@ class Home : AppCompatActivity() {
 
     fun updateSearch(term: String) {
         doAsync {
-            val result: JsonArray = parser.parse(rest.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
+            val result: JsonArray = PARSER.parse(rest.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
             uiThread {
 
-                var productList = mutableListOf<ProductSearch>()
+                val productList = mutableListOf<ProductSearch>()
                 result.forEach {
                     val productId: String? = splitQuery(URL(it.asJsonObject.get("href").asString.replace("amp;", "")))["product_id"]
                     if (productId != null) {

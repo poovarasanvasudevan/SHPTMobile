@@ -1,6 +1,6 @@
 package com.shpt.core.event
 
-import android.app.Activity
+import android.content.Context
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.toast
 import logMessage
@@ -13,23 +13,23 @@ import logMessage
  */
 
 class ToastEvent : EventBase {
-    override fun beforeExecute(act: Activity, params: JsonObject): Boolean {
+    override fun beforeExecute(ctx: Context, params: JsonObject): Boolean {
 
         return true
     }
 
-    override fun afterExecute(act: Activity, params: JsonObject, output: JsonObject) {
+    override fun afterExecute(ctx: Context, params: JsonObject, output: JsonObject) {
 
     }
 
-    override fun execute(act: Activity, params: JsonObject): JsonObject {
+    override fun execute(ctx: Context, params: JsonObject): JsonObject {
 
         if (params.has("text")) {
-            act.toast(params.get("text").asString)
+            ctx.toast(params.get("text").asString)
         } else {
             if (params.has("whattotoast")) {
                 if (params.has(params.get("whattotoast").asString)) {
-                    act.toast(params.get(params.get("whattotoast").asString).asString)
+                    ctx.toast(params.get(params.get("whattotoast").asString).asString)
                 } else {
                     logMessage(" ${params.get("whattotoast").asString} not found in params")
                 }

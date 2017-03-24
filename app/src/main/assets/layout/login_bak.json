@@ -18,7 +18,7 @@
       "layout_height": "match_parent",
       "children": [
         {
-          "type": "Appbar",
+          "type": "AppBarLayout",
           "layout_width": "match_parent",
           "layout_height": "wrap_content",
           "id": "appbar",
@@ -127,7 +127,7 @@
       "layout_height": "match_parent",
       "children": [
         {
-          "type": "Appbar",
+          "type": "AppBarLayout",
           "id": "appbar",
           "elevation": "4dp",
           "layout_width": "match_parent",

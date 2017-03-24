@@ -2,7 +2,6 @@ package com.shpt.core
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.app.Activity
 import android.support.design.widget.NavigationView
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
@@ -24,6 +23,7 @@ import com.poovarasan.bladecardview.CardViewModule
 import com.poovarasan.bladedesign.DesignModule
 import com.shpt.R
 import com.shpt.core.callback.EventCallback
+import com.shpt.core.config.CONTEXT
 import com.shpt.core.config.Config
 import com.shpt.mobile.widget.Ripple
 import com.shpt.parser.*
@@ -156,8 +156,8 @@ fun ImageView.setSHPTImageURL(imageURL: String, imageSize: ImageSize = ImageSize
 
 }
 
-inline fun ViewManager.progressLine(theme: Int = 0) = progressLine(theme) {}
-inline fun ViewManager.progressLine(theme: Int = 0, init: AppProgressBar.() -> Unit) = ankoView(::AppProgressBar, theme, init)
+fun ViewManager.progressLine(theme: Int = 0) = progressLine(theme) {}
+fun ViewManager.progressLine(theme: Int = 0, init: AppProgressBar.() -> Unit) = ankoView(::AppProgressBar, theme, init)
 
 inline fun ViewManager.shptWebView(theme: Int = 0) = shptWebView(theme) {}
 inline fun ViewManager.shptWebView(theme: Int = 0, init: SHPTWebView.() -> Unit) = ankoView(::SHPTWebView, theme, init)
@@ -175,9 +175,9 @@ inline fun ViewManager.shadow(theme: Int) = shadow(theme) {}
 inline fun ViewManager.shadow(theme: Int = 0, init: Shadow.() -> Unit) = ankoView(::Shadow, theme, init)
 
 
-fun getLayoutBuilder(act: Activity): DataParsingLayoutBuilder {
+fun getLayoutBuilder(): DataParsingLayoutBuilder {
     val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
-    layoutBuilder.listener = EventCallback(act)
+    layoutBuilder.listener = EventCallback(CONTEXT)
 
     val appCompatModule: Module = AppCompatModule()
     appCompatModule.register(layoutBuilder)
@@ -194,5 +194,3 @@ fun getLayoutBuilder(act: Activity): DataParsingLayoutBuilder {
 }
 
 
-val Activity.LAYOUT_BUILDER_FACTORY: DataParsingLayoutBuilder
-    get() = getLayoutBuilder(this)

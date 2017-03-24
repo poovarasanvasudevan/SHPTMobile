@@ -2,7 +2,7 @@ package com.shpt.core.api
 
 import android.content.Context
 import android.util.Log
-import com.shpt.core.app.BUS
+import com.shpt.core.config.BUS
 import com.shpt.core.config.Config
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.rest.Rest

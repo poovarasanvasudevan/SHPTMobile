@@ -1,6 +1,6 @@
 package com.shpt.core.event
 
-import android.app.Activity
+import android.content.Context
 import com.google.gson.JsonArray
 import com.mcxiaoke.koi.ext.toast
 
@@ -13,7 +13,7 @@ import com.mcxiaoke.koi.ext.toast
 
 class CoreEvents {
 
-    fun makeToast(act: Activity, params: JsonArray) {
+    fun makeToast(act: Context, params: JsonArray) {
         act.toast(params.toString())
     }
 }

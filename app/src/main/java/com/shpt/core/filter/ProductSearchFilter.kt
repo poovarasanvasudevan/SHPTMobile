@@ -13,8 +13,8 @@ import com.mcxiaoke.koi.ext.find
 import com.shpt.R
 import com.shpt.core.api.rest
 import com.shpt.core.config.Config
+import com.shpt.core.config.PARSER
 import com.shpt.core.models.ProductSearch
-import com.shpt.core.parser
 import com.shpt.core.splitQuery
 import logMessage
 import org.jetbrains.anko.doAsync
@@ -49,7 +49,7 @@ class ProductSearchFilter(context: Context, @LayoutRes resource: Int) : ArrayAda
                 val term = constraint.toString()
 
                 doAsync {
-                    val result: JsonArray = parser.parse(context.rest.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
+                    val result: JsonArray = PARSER.parse(context.rest.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
 
                     uiThread {
 

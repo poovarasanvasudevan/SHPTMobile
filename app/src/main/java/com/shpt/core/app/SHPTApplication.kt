@@ -1,13 +1,12 @@
 package com.shpt.core.app
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import com.birbit.android.jobqueue.JobManager
-import com.birbit.android.jobqueue.Params
 import com.birbit.android.jobqueue.config.Configuration
 import com.birbit.android.jobqueue.log.CustomLogger
 import com.shpt.core.mqtt.MQTT
-import com.shpt.job.Priority
 import com.squareup.otto.Bus
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttToken
@@ -26,53 +25,25 @@ import org.eclipse.paho.client.mqttv3.MqttException
 
 class SHPTApplication : Application() {
 
-
     companion object {
-        private var instance: SHPTApplication? = null
-        private var jobinstance: JobManager? = null
-        private var bus: Bus? = null
-
-        fun getApp(): SHPTApplication {
-            if (instance == null) {
-                instance = SHPTApplication()
-            }
-
-            return instance as SHPTApplication
-        }
-
-        fun getJobInstance(): JobManager {
-            if (jobinstance == null) {
-                jobinstance = JobManager(getApp().configureJobManager())
-            }
-
-            return jobinstance as JobManager
-        }
-
-        fun getEventBus(): Bus {
-            if (bus == null) {
-                bus = Bus()
-            }
-
-            return bus as Bus
-        }
+        lateinit var instance: SHPTApplication
+            private set
+        lateinit var jobinstance: JobManager
+            private set
+        lateinit var context: Context
+            private set
+        lateinit var bus: Bus
+            private set
     }
 
 
     override fun onCreate() {
         super.onCreate()
-//
-//        Parse.initialize(Parse.Configuration.Builder(this)
-//                .applicationId(Config.MY_APP_ID)
-//                .server(Config.SERVER)
-//                .clientKey(null)
-//                .enableLocalDataStore()
-//                .build()
-//        )
-//
-//        Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE)
-//        ParseInstallation.getCurrentInstallation().saveInBackground();
-//
 
+        instance = this
+        jobinstance = JobManager(configureJobManager())
+        context = this.applicationContext
+        bus = Bus()
 
         try {
 
@@ -129,21 +100,3 @@ class SHPTApplication : Application() {
     }
 }
 
-val jobManager: JobManager
-    get() = SHPTApplication.getJobInstance()
-
-val networkJobParams: Params
-    get() = Params(Priority.HIGH)
-            .requireNetwork()
-            .persist()
-            .groupBy("high_priority")
-
-val kernelUpdateParams: Params
-    get() = Params(Priority.HIGH)
-            .requireNetwork()
-            .persist()
-            .groupBy("kernel_update")
-            .setPersistent(true)
-
-val BUS: Bus
-    get() = SHPTApplication.getEventBus()

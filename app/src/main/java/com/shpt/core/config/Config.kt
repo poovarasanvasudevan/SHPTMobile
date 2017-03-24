@@ -24,4 +24,6 @@ object Config {
     var SERVER = "http://localhost:1337/parse"
     var CLIENT_KEY = "2ead5328dda34e688816040a0e78948a"
     var TEST_MODE = true
+
+//    var CIVICRM_URL = config("CIVICRM_URL")
 }

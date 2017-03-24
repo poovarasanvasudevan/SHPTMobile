@@ -11,7 +11,7 @@ import com.mcxiaoke.koi.ext.startActivity
 import com.shpt.activity.Login
 import com.shpt.activity.SRCMLogin
 import com.shpt.core.config.Config
-import com.shpt.core.db.database
+import com.shpt.core.config.DATABASE
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.progressLine
 import com.shpt.core.serviceevent.RetryServiceEvent
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     inner class DownloadKernel : AsyncTask<Void, Void, JsonObject>() {
         override fun doInBackground(vararg params: Void?): JsonObject {
             val returnJson = readJson()
-            database.use {
+            DATABASE.use {
                 delete("Layout")
                 delete("Settings")
 

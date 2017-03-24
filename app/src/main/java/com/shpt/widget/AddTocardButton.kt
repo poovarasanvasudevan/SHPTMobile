@@ -3,17 +3,14 @@ package com.shpt.widget
 import android.content.Context
 import android.util.AttributeSet
 import com.mikepenz.iconics.view.IconicsButton
-import com.shpt.core.app.jobManager
-import com.shpt.core.app.networkJobParams
+import com.shpt.core.config.JOB_MANAGER
+import com.shpt.core.config.NETWORK_JOB_PARAMS
 import com.shpt.job.AddToCartJob
 
 /**
  * Created by poovarasanv on 2/3/17.
-
  * @author poovarasanv
- * *
  * @project SHPT
- * *
  * @on 2/3/17 at 11:25 AM
  */
 
@@ -35,8 +32,8 @@ open class AddTocardButton : IconicsButton {
     fun init() {
         setOnClickListener {
             if (product != 0) {
-                jobManager
-                        .addJobInBackground(AddToCartJob(productId = product, params = networkJobParams), {
+                JOB_MANAGER
+                        .addJobInBackground(AddToCartJob(productId = product, params = NETWORK_JOB_PARAMS), {
                             //need to implement callback of addtocart
                         })
 

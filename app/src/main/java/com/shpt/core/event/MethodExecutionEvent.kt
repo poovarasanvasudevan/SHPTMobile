@@ -1,6 +1,6 @@
 package com.shpt.core.event
 
-import android.app.Activity
+import android.content.Context
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.toast
@@ -18,32 +18,32 @@ import org.jetbrains.anko.uiThread
  */
 
 class MethodExecutionEvent:EventBase {
-    override fun beforeExecute(act: Activity, params: JsonObject): Boolean {
+    override fun beforeExecute(ctx: Context, params: JsonObject): Boolean {
         return true;
     }
 
-    override fun afterExecute(act: Activity, params: JsonObject, output: JsonObject) {
+    override fun afterExecute(ctx: Context, params: JsonObject, output: JsonObject) {
 
     }
 
-    override fun execute(act: Activity, task: JsonObject): JsonObject {
+    override fun execute(ctx: Context, task: JsonObject): JsonObject {
         try {
             doAsync {
-                var className = Class.forName("${task.get("className").asString}")
+                val className = Class.forName(task.get("className").asString)
 
-                var obj = className.newInstance()
-                var params = task.getAsJsonArray("params").asJsonArray
-                var method = className.getDeclaredMethod("${task.get("methodName").asString}", Activity::class.java, JsonArray::class.java)
+                val obj = className.newInstance()
+                val params = task.getAsJsonArray("params").asJsonArray
+                val method = className.getDeclaredMethod(task.get("methodName").asString, Context::class.java, JsonArray::class.java)
 
                 uiThread {
-                    method.invoke(obj, act, params);
+                    method.invoke(obj, ctx, params);
                 }
 
             }
 
 
         } catch (e: Exception) {
-            act.toast("Oops : ${e.cause.toString()}")
+            ctx.toast("Oops : ${e.cause.toString()}")
         }
 
         return JsonObject()

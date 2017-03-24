@@ -1,6 +1,6 @@
 package com.shpt.core.event
 
-import android.app.Activity
+import android.content.Context
 import com.google.gson.JsonObject
 
 /**
@@ -14,7 +14,7 @@ import com.google.gson.JsonObject
  */
 
 interface EventBase {
-    fun beforeExecute(act: Activity, params: JsonObject): Boolean
-    fun afterExecute(act: Activity, params: JsonObject, output: JsonObject)
-    fun execute(act: Activity, params: JsonObject): JsonObject
+    fun beforeExecute(ctx: Context, params: JsonObject): Boolean
+    fun afterExecute(ctx: Context, params: JsonObject, output: JsonObject)
+    fun execute(ctx: Context, params: JsonObject): JsonObject
 }

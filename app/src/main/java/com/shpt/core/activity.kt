@@ -3,7 +3,6 @@ package com.shpt.core
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
-import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.startActivity
 import com.shpt.activity.Login
@@ -41,8 +40,6 @@ fun Context.handleConnectionError() {
     if (!isConnected()) alert1.show() else alert1.dismiss()
 }
 
-val parser: JsonParser
-    get() = JsonParser()
 
 @Throws(UnsupportedEncodingException::class)
 fun splitQuery(url: URL): Map<String, String> {

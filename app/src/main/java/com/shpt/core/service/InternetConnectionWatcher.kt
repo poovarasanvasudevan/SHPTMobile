@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.mcxiaoke.koi.ext.isConnected
-import com.shpt.core.app.BUS
+import com.shpt.core.config.BUS
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 
 

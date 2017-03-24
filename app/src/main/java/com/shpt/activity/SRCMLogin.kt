@@ -18,11 +18,11 @@ import com.mcxiaoke.koi.log.logi
 import com.poovarasan.blade.toolbox.Styles
 import com.poovarasan.bladeappcompat.widget.AppProgressBar
 import com.shpt.R
-import com.shpt.core.LAYOUT_BUILDER_FACTORY
-import com.shpt.core.app.BUS
+import com.shpt.core.config.BUS
 import com.shpt.core.config.Config
+import com.shpt.core.config.DATABASE
+import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.data.Constant
-import com.shpt.core.db.database
 import com.shpt.core.getBackIcon
 import com.shpt.core.handleConnectionError
 import com.shpt.core.handleMenu
@@ -80,7 +80,7 @@ class SRCMLogin : AppCompatActivity() {
 
 
         doAsync {
-            database.use {
+            DATABASE.use {
                 select("Layout").where("page = {pageTitle}", "pageTitle" to "srcmlogin").exec {
 
                     val rowParser = classParser<Layout>()
@@ -185,7 +185,7 @@ class SRCMLogin : AppCompatActivity() {
 
 
         override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-            val alertDialog = alert("Error : " + error!!.description) {
+            alert("Error : " + error!!.description) {
 
                 noButton {
                     finish()

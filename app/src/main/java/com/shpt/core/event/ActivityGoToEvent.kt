@@ -1,6 +1,7 @@
 package com.shpt.core.event
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.toast
@@ -14,24 +15,25 @@ import com.shpt.core.data.Constant
  */
 
 class ActivityGoToEvent : EventBase {
-    override fun beforeExecute(act: Activity, params: JsonObject): Boolean {
+    override fun beforeExecute(ctx: Context, params: JsonObject): Boolean {
         return true;
     }
 
-    override fun afterExecute(act: Activity, params: JsonObject, output: JsonObject) {
+    override fun afterExecute(ctx: Context, params: JsonObject, output: JsonObject) {
     }
 
-    override fun execute(act: Activity, params: JsonObject): JsonObject {
+    override fun execute(ctx: Context, params: JsonObject): JsonObject {
         try {
             val activityName: Class<Activity> = Class.forName("com.shpt.activity.${params.get("activity").asString}") as Class<Activity>
 
-            val intent = Intent(act, activityName)
+            val intent = Intent(ctx, activityName)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             if (params.has("data")) {
                 intent.putExtra(Constant.PARCEL, params.get("data").toString())
             }
-            act.startActivity(intent)
+            ctx.startActivity(intent)
         } catch (e: Exception) {
-            act.toast("Oops : ${e.cause.toString()}")
+            ctx.toast("Oops : ${e.cause.toString()}")
         }
         return JsonObject()
     }

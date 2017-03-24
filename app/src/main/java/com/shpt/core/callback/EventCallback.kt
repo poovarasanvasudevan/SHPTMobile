@@ -1,6 +1,6 @@
 package com.shpt.core.callback
 
-import android.app.Activity
+import android.content.Context
 import android.support.annotation.Nullable
 import android.support.v4.view.PagerAdapter
 import android.util.Log
@@ -24,7 +24,7 @@ import org.jetbrains.anko.longToast
  * @on 20/1/17 at 2:40 PM
  */
 
-class EventCallback(activity: Activity) : LayoutBuilderCallback {
+class EventCallback(activity: Context) : LayoutBuilderCallback {
 
     private var act = activity
 
@@ -57,9 +57,9 @@ class EventCallback(activity: Activity) : LayoutBuilderCallback {
                     val className = Class.forName("com.shpt.core.event.${task.get("event").asString}")
                     val obj = className.newInstance()
 
-                    val beforeExecute = className.getDeclaredMethod("beforeExecute", Activity::class.java, JsonObject::class.java)
-                    val execute = className.getDeclaredMethod("execute", Activity::class.java, JsonObject::class.java)
-                    val afterExecute = className.getDeclaredMethod("afterExecute", Activity::class.java, JsonObject::class.java, JsonObject::class.java)
+                    val beforeExecute = className.getDeclaredMethod("beforeExecute", Context::class.java, JsonObject::class.java)
+                    val execute = className.getDeclaredMethod("execute", Context::class.java, JsonObject::class.java)
+                    val afterExecute = className.getDeclaredMethod("afterExecute", Context::class.java, JsonObject::class.java, JsonObject::class.java)
 
 
                     val before: Boolean = beforeExecute.invoke(obj, act, task) as Boolean

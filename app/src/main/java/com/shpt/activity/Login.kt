@@ -11,8 +11,8 @@ import com.mcxiaoke.koi.ext.toast
 import com.poovarasan.blade.toolbox.Styles
 import com.poovarasan.bladeappcompat.widget.AppToolbar
 import com.shpt.R
-import com.shpt.core.LAYOUT_BUILDER_FACTORY
-import com.shpt.core.db.database
+import com.shpt.core.config.DATABASE
+import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.models.Layout
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.squareup.otto.Subscribe
@@ -32,7 +32,7 @@ class Login : AppCompatActivity() {
 
         try {
             doAsync {
-                database.use {
+                DATABASE.use {
                     select("Layout").where("page = {pageName}", "pageName" to "login").exec {
                         val rowParser = classParser<Layout>()
                         val row = parseSingle(rowParser)

@@ -8,7 +8,7 @@ import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.toast
 import com.shpt.core.api.rest
 import com.shpt.core.config.Config
-import com.shpt.core.parser
+import com.shpt.core.config.PARSER
 import logMessage
 
 /**
@@ -30,7 +30,7 @@ class AddToCartJob(params: Params, val productId: Int) : Job(params) {
                 quantity = 1
         ).execute().body().string()
 
-        val jsonResponse: JsonObject = parser.parse(response).asJsonObject
+        val jsonResponse: JsonObject = PARSER.parse(response).asJsonObject
         if (jsonResponse.has("success")) {
             applicationContext.toast(Html.fromHtml(jsonResponse.get("success").asString))
         } else if (jsonResponse.has("failure")) {
