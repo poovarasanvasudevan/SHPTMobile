@@ -9,6 +9,7 @@ import com.birbit.android.jobqueue.log.CustomLogger
 import com.shpt.core.mqtt.MQTT
 import com.shpt.core.mqtt.connectMqtt
 import com.squareup.otto.Bus
+import com.squareup.otto.ThreadEnforcer
 import org.eclipse.paho.android.service.MqttAndroidClient
 
 
@@ -44,7 +45,7 @@ class SHPTApplication : Application() {
 		instance = this
 		jobinstance = JobManager(configureJobManager())
 		context = this.applicationContext
-		bus = Bus()
+		bus = Bus(ThreadEnforcer.ANY)
 		mqtt = MQTT.getMQTTClient(applicationContext)!!
 		
 		connectMqtt();

@@ -18,7 +18,7 @@ public class DesignModule implements Module {
 
     @Override
     public void register(LayoutBuilder layoutBuilder) {
-        ViewParser viewParser = new ViewParser();
+        ViewParser      viewParser      = new ViewParser();
         ViewGroupParser viewGroupParser = new ViewGroupParser(viewParser);
 
         layoutBuilder.registerHandler("AppBarLayout", new BladeAppBarParser(viewGroupParser));

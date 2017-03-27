@@ -15,11 +15,13 @@ import com.poovarasan.blade.toolbox.Styles
 import com.poovarasan.blade.view.BladeView
 import com.shpt.R
 import com.shpt.core.config.CONTEXT
+import com.shpt.core.setImageURL
+import com.shpt.core.setSHPTImageURL
 import com.shpt.uiext.SHPTImageView
 
 /**
  * Created by poovarasanv on 17/1/17.
-
+ 
  * @author poovarasanv
  * *
  * @project SHPT
@@ -28,37 +30,39 @@ import com.shpt.uiext.SHPTImageView
  */
 
 class ImageViewParser(wrappedParser: Parser<ImageView>) : WrappableParser<ImageView>(wrappedParser) {
-
-    override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): BladeView {
-        return SHPTImageView(viewGroup.context)
-    }
-
-    override fun prepareHandlers() {
-        super.prepareHandlers()
-
-
-        addHandler(Attributes.Attribute("imageUrl"), object : StringAttributeProcessor<ImageView>() {
-            override fun handle(p0: String?, p1: String?, p2: ImageView?) {
-                p2!!.setImageDrawable(null)
-                Glide.with(CONTEXT)
-                        .load(p1)
-                        .error(ContextCompat.getDrawable(p2.context, R.drawable.no_image))
-                        .animate(R.anim.zoomin)
-                        .into(p2)
-            }
-        })
-
-        addHandler(Attributes.Attribute("imageSrc"), object : DrawableResourceProcessor<ImageView>() {
-            override fun setDrawable(p0: ImageView?, p1: Drawable?) {
-                p0!!.setImageDrawable(null)
-
-                Glide.with(CONTEXT)
-                        .load(p1)
-                        .error(ContextCompat.getDrawable(p0.context, R.drawable.no_image))
-                        .animate(R.anim.zoomin)
-                        .into(p0)
-
-            }
-        })
-    }
+	
+	override fun createView(viewGroup: ViewGroup, jsonObject: JsonObject, jsonObject1: JsonObject, styles: Styles, i: Int): BladeView {
+		return SHPTImageView(viewGroup.context)
+	}
+	
+	override fun prepareHandlers() {
+		super.prepareHandlers()
+		
+		
+		addHandler(Attributes.Attribute("imageUrl"), object : StringAttributeProcessor<ImageView>() {
+			override fun handle(p0: String?, p1: String?, p2: ImageView?) {
+				p2!!.setImageDrawable(null)
+				p2.setImageURL(p1!!)
+			}
+		})
+		
+		addHandler(Attributes.Attribute("shpturl"), object : StringAttributeProcessor<ImageView>() {
+			override fun handle(attributeKey: String?, attributeValue: String?, view: ImageView?) {
+				view!!.setSHPTImageURL(attributeValue!!)
+			}
+		});
+		
+		addHandler(Attributes.Attribute("imageSrc"), object : DrawableResourceProcessor<ImageView>() {
+			override fun setDrawable(p0: ImageView?, p1: Drawable?) {
+				p0!!.setImageDrawable(null)
+				
+				Glide.with(CONTEXT)
+					.load(p1)
+					.error(ContextCompat.getDrawable(p0.context, R.drawable.no_image))
+					.animate(R.anim.zoomin)
+					.into(p0)
+				
+			}
+		})
+	}
 }

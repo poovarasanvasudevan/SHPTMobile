@@ -13,8 +13,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage
  */
 
 class MessageCallback : MqttCallback {
-	override fun connectionLost(cause: Throwable) {
-		logMessage(cause.localizedMessage)
+	override fun connectionLost(cause: Throwable?) {
+		if (cause != null) {
+			logMessage(cause.localizedMessage)
+		}
 	}
 	
 	@Throws(Exception::class)
