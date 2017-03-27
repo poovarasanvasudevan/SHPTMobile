@@ -38,27 +38,26 @@
 
 
         </activity>
-
-
         <receiver android:name=".core.service.InternetConnectionWatcher">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-
-
         <receiver android:name=".core.service.MQTTServiceStarter">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-
-
+        <receiver android:name=".core.service.MQTTServiceMoniter">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
         <service android:name="org.eclipse.paho.android.service.MqttService">
         </service>
-
     </application>
 
 </manifest>

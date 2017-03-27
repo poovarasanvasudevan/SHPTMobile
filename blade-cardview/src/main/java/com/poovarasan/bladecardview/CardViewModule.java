@@ -20,6 +20,6 @@ public class CardViewModule implements Module {
         ViewParser      viewParser      = new ViewParser();
         ViewGroupParser viewGroupParser = new ViewGroupParser(viewParser);
 
-        layoutBuilder.registerHandler("CardView", new AppCardViewParser(viewGroupParser));
+        layoutBuilder.registerHandler("CardView", new AppCardViewParser(viewParser));
     }
 }

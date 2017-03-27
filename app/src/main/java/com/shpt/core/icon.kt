@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
+import com.shpt.core.config.CONTEXT
 
 /**
  * Created by poovarasanv on 18/1/17.
@@ -14,9 +15,9 @@ import com.mikepenz.iconics.IconicsDrawable
  */
 
 
-fun Context.getBackIcon(): Drawable {
+fun getBackIcon(): Drawable {
     //GoogleMaterial.Icon.gmd_apps
-    return IconicsDrawable(this)
+    return IconicsDrawable(CONTEXT)
             .icon(GoogleMaterial.Icon.gmd_arrow_back)
             .color(Color.WHITE)
             .sizeDp(18)

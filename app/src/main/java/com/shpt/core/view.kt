@@ -2,14 +2,18 @@ package com.shpt.core
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity
 import android.support.design.widget.NavigationView
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.google.gson.JsonObject
+import com.mcxiaoke.koi.ext.find
 import com.mikepenz.iconics.view.IconicsButton
 import com.mikepenz.iconics.view.IconicsImageView
 import com.poovarasan.blade.builder.DataParsingLayoutBuilder
@@ -19,6 +23,7 @@ import com.poovarasan.blade.module.Module
 import com.poovarasan.blade.parser.Parser
 import com.poovarasan.bladeappcompat.AppCompatModule
 import com.poovarasan.bladeappcompat.widget.AppProgressBar
+import com.poovarasan.bladeappcompat.widget.AppToolbar
 import com.poovarasan.bladecardview.CardViewModule
 import com.poovarasan.bladedesign.DesignModule
 import com.shpt.R
@@ -37,7 +42,7 @@ import org.jetbrains.anko.custom.ankoView
 
 /**
  * Created by poovarasanv on 17/1/17.
-
+ 
  * @author poovarasanv
  * *
  * @project SHPT
@@ -45,115 +50,114 @@ import org.jetbrains.anko.custom.ankoView
  * @on 17/1/17 at 1:59 PM
  */
 fun registerCustomView(builder: LayoutBuilder) {
-
-    val rippleParser = builder.getHandler("FrameLayout") as Parser<Ripple>
-    builder.registerHandler("Ripple", RippleParser(rippleParser))
-
-
-    val webviewParser = builder.getHandler("FrameLayout") as Parser<SHPTWebView>
-    builder.registerHandler("Web", WebViewParser(webviewParser))
-
-
-    val imageviewParser = builder.getHandler("FrameLayout") as Parser<ImageView>
-    builder.registerHandler("Image", ImageViewParser(imageviewParser))
-
-
-    val justifiedviewParser = builder.getHandler("FrameLayout") as Parser<JustifiedTextView>
-    builder.registerHandler("JustifiedTextView", JustifiedTextViewParser(justifiedviewParser))
-
-
-    val iconParser = builder.getHandler("FrameLayout") as Parser<IconicsImageView>
-    builder.registerHandler("Icon", IconParser(iconParser))
-
-    val navViewParser = builder.getHandler("FrameLayout") as Parser<NavigationView>
-    builder.registerHandler("NavigationView", NavigationViewParser(navViewParser))
-
-    val drawerViewParser = builder.getHandler("FrameLayout") as Parser<DrawerLayout>
-    builder.registerHandler("DrawerLayout", DrawerLayoutParser(drawerViewParser))
-
-
-    val viewPagerParser = builder.getHandler("FrameLayout") as Parser<ViewPager>
-    builder.registerHandler("Pager", ViewPagerParser(viewPagerParser))
-
-
-    val bigProductParser = builder.getHandler("FrameLayout") as Parser<BigProductView>
-    builder.registerHandler("BigProduct", BigProductViewParser(bigProductParser))
-
+	
+	val rippleParser = builder.getHandler("FrameLayout") as Parser<Ripple>
+	builder.registerHandler("Ripple", RippleParser(rippleParser))
+	
+	
+	val webviewParser = builder.getHandler("FrameLayout") as Parser<SHPTWebView>
+	builder.registerHandler("Web", WebViewParser(webviewParser))
+	
+	
+	val imageviewParser = builder.getHandler("FrameLayout") as Parser<ImageView>
+	builder.registerHandler("Image", ImageViewParser(imageviewParser))
+	
+	
+	val justifiedviewParser = builder.getHandler("FrameLayout") as Parser<JustifiedTextView>
+	builder.registerHandler("JustifiedTextView", JustifiedTextViewParser(justifiedviewParser))
+	
+	
+	val iconParser = builder.getHandler("FrameLayout") as Parser<IconicsImageView>
+	builder.registerHandler("Icon", IconParser(iconParser))
+	
+	val navViewParser = builder.getHandler("FrameLayout") as Parser<NavigationView>
+	builder.registerHandler("NavigationView", NavigationViewParser(navViewParser))
+	
+	val drawerViewParser = builder.getHandler("FrameLayout") as Parser<DrawerLayout>
+	builder.registerHandler("DrawerLayout", DrawerLayoutParser(drawerViewParser))
+	
+	
+	val viewPagerParser = builder.getHandler("FrameLayout") as Parser<ViewPager>
+	builder.registerHandler("Pager", ViewPagerParser(viewPagerParser))
+	
+	
+	val bigProductParser = builder.getHandler("FrameLayout") as Parser<BigProductView>
+	builder.registerHandler("BigProduct", BigProductViewParser(bigProductParser))
+	
 }
 
 fun postEvent(tv: TextView, bgColor: Int, msg: String) {
-    tv.text = msg
-    tv.setBackgroundColor(bgColor)
-    tv.visibility = View.VISIBLE
-    tv.postDelayed({
-        tv.visibility = View.GONE
-    }, 3000)
+	tv.text = msg
+	tv.setBackgroundColor(bgColor)
+	tv.visibility = View.VISIBLE
+	tv.postDelayed({
+		tv.visibility = View.GONE
+	}, 3000)
 }
 
 fun ImageView.setImageURL(imageUrl: String) {
-    Glide.with(this.context)
-            .load(imageUrl)
-            .error(R.drawable.no_image)
-            .animate(R.anim.zoomin)
-            .into(this)
-
+	Glide.with(this.context)
+		.load(imageUrl)
+		.error(R.drawable.no_image)
+		.animate(R.anim.zoomin)
+		.into(this)
+	
 }
 
 fun View.setVisibility(visibility: Int) {
-
-    val view = this
-
-    this.animate()
-            .translationY(this.getHeight().toFloat())
-            .alpha(0.0f)
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    view.visibility = visibility
-                }
-            });
+	
+	val view = this
+	
+	this.animate()
+		.translationY(this.getHeight().toFloat())
+		.alpha(0.0f)
+		.setDuration(300)
+		.setListener(object : AnimatorListenerAdapter() {
+			override fun onAnimationEnd(animation: Animator?) {
+				super.onAnimationEnd(animation)
+				view.visibility = visibility
+			}
+		});
 }
 
 
 fun ImageView.setSHPTImageURL(imageURL: String, imageSize: ImageSize = ImageSize.MEDIUM) {
-
-    //data/2433_FC.jpg
-
-    val manipulatedImage = imageURL.split(".")
-    var changedImage = manipulatedImage[0]
-    when (imageSize) {
-        ImageSize.SMALL -> {
-            //74x74
-            changedImage += "-74x74"
-        }
-
-        ImageSize.MEDIUM -> {
-            //200x250
-            changedImage += "-200x250"
-        }
-
-        ImageSize.LARGE -> {
-
-            //228x228
-            changedImage += "-228x228"
-        }
-
-        ImageSize.EXTRALARGE -> {
-            //550x550
-            changedImage += "-550x550"
-        }
-    }
-
-    val imageFull = Config.IMAGE_URL + changedImage + "." + manipulatedImage[1]
-
-    Glide.with(this.context)
-            .load(imageFull)
-            .error(R.drawable.no_image)
-            .animate(R.anim.zoomin)
-            .into(this)
-
-
+	
+	//data/2433_FC.jpg
+	
+	val manipulatedImage = imageURL.split(".")
+	var changedImage = manipulatedImage[0]
+	when (imageSize) {
+		ImageSize.SMALL      -> {
+			//74x74
+			changedImage += "-74x74"
+		}
+		
+		ImageSize.MEDIUM     -> {
+			//200x250
+			changedImage += "-200x250"
+		}
+		
+		ImageSize.LARGE      -> {
+			//228x228
+			changedImage += "-228x228"
+		}
+		
+		ImageSize.EXTRALARGE -> {
+			//550x550
+			changedImage += "-550x550"
+		}
+	}
+	
+	val imageFull = Config.IMAGE_URL + changedImage + "." + manipulatedImage[1]
+	
+	Glide.with(this.context)
+		.load(imageFull)
+		.error(R.drawable.no_image)
+		.animate(R.anim.zoomin)
+		.into(this)
+	
+	
 }
 
 fun ViewManager.progressLine(theme: Int = 0) = progressLine(theme) {}
@@ -176,21 +180,47 @@ inline fun ViewManager.shadow(theme: Int = 0, init: Shadow.() -> Unit) = ankoVie
 
 
 fun getLayoutBuilder(): DataParsingLayoutBuilder {
-    val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
-    layoutBuilder.listener = EventCallback(CONTEXT)
-
-    val appCompatModule: Module = AppCompatModule()
-    appCompatModule.register(layoutBuilder)
-
-    val cardViewModule: Module = CardViewModule()
-    cardViewModule.register(layoutBuilder)
-
-    val designModule: Module = DesignModule()
-    designModule.register(layoutBuilder)
-
-
-    registerCustomView(builder = layoutBuilder)
-    return layoutBuilder
+	val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
+	layoutBuilder.listener = EventCallback(CONTEXT)
+	
+	/*
+	* @see AppCompatModule
+	* This Registers Appcompat Module into App Module
+	* @author poovarasan
+	* */
+	val appCompatModule: Module = AppCompatModule()
+	appCompatModule.register(layoutBuilder)
+	
+	val cardViewModule: Module = CardViewModule()
+	cardViewModule.register(layoutBuilder)
+	
+	val designModule: Module = DesignModule()
+	designModule.register(layoutBuilder)
+	
+	
+	registerCustomView(builder = layoutBuilder)
+	return layoutBuilder
 }
 
-
+/*
+* Set up essential components
+* like toolbar...
+*
+* @fix Need to fix menu item component as Sticky (or) has to move into Base Activity
+* */
+fun setUpEssential(
+	layoutBuilder: DataParsingLayoutBuilder,
+	view: View,
+	viewJson: JsonObject,
+	dataJson: JsonObject,
+	activity: Activity) {
+	
+	val toolbarid = layoutBuilder.getUniqueViewId("toolbar")
+	if (toolbarid != null && view.findViewById(toolbarid) != null) {
+		val toolbar = view.find<AppToolbar>(toolbarid)
+		(activity as AppCompatActivity).setSupportActionBar(toolbar)
+		(activity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+		(activity).supportActionBar!!.setDisplayShowHomeEnabled(true)
+		(activity).supportActionBar!!.setHomeAsUpIndicator(getBackIcon())
+	}
+}

@@ -153,10 +153,10 @@
               "id": "loginWeb",
               "layout_width": "match_parent",
               "layout_height": "match_parent",
-              "url": "http://localhost:8080/index.php?route=mobile/api/loginMe"
+              "url": "http://localhost:8092/index.php?route=mobile/api/loginMe"
             },
             {
-              "type": "ProgressWheel",
+              "type": "AppCompatProgressBar",
               "layout_width": "40dp",
               "id": "loginProgress",
               "layout_centerHorizontal": "true",
@@ -174,14 +174,6 @@
     "menu": {
       "toolbar": {
         "children": [
-          {
-            "icon": "gmd_search",
-            "showaction": "always",
-            "title": "Search Product",
-            "event": "",
-            "searchcomponent": true,
-            "visibility": "visible"
-          },
           {
             "icon": "gmd_notifications",
             "showaction": "always",
@@ -367,45 +359,38 @@
                 "layout_main": [
                   {
                     "main": {
-                      "type": "CardView",
+                      "type": "LinearLayout",
+                      "background": "#000000",
                       "layout_width": "match_parent",
                       "layout_margin": "3dp",
-                      "layout_height": "match_parent",
-                      "children": [
-                      ]
+                      "layout_height": "match_parent"
                     }
                   },
                   {
                     "main": {
-                      "type": "CardView",
+                      "type": "LinearLayout",
                       "background": "#000000",
                       "layout_width": "match_parent",
                       "layout_margin": "3dp",
-                      "layout_height": "match_parent",
-                      "children": [
-                      ]
+                      "layout_height": "match_parent"
                     }
                   },
                   {
                     "main": {
-                      "type": "CardView",
+                      "type": "LinearLayout",
                       "background": "#000000",
                       "layout_width": "match_parent",
                       "layout_margin": "3dp",
-                      "layout_height": "match_parent",
-                      "children": [
-                      ]
+                      "layout_height": "match_parent"
                     }
                   },
                   {
                     "main": {
-                      "type": "CardView",
+                      "type": "LinearLayout",
                       "background": "#000000",
                       "layout_width": "match_parent",
                       "layout_margin": "3dp",
-                      "layout_height": "match_parent",
-                      "children": [
-                      ]
+                      "layout_height": "match_parent"
                     }
                   }
                 ]

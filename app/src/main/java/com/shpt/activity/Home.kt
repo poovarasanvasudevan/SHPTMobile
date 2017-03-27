@@ -95,6 +95,7 @@ class Home : AppCompatActivity() {
                         editText {
                             hint = "Search for Books,CD,DVD..."
                             background = null
+                            textSize = dip(5).toFloat()
                             compoundDrawablePadding = dip(10)
                             onTextChange { text, start, before, count ->
                                 if (isConnected() && count > 2) {
@@ -224,15 +225,24 @@ class Home : AppCompatActivity() {
                             val view = layoutBuilder.build(find<RelativeLayout>(R.id.mainLayout1), parser.parse(row.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, Styles())
                             find<RelativeLayout>(R.id.mainLayout1).removeAllViews()
                             find<RelativeLayout>(R.id.mainLayout1).addView(view as View)
-
-
+    
+    
+                            setUpEssential(
+                                layoutBuilder,
+                                view,
+                                parser.parse(row.structure).asJsonObject.getAsJsonObject("main"),
+                                JsonObject(),
+                                this@Home
+                            )
+    
                             if (parser.parse(row.structure).asJsonObject.has("menu")) {
                                 menuJson = parser.parse(row.structure).asJsonObject.getAsJsonObject("menu")
                                 invalidateOptionsMenu()
                             } else {
                                 menuJson = JsonObject()
                             }
-
+    
+    
                             val actionBarDrawerToggle = object : ActionBarDrawerToggle(this@Home, find<DrawerLayout>(R.id.drawer), find<Toolbar>(R.id.toolbar), R.string.drawer_open, R.string.drawer_close) {
 
                                 override fun onDrawerClosed(drawerView: View) {

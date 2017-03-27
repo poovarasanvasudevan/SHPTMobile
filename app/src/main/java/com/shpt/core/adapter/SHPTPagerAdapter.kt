@@ -9,10 +9,9 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import com.poovarasan.blade.builder.LayoutBuilderFactory
 import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
-import com.shpt.core.registerCustomView
+import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
 import logMessage
 
 /**
@@ -45,10 +44,8 @@ class SHPTPagerAdapter(private val layoutJson: JsonArray, private val context: C
         mainLayout = imageLayout.findViewById(R.id.mainLayout) as RelativeLayout
 
         logMessage(thisJson.toString())
-        val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
+        val layoutBuilder = LAYOUT_BUILDER_FACTORY
         mainLayout.removeAllViews()
-        registerCustomView(layoutBuilder)
-
         val view = layoutBuilder.build(mainLayout, layout, dataJson, 0, Styles())
 
         mainLayout.addView(view as View)

@@ -27,28 +27,29 @@ fun Activity.goToSrcmLoginPage() = startActivity<SRCMLogin>()
 fun Activity.goToLoginPage() = startActivity<Login>()
 fun Context.isServiceRunning(serviceClass: Class<*>): Boolean = activityManager.getRunningServices(Integer.MAX_VALUE).any { serviceClass.name == it.service.className }
 fun Context.handleConnectionError() {
-
-    val alert1 = alert("Not Connected to Internet. Retry again?") {
-
-        positiveButton("Yes", {
-            handleConnectionError()
-        })
-
-        negativeButton("No", DialogInterface::dismiss)
-
-    }
-    if (!isConnected()) alert1.show() else alert1.dismiss()
+	
+	val alert1 = alert("Not Connected to Internet. Retry again?") {
+		
+		positiveButton("Yes", {
+			handleConnectionError()
+		})
+		
+		negativeButton("No", DialogInterface::dismiss)
+		
+	}
+	if (!isConnected()) alert1.show() else alert1.dismiss()
 }
 
 
 @Throws(UnsupportedEncodingException::class)
 fun splitQuery(url: URL): Map<String, String> {
-    val query_pairs = LinkedHashMap<String, String>()
-    val query = url.getQuery()
-    val pairs = query.split("&".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
-    for (pair in pairs) {
-        val idx = pair.indexOf("=")
-        query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"))
-    }
-    return query_pairs
+	val query_pairs = LinkedHashMap<String, String>()
+	val query = url.getQuery()
+	val pairs = query.split("&".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
+	for (pair in pairs) {
+		val idx = pair.indexOf("=")
+		query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"))
+	}
+	return query_pairs
 }
+

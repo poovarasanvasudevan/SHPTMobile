@@ -23,10 +23,7 @@ import org.jetbrains.anko.searchManager
 
 fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activity) {
     if (json.has("toolbar")) {
-
-
-
-
+    
         val toolBarMenu = json.getAsJsonObject("toolbar")
         val menuItems = toolBarMenu.getAsJsonArray("children")
 

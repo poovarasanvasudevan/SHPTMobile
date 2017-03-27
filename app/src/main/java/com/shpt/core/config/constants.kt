@@ -13,6 +13,7 @@ import com.shpt.core.prefs.Prefs
 import com.shpt.core.rest.Rest
 import com.shpt.job.Priority
 import com.squareup.otto.Bus
+import org.eclipse.paho.android.service.MqttAndroidClient
 
 /**
  * Created by poovarasanv on 24/3/17.
@@ -62,3 +63,6 @@ val CONTEXT: Context
 
 val REST: Rest
     get() = CONTEXT.getAdapter()
+
+val MQTT_OBJ: MqttAndroidClient
+	get() = SHPTApplication.mqtt
