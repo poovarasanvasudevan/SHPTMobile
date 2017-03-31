@@ -1,1 +1,1 @@
-include ':app', ':blade', ':blade-appcompat', ':blade-cardview', ':blade-design'
+include ':app', ':blade', ':blade-appcompat', ':blade-cardview', ':blade-design', ':android-verify'

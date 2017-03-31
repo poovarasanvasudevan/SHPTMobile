@@ -15,8 +15,8 @@ import com.shpt.core.config.DATABASE
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.progressLine
 import com.shpt.core.serviceevent.RetryServiceEvent
-import com.squareup.otto.Subscribe
 import logMessage
+import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
@@ -91,10 +91,12 @@ class MainActivity : AppCompatActivity() {
 
             if (Prefs.with(this@MainActivity).contains(Config.COOKIE)) {
                 startActivity<SRCMLogin>()
+	            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 finish()
             } else {
 
                 startActivity<Login>()
+	            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 finish()
             }
 

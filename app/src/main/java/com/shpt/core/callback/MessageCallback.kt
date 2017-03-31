@@ -1,5 +1,7 @@
 package com.shpt.core.callback
 
+import com.shpt.core.config.BUS
+import com.shpt.core.serviceevent.NotificationEvent
 import logMessage
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallback
@@ -22,6 +24,7 @@ class MessageCallback : MqttCallback {
 	@Throws(Exception::class)
 	override fun messageArrived(topic: String, message: MqttMessage) {
 		logMessage("Message from : $topic was ${message.toString()}")
+		BUS.post(NotificationEvent(message = message.toString()))
 	}
 	
 	override fun deliveryComplete(token: IMqttDeliveryToken) {

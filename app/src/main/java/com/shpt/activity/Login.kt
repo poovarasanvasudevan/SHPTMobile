@@ -15,8 +15,8 @@ import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.models.Layout
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.core.setUpEssential
-import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseSingle
 import org.jetbrains.anko.db.select

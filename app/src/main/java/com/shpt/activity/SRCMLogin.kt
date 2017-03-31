@@ -31,9 +31,9 @@ import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.core.setUpEssential
 import com.shpt.uiext.SHPTWebView
-import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
 import logMessage
+import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseSingle
@@ -149,6 +149,7 @@ class SRCMLogin : AppCompatActivity() {
 				saveCookie(url)
 				//startActivity<ProfileUpdate>()
 				startActivity<Home>()
+				overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 				finish()
 			}
 			
@@ -157,6 +158,7 @@ class SRCMLogin : AppCompatActivity() {
 				//go to home page
 				saveCookie(url)
 				startActivity<Home>()
+				overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 				finish()
 			}
 			
@@ -164,6 +166,7 @@ class SRCMLogin : AppCompatActivity() {
 				loginWebView.visibility = View.GONE
 				saveCookie(url)
 				startActivity<Home>()
+				overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 				finish()
 			}
 			

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SHPT.iml" filepath="$PROJECT_DIR$/SHPT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-verify/android-verify.iml" filepath="$PROJECT_DIR$/android-verify/android-verify.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/blade/blade.iml" filepath="$PROJECT_DIR$/blade/blade.iml" />
       <module fileurl="file://$PROJECT_DIR$/blade-appcompat/blade-appcompat.iml" filepath="$PROJECT_DIR$/blade-appcompat/blade-appcompat.iml" />

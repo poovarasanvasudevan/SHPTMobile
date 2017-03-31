@@ -52,4 +52,3 @@ fun splitQuery(url: URL): Map<String, String> {
 	}
 	return query_pairs
 }
-

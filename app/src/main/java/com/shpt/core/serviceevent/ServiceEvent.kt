@@ -2,7 +2,7 @@ package com.shpt.core.serviceevent
 
 /**
  * Created by poovarasanv on 10/2/17.
-
+ 
  * @author poovarasanv
  * *
  * @project SHPT
@@ -12,3 +12,4 @@ package com.shpt.core.serviceevent
 
 class ConnectionServiceEvent(var status: Boolean, var message: String)
 class RetryServiceEvent(var status: Boolean, var message: String)
+class NotificationEvent(var message: String)

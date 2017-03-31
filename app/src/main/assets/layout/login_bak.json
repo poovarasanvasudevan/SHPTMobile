@@ -47,13 +47,6 @@
               "layout_height": "wrap_content",
               "children": [
                 {
-                  "type": "Image",
-                  "layout_width": "match_parent",
-                  "layout_height": "wrap_content",
-                  "layout_margin": "36dp",
-                  "imageUrl": "http://en.staging.heartfulness.org/wp-content/uploads/sites/2/2017/01/logo1.png"
-                },
-                {
                   "type": "ScrollView",
                   "layout_width": "match_parent",
                   "layout_height": "match_parent",
@@ -102,10 +95,9 @@
                         "event": [
                           {
                             "event": "ActivityGoToEvent",
-                            "activity": "SRCMLogin",
+                            "activity": "FormActivity",
                             "data": {
-                              "layout": {
-                              }
+                              "formName": "eventRegister"
                             }
                           }
                         ]
@@ -296,45 +288,47 @@
           },
           {
             "icon": "gmd_people",
-            "title": "My Account",
+            "title": "Account Information",
             "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
+            "visibility": "visible",
+            "children": [
+              {
+                "icon": "gmd_people",
+                "title": "My Account",
+                "event": "",
+                "visibility": "visible"
+              },
+              {
+                "icon": "gmd_people",
+                "title": "My Account",
+                "event": "",
+                "visibility": "visible"
+              },
+              {
+                "icon": "gmd_people",
+                "title": "My Account",
+                "event": "",
+                "visibility": "visible"
+              },
+              {
+                "icon": "gmd_people",
+                "title": "My Account",
+                "event": "",
+                "visibility": "visible"
+              },
+              {
+                "icon": "gmd_people",
+                "title": "My Account",
+                "event": "",
+                "visibility": "visible"
+              },
+              {
+                "icon": "gmd_people",
+                "title": "My Account",
+                "event": "",
+                "visibility": "visible"
+              }
+            ]
           }
         ]
       }
@@ -405,6 +399,172 @@
           ]
         }
       ]
+    }
+  },
+  "forms": {
+    "eventRegister": {
+      "main": {
+        "type": "RelativeLayout",
+        "layout_width": "match_parent",
+        "layout_height": "match_parent",
+        "children": [
+          {
+            "type": "AppBarLayout",
+            "id": "appbar",
+            "elevation": "4dp",
+            "layout_width": "match_parent",
+            "layout_height": "wrap_content",
+            "children": [
+              {
+                "type": "Toolbar",
+                "id": "toolbar",
+                "title": "Event Register Form",
+                "layout_width": "match_parent",
+                "layout_height": "56dp"
+              }
+            ]
+          },
+          {
+            "type": "ScrollView",
+            "layout_below": "appbar",
+            "layout_width": "match_parent",
+            "layout_height": "match_parent",
+            "children": [
+              {
+                "type": "LinearLayout",
+                "layout_width": "match_parent",
+                "layout_height": "match_parent",
+                "orientation": "vertical",
+                "children": [
+                  {
+                    "type": "EditText",
+                    "layout_width": "match_parent",
+                    "layout_height": "wrap_content",
+                    "hint": "First Name",
+                    "id": "firstName"
+                  },
+                  {
+                    "type": "EditText",
+                    "layout_width": "match_parent",
+                    "layout_height": "wrap_content",
+                    "hint": "Last Name",
+                    "id": "lastName"
+                  },
+                  {
+                    "type": "EditText",
+                    "layout_width": "match_parent",
+                    "layout_height": "wrap_content",
+                    "hint": "Email",
+                    "id": "email"
+                  },
+                  {
+                    "type": "EditText",
+                    "layout_width": "match_parent",
+                    "layout_height": "wrap_content",
+                    "hint": "Phone Number",
+                    "id": "phone"
+                  },
+                  {
+                    "type": "EditText",
+                    "layout_width": "match_parent",
+                    "layout_height": "wrap_content",
+                    "hint": "Mobile Number",
+                    "id": "mobile"
+                  },
+                  {
+                    "type": "Button",
+                    "layout_width": "match_parent",
+                    "layout_height": "wrap_content",
+                    "text": "Submit",
+                    "id": "submit"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "data": {
+      },
+      "validator": {
+        "validateOnClickButton": "#submit",
+        "validateOptions": [
+          {
+            "id": "#firstName",
+            "creteria": [
+              {
+                "type": "REQUIRED",
+                "errorMessage": "First Name is Required"
+              },
+              {
+                "type": "MINLENGTH",
+                "value": 10,
+                "errorMessage": "First Name should be Of Minimum of 10 Character"
+              },
+              {
+                "type": "MAXLENGTH",
+                "value": 30,
+                "errorMessage": "First Name Max of 30 Characters"
+              }
+            ]
+          },
+          {
+            "id": "#lastName",
+            "creteria": [
+              {
+                "type": "REQUIRED",
+                "errorMessage": "Last Name is Required"
+              }
+            ]
+          },
+          {
+            "id": "#email",
+            "creteria": [
+              {
+                "type": "REQUIRED",
+                "errorMessage": "Email is Required"
+              },
+              {
+                "type": "EMAIL",
+                "errorMessage": "Email Should be Valid"
+              }
+            ]
+          },
+          {
+            "id": "#phone",
+            "creteria": [
+              {
+                "type": "REQUIRED",
+                "errorMessage": "Phone Number is Required"
+              },
+              {
+                "type": "PHONE",
+                "errorMessage": "It Should be valid Phone number"
+              }
+            ]
+          },
+          {
+            "id": "#mobile",
+            "creteria": [
+              {
+                "type": "REQUIRED",
+                "errorMessage": "Mobile Number is Required"
+              },
+              {
+                "type": "REGEX",
+                "value": "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+                "errorMessage": "It Should be valid Mobile number"
+              }
+            ]
+          }
+        ]
+      },
+      "configuration": {
+        "formSubmitURL": "",
+        "formMethod": "",
+        "responseSuccessAttr": "",
+        "responseFailureAttr": ""
+      }
     }
   }
 }

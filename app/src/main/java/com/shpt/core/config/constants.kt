@@ -8,11 +8,11 @@ import com.poovarasan.blade.builder.DataParsingLayoutBuilder
 import com.shpt.core.api.getAdapter
 import com.shpt.core.app.SHPTApplication
 import com.shpt.core.db.DatabaseOpenHelper
+import com.shpt.core.ext.BusBase
 import com.shpt.core.getLayoutBuilder
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.rest.Rest
 import com.shpt.job.Priority
-import com.squareup.otto.Bus
 import org.eclipse.paho.android.service.MqttAndroidClient
 
 /**
@@ -55,7 +55,7 @@ val KERNEL_UPDATE_PARAMS: Params
             .groupBy("kernel_update")
             .setPersistent(true)
 
-val BUS: Bus
+val BUS: BusBase
     get() = SHPTApplication.bus
 
 val CONTEXT: Context

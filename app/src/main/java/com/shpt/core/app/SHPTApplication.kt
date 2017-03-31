@@ -6,10 +6,11 @@ import android.util.Log
 import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.config.Configuration
 import com.birbit.android.jobqueue.log.CustomLogger
+import com.poovarasan.androidverify.App
+import com.shpt.core.ext.BusBase
+import com.shpt.core.ext.GreenRobotEventBus
 import com.shpt.core.mqtt.MQTT
 import com.shpt.core.mqtt.connectMqtt
-import com.squareup.otto.Bus
-import com.squareup.otto.ThreadEnforcer
 import org.eclipse.paho.android.service.MqttAndroidClient
 
 
@@ -32,7 +33,7 @@ class SHPTApplication : Application() {
 			private set
 		lateinit var context: Context
 			private set
-		lateinit var bus: Bus
+		lateinit var bus: BusBase
 			private set
 		lateinit var mqtt: MqttAndroidClient
 			private set
@@ -45,9 +46,11 @@ class SHPTApplication : Application() {
 		instance = this
 		jobinstance = JobManager(configureJobManager())
 		context = this.applicationContext
-		bus = Bus(ThreadEnforcer.ANY)
+		bus = GreenRobotEventBus()
 		mqtt = MQTT.getMQTTClient(applicationContext)!!
 		
+		
+		App.setContext(this);
 		connectMqtt();
 	}
 	
