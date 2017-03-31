@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.toast
 import com.poovarasan.androidverify.Form
 import com.poovarasan.androidverify.InputValidator
@@ -63,7 +62,7 @@ class FormActivity : AppCompatActivity() {
 								val layoutBuilder = LAYOUT_BUILDER_FACTORY
 								mainLayout.removeAllViews()
 								
-								val parser = JsonParser()
+								
 								val view = layoutBuilder.build(mainLayout, layout, data, 0, Styles())
 								mainLayout.addView(view as View)
 								
@@ -144,8 +143,9 @@ class FormActivity : AppCompatActivity() {
 										
 										val minForm = formBuilder.build()
 										
-										view.findViewById(validatorButton).setOnClickListener {
+										findViewById(validatorButton).setOnClickListener {
 											if (minForm.isValid) {
+												
 												//process
 												toast("Valid Form")
 											} else {
@@ -159,6 +159,7 @@ class FormActivity : AppCompatActivity() {
 					}
 				}
 			}
+			
 		} catch (e: Exception) {
 			toast(e.cause.toString())
 		}

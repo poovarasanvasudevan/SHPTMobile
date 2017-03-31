@@ -472,6 +472,21 @@
                     "id": "mobile"
                   },
                   {
+                    "type": "AutoCompleteTextView",
+                    "layout_width": "match_parent",
+                    "layout_height": "wrap_content",
+                    "hint": "Country",
+                    "data": [
+                      "India",
+                      "USA",
+                      "China",
+                      "Japan",
+                      "Korea",
+                      "Australia"
+                    ],
+                    "id": "country"
+                  },
+                  {
                     "type": "Button",
                     "layout_width": "match_parent",
                     "layout_height": "wrap_content",

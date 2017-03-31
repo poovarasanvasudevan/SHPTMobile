@@ -24,6 +24,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 
 import com.poovarasan.blade.parser.ViewParser;
+import com.poovarasan.blade.parser.custom.AutoCompleteTextViewParser;
 import com.poovarasan.blade.parser.custom.ButtonParser;
 import com.poovarasan.blade.parser.custom.CheckBoxParser;
 import com.poovarasan.blade.parser.custom.EditTextParser;
@@ -59,8 +60,8 @@ import java.util.Map;
  */
 public class LayoutBuilderFactory {
 
-    private SimpleLayoutBuilder simpleLayoutBuilderInstance;
-    private DataParsingLayoutBuilder dataParsingLayoutBuilderInstance;
+    private SimpleLayoutBuilder             simpleLayoutBuilderInstance;
+    private DataParsingLayoutBuilder        dataParsingLayoutBuilderInstance;
     private DataAndViewParsingLayoutBuilder dataAndViewParsingLayoutBuilderInstance;
 
     /**
@@ -139,23 +140,24 @@ public class LayoutBuilderFactory {
      */
     @SuppressWarnings("unchecked")
     protected void registerBuiltInHandlers(LayoutBuilder layoutBuilder) {
-        ViewParser viewParser = new ViewParser();
-        ImageViewParser imageViewParser = new ImageViewParser(viewParser);
-        ImageButtonParser imageButtonParser = new ImageButtonParser(imageViewParser);
-        ViewGroupParser viewGroupParser = new ViewGroupParser(viewParser);
-        RelativeLayoutParser relativeLayoutParser = new RelativeLayoutParser(viewGroupParser);
-        LinearLayoutParser linearLayoutParser = new LinearLayoutParser(viewGroupParser);
-        FrameLayoutParser frameLayoutParser = new FrameLayoutParser(viewGroupParser);
-        ScrollViewParser scrollViewParser = new ScrollViewParser(frameLayoutParser);
-        HorizontalScrollViewParser horizontalScrollViewParser = new HorizontalScrollViewParser(frameLayoutParser);
-        TextViewParser textViewParser = new TextViewParser(viewParser);
-        EditTextParser editTextParser = new EditTextParser(textViewParser);
-        ButtonParser buttonParser = new ButtonParser(textViewParser);
-        ViewPagerParser viewPagerParser = new ViewPagerParser(viewGroupParser);
-        WebViewParser webViewParser = new WebViewParser(viewParser);
-        RatingBarParser ratingBarParser = new RatingBarParser(viewParser);
-        CheckBoxParser checkBoxParser = new CheckBoxParser(buttonParser);
-        ProgressBarParser progressBarParser = new ProgressBarParser(viewParser);
+        ViewParser                  viewParser                  = new ViewParser();
+        ImageViewParser             imageViewParser             = new ImageViewParser(viewParser);
+        ImageButtonParser           imageButtonParser           = new ImageButtonParser(imageViewParser);
+        ViewGroupParser             viewGroupParser             = new ViewGroupParser(viewParser);
+        RelativeLayoutParser        relativeLayoutParser        = new RelativeLayoutParser(viewGroupParser);
+        LinearLayoutParser          linearLayoutParser          = new LinearLayoutParser(viewGroupParser);
+        FrameLayoutParser           frameLayoutParser           = new FrameLayoutParser(viewGroupParser);
+        ScrollViewParser            scrollViewParser            = new ScrollViewParser(frameLayoutParser);
+        HorizontalScrollViewParser  horizontalScrollViewParser  = new HorizontalScrollViewParser(frameLayoutParser);
+        TextViewParser              textViewParser              = new TextViewParser(viewParser);
+        EditTextParser              editTextParser              = new EditTextParser(textViewParser);
+        AutoCompleteTextViewParser  autoCompleteTextViewParser  = new AutoCompleteTextViewParser(editTextParser);
+        ButtonParser                buttonParser                = new ButtonParser(textViewParser);
+        ViewPagerParser             viewPagerParser             = new ViewPagerParser(viewGroupParser);
+        WebViewParser               webViewParser               = new WebViewParser(viewParser);
+        RatingBarParser             ratingBarParser             = new RatingBarParser(viewParser);
+        CheckBoxParser              checkBoxParser              = new CheckBoxParser(buttonParser);
+        ProgressBarParser           progressBarParser           = new ProgressBarParser(viewParser);
         HorizontalProgressBarParser horizontalProgressBarParser = new HorizontalProgressBarParser(progressBarParser);
 
         layoutBuilder.registerHandler("View", viewParser);
@@ -168,6 +170,7 @@ public class LayoutBuilderFactory {
         layoutBuilder.registerHandler("ImageView", imageViewParser);
         layoutBuilder.registerHandler("TextView", textViewParser);
         layoutBuilder.registerHandler("EditText", editTextParser);
+        layoutBuilder.registerHandler("AutoCompleteTextView", autoCompleteTextViewParser);
         layoutBuilder.registerHandler("Button", buttonParser);
         layoutBuilder.registerHandler("ImageButton", imageButtonParser);
         layoutBuilder.registerHandler("ViewPager", viewPagerParser);
