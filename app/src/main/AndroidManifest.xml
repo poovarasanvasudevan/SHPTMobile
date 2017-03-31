@@ -22,10 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Login">
-        </activity>
-        <activity android:name=".activity.SRCMLogin"></activity>
-        <activity android:name=".activity.FormActivity">
+        <activity android:name=".activity.Login"/>
+        <activity android:name=".activity.SRCMLogin"/>
+        <activity android:name=".activity.FormActivity"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity android:name=".activity.Home"
                   android:windowSoftInputMode="stateHidden|adjustResize">

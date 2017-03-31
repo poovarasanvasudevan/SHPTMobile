@@ -441,35 +441,41 @@
                     "layout_width": "match_parent",
                     "layout_height": "wrap_content",
                     "hint": "First Name",
-                    "id": "firstName"
+                    "id": "firstName",
+                    "text": "~{{user.name}}",
+                    "tag": "firstName"
                   },
                   {
                     "type": "EditText",
                     "layout_width": "match_parent",
                     "layout_height": "wrap_content",
                     "hint": "Last Name",
-                    "id": "lastName"
+                    "id": "lastName",
+                    "tag": "lastName"
                   },
                   {
                     "type": "EditText",
                     "layout_width": "match_parent",
                     "layout_height": "wrap_content",
                     "hint": "Email",
-                    "id": "email"
+                    "id": "email",
+                    "tag": "email"
                   },
                   {
                     "type": "EditText",
                     "layout_width": "match_parent",
                     "layout_height": "wrap_content",
                     "hint": "Phone Number",
-                    "id": "phone"
+                    "id": "phone",
+                    "tag": "phone"
                   },
                   {
                     "type": "EditText",
                     "layout_width": "match_parent",
                     "layout_height": "wrap_content",
                     "hint": "Mobile Number",
-                    "id": "mobile"
+                    "id": "mobile",
+                    "tag": "mobile"
                   },
                   {
                     "type": "AutoCompleteTextView",
@@ -484,7 +490,8 @@
                       "Korea",
                       "Australia"
                     ],
-                    "id": "country"
+                    "id": "country",
+                    "tag": "country"
                   },
                   {
                     "type": "Button",
@@ -500,6 +507,9 @@
         ]
       },
       "data": {
+        "user": {
+          "name": "Poovarasan"
+        }
       },
       "validator": {
         "validateOnClickButton": "#submit",
@@ -575,10 +585,24 @@
         ]
       },
       "configuration": {
-        "formSubmitURL": "",
-        "formMethod": "",
+        "formSubmitURL": "http://google.com",
+        "cancelable": false,
+        "formTagParams": [
+          "@firstName",
+          "@lastName",
+          "@email",
+          "@phone",
+          "@mobile",
+          "@country"
+        ],
         "responseSuccessAttr": "",
-        "responseFailureAttr": ""
+        "responseFailureAttr": "",
+        "attachParams": [
+          {
+            "key": "key",
+            "value": "value"
+          }
+        ]
       }
     }
   }

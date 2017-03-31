@@ -14,6 +14,7 @@ import com.shpt.R
 import com.shpt.core.config.DATABASE
 import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.config.PARSER
+import com.shpt.core.config.REST
 import com.shpt.core.data.Constant
 import com.shpt.core.ext.getArray
 import com.shpt.core.ext.getString
@@ -27,6 +28,7 @@ import org.jetbrains.anko.db.parseSingle
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
+import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.uiThread
 
 
@@ -48,15 +50,13 @@ class FormActivity : AppCompatActivity() {
 					select("Layout").where("page = {pageName}", "pageName" to "forms").exec {
 						val rowParser = classParser<Layout>()
 						val row = parseSingle(rowParser)
-						
-						
 						uiThread {
-							
 							if (PARSER.parse(row.structure).asJsonObject.has(formName)) {
 								val form = PARSER.parse(row.structure).asJsonObject.getAsJsonObject(formName)
 								val layout = form.getAsJsonObject("main");
 								val data = if (form.has("data")) form.getAsJsonObject("data") else JsonObject()
 								val validator = if (form.has("validator")) form.getAsJsonObject("validator") else JsonObject()
+								val configuration = if (form.has("configuration")) form.getAsJsonObject("configuration") else JsonObject()
 								
 								
 								val layoutBuilder = LAYOUT_BUILDER_FACTORY
@@ -145,7 +145,43 @@ class FormActivity : AppCompatActivity() {
 										
 										findViewById(validatorButton).setOnClickListener {
 											if (minForm.isValid) {
-												
+												if (configuration.has("formSubmitURL")) {
+													val formSubmitURL = configuration.get("formSubmitURL").asString
+													val formTagParams = configuration.get("formTagParams").asJsonArray
+													
+													val paramsMap: MutableMap<String, String> = mutableMapOf();
+													
+													formTagParams.forEach {
+														val id = it.asString.replace("@", "").trim()
+														val element = findViewById(layoutBuilder.getUniqueViewId(id)) as EditText
+														paramsMap.put(id, element.text.toString())
+													}
+													
+													if (configuration.has("attachParams")) {
+														val attachParams = configuration.get("attachParams").asJsonArray
+														attachParams.forEach {
+															paramsMap.put(it.asJsonObject.getString("key"), it.asJsonObject.getString("value"))
+														}
+													}
+													
+													val pd = indeterminateProgressDialog(if (configuration.has("progressMessage")) configuration.getString("progressMessage") else "Loading Please wait...")
+													pd.setCanceledOnTouchOutside(if (configuration.has("cancelable")) configuration.get("cancelable").asBoolean else true)
+													pd.show()
+													
+													if (formSubmitURL.isNotEmpty() && formSubmitURL.isNotBlank()) {
+														doAsync {
+															val executedText: String = REST.submitForm(formSubmitURL, params = paramsMap).execute().body().string()
+															uiThread {
+																if (pd.isShowing) {
+																	pd.dismiss();
+																}
+																toast(executedText)
+															}
+														}
+													}
+													
+													toast(" SIZE ==> ${paramsMap.size}")
+												}
 												//process
 												toast("Valid Form")
 											} else {
