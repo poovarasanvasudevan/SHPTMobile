@@ -52,6 +52,7 @@ class FormActivity : AppCompatActivity() {
 						val row = parseSingle(rowParser)
 						uiThread {
 							if (PARSER.parse(row.structure).asJsonObject.has(formName)) {
+								
 								val form = PARSER.parse(row.structure).asJsonObject.getAsJsonObject(formName)
 								val layout = form.getAsJsonObject("main");
 								val data = if (form.has("data")) form.getAsJsonObject("data") else JsonObject()
