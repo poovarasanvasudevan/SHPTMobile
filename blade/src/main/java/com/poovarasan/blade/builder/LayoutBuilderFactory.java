@@ -35,6 +35,8 @@ import com.poovarasan.blade.parser.custom.ImageButtonParser;
 import com.poovarasan.blade.parser.custom.ImageViewParser;
 import com.poovarasan.blade.parser.custom.LinearLayoutParser;
 import com.poovarasan.blade.parser.custom.ProgressBarParser;
+import com.poovarasan.blade.parser.custom.RadioButtonParser;
+import com.poovarasan.blade.parser.custom.RadioGroupParser;
 import com.poovarasan.blade.parser.custom.RatingBarParser;
 import com.poovarasan.blade.parser.custom.RelativeLayoutParser;
 import com.poovarasan.blade.parser.custom.ScrollViewParser;
@@ -159,6 +161,9 @@ public class LayoutBuilderFactory {
         CheckBoxParser              checkBoxParser              = new CheckBoxParser(buttonParser);
         ProgressBarParser           progressBarParser           = new ProgressBarParser(viewParser);
         HorizontalProgressBarParser horizontalProgressBarParser = new HorizontalProgressBarParser(progressBarParser);
+        RadioGroupParser            radioGroupParser            = new RadioGroupParser(viewGroupParser);
+        RadioButtonParser           radioButtonParser           = new RadioButtonParser(checkBoxParser);
+
 
         layoutBuilder.registerHandler("View", viewParser);
         layoutBuilder.registerHandler("ViewGroup", viewGroupParser);
@@ -179,6 +184,8 @@ public class LayoutBuilderFactory {
         layoutBuilder.registerHandler("CheckBox", checkBoxParser);
         layoutBuilder.registerHandler("ProgressBar", progressBarParser);
         layoutBuilder.registerHandler("HorizontalProgressBar", horizontalProgressBarParser);
+        layoutBuilder.registerHandler("RadioGroup", radioGroupParser);
+        layoutBuilder.registerHandler("RadioButton", radioButtonParser);
     }
 
     protected void registerFormatter(DataParsingLayoutBuilder layoutBuilder) {

@@ -100,9 +100,14 @@ class FormActivity : AppCompatActivity() {
 									val componentId = it.asJsonObject.getString("id").replace("#", "").trim()
 									
 									if (componentId != "" && layoutBuilder.getUniqueViewId(componentId) != null && view.findViewById(layoutBuilder.getUniqueViewId(componentId)) != null) {
-										val componentView = view.findViewById(layoutBuilder.getUniqueViewId(componentId)) as EditText
 										
-										if (it.asJsonObject.has("creteria")) {
+										
+										var componentView: EditText? = null
+										if (view.findViewById(layoutBuilder.getUniqueViewId(componentId)) is EditText) {
+											componentView = view.findViewById(layoutBuilder.getUniqueViewId(componentId)) as EditText
+										}
+										
+										if (it.asJsonObject.has("creteria") && view.findViewById(layoutBuilder.getUniqueViewId(componentId)) is EditText) {
 											val creteria = it.asJsonObject.getArray("creteria")
 											
 											val inputValidator = InputValidator.Builder(applicationContext)
@@ -148,6 +153,8 @@ class FormActivity : AppCompatActivity() {
 											}
 											formBuilder.addInputValidator(inputValidator.build())
 										}
+										
+										
 									}
 								}
 							}
