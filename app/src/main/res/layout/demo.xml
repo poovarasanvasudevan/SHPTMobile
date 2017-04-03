@@ -4,15 +4,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="160dp">
 
-    <ImageView android:layout_width="wrap_content"
-               android:id="@+id/images"
-               android:src="@drawable/no_image"
-               android:layout_height="match_parent"/>
-
 
     <LinearLayout android:layout_width="match_parent"
-                  android:layout_toRightOf="@+id/images"
                   android:layout_height="match_parent">
 
+        <EditText android:layout_width="match_parent"
+                  android:layout_margin="10dp"
+                  android:background="@drawable/et"
+                  android:layout_height="45dp"/>
     </LinearLayout>
 </RelativeLayout>

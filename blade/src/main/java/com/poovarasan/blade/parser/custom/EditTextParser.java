@@ -19,11 +19,14 @@ package com.poovarasan.blade.parser.custom;
 
 import com.google.gson.JsonObject;
 
+import android.text.InputType;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.poovarasan.blade.parser.Attributes;
 import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
+import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
 import com.poovarasan.blade.view.BladeEditText;
 import com.poovarasan.blade.view.BladeView;
@@ -40,5 +43,38 @@ public class EditTextParser<T extends EditText> extends WrappableParser<T> {
     @Override
     public BladeView createView(ViewGroup parent, JsonObject layout, JsonObject data, Styles styles, int index) {
         return new BladeEditText(parent.getContext());
+    }
+
+    @Override
+    protected void prepareHandlers() {
+        super.prepareHandlers();
+
+
+        addHandler(new Attributes.Attribute("inputType"), new StringAttributeProcessor<T>() {
+            @Override
+            public void handle(String attributeKey, String attributeValue, T view) {
+
+                switch (attributeValue) {
+                    case "NUMBER":
+                        view.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        break;
+                    case "TEXT":
+                        view.setInputType(InputType.TYPE_CLASS_TEXT);
+                        break;
+                    case "EMAIL":
+                        view.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                        break;
+                    case "PHONE":
+                        view.setInputType(InputType.TYPE_CLASS_PHONE);
+                        break;
+                    case "PASSWORD":
+                        view.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        break;
+
+                    default:
+                        view.setInputType(InputType.TYPE_CLASS_TEXT);
+                }
+            }
+        });
     }
 }

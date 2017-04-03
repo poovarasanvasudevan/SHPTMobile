@@ -37,7 +37,7 @@ fun Context.handleConnectionError() {
 		negativeButton("No", DialogInterface::dismiss)
 		
 	}
-	if (!isConnected()) alert1.show() else alert1.dismiss()
+	if (!isConnected()) alert1.show() else alert1.build().dismiss();
 }
 
 

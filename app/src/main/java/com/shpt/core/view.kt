@@ -12,6 +12,7 @@ import android.view.ViewManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.find
 import com.mikepenz.iconics.view.IconicsButton
@@ -21,6 +22,7 @@ import com.poovarasan.blade.builder.LayoutBuilder
 import com.poovarasan.blade.builder.LayoutBuilderFactory
 import com.poovarasan.blade.module.Module
 import com.poovarasan.blade.parser.Parser
+import com.poovarasan.blade.toolbox.Styles
 import com.poovarasan.bladeappcompat.AppCompatModule
 import com.poovarasan.bladeappcompat.widget.AppProgressBar
 import com.poovarasan.bladeappcompat.widget.AppToolbar
@@ -30,6 +32,9 @@ import com.shpt.R
 import com.shpt.core.callback.EventCallback
 import com.shpt.core.config.CONTEXT
 import com.shpt.core.config.Config
+import com.shpt.core.config.DATABASE
+import com.shpt.core.formatter.SessionFormattor
+import com.shpt.core.models.Layout
 import com.shpt.mobile.widget.Ripple
 import com.shpt.parser.*
 import com.shpt.uiext.SHPTAddToCartButton
@@ -39,6 +44,9 @@ import com.shpt.widget.BigProductView
 import com.shpt.widget.JustifiedTextView
 import com.shpt.widget.Shadow
 import org.jetbrains.anko.custom.ankoView
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.parseSingle
+import org.jetbrains.anko.db.select
 
 /**
  * Created by poovarasanv on 17/1/17.
@@ -182,6 +190,7 @@ inline fun ViewManager.shadow(theme: Int = 0, init: Shadow.() -> Unit) = ankoVie
 fun getLayoutBuilder(): DataParsingLayoutBuilder {
 	val layoutBuilder = LayoutBuilderFactory().dataParsingLayoutBuilder
 	layoutBuilder.listener = EventCallback(CONTEXT)
+	layoutBuilder.registerFormatter(SessionFormattor())
 	
 	/*
 	* @see AppCompatModule
@@ -223,4 +232,44 @@ fun setUpEssential(
 		(activity).supportActionBar!!.setDisplayShowHomeEnabled(true)
 		(activity).supportActionBar!!.setHomeAsUpIndicator(getBackIcon())
 	}
+}
+
+
+fun getStyles(): Styles? {
+	var styles: Styles? = null
+	
+	DATABASE.use {
+		select("Layout").where("page = {pageName}", "pageName" to "style").exec {
+			val rowParser = classParser<Layout>()
+			val row = parseSingle(rowParser)
+			styles = Gson().fromJson(row.structure, Styles::class.java)
+		}
+	}
+	
+	
+	
+	
+	if (styles == null) {
+		styles = Gson().fromJson(JsonObject(), Styles::class.java)
+	}
+	
+	return styles
+}
+
+fun getLayout(layoutName: String): Layout? {
+	
+	var layout: Layout? = null;
+	
+	DATABASE.use {
+		select("Layout").where("page = {pageName}", "pageName" to layoutName).exec {
+			val rowParser = classParser<Layout>()
+			layout = parseSingle(rowParser)
+		}
+	}
+	
+	if (layout == null) {
+		layout = Layout(123, "", JsonObject().toString())
+	}
+	
+	return layout;
 }

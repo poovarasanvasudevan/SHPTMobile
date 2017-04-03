@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/blade-appcompat/blade-appcompat.iml" filepath="$PROJECT_DIR$/blade-appcompat/blade-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/blade-cardview/blade-cardview.iml" filepath="$PROJECT_DIR$/blade-cardview/blade-cardview.iml" />
       <module fileurl="file://$PROJECT_DIR$/blade-design/blade-design.iml" filepath="$PROJECT_DIR$/blade-design/blade-design.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deepstream/deepstream.iml" filepath="$PROJECT_DIR$/deepstream/deepstream.iml" />
     </modules>
   </component>
 </project>

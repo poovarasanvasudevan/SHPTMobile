@@ -18,28 +18,23 @@ import com.mcxiaoke.koi.log.logi
 import com.poovarasan.blade.toolbox.Styles
 import com.poovarasan.bladeappcompat.widget.AppProgressBar
 import com.shpt.R
+import com.shpt.core.*
 import com.shpt.core.config.BUS
 import com.shpt.core.config.Config
-import com.shpt.core.config.DATABASE
 import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.data.Constant
-import com.shpt.core.handleConnectionError
-import com.shpt.core.handleMenu
 import com.shpt.core.models.Layout
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
-import com.shpt.core.setUpEssential
 import com.shpt.uiext.SHPTWebView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 import logMessage
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.parseSingle
-import org.jetbrains.anko.db.select
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import org.jetbrains.anko.coroutines.experimental.bg
 
 class SRCMLogin : AppCompatActivity() {
 	
@@ -75,52 +70,57 @@ class SRCMLogin : AppCompatActivity() {
 			toast(intent.extras.getString(Constant.PARCEL))
 		}
 		
-		doAsync {
-			DATABASE.use {
-				select("Layout").where("page = {pageTitle}", "pageTitle" to "srcmlogin").exec {
-					
-					val rowParser = classParser<Layout>()
-					val row = parseSingle(rowParser)
-					
-					uiThread {
-						val layoutBuilder = LAYOUT_BUILDER_FACTORY
-						mainLayout.removeAllViews()
-						
-						val parser = JsonParser()
-						val view = layoutBuilder.build(mainLayout, parser.parse(row.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, Styles())
-						
-						mainLayout.addView(view as View)
-						
-						setUpEssential(
-							view = view,
-							layoutBuilder = layoutBuilder,
-							viewJson = parser.parse(row.structure).asJsonObject.getAsJsonObject("main"),
-							dataJson = JsonObject(),
-							activity = this@SRCMLogin
-						)
-						
-						if (parser.parse(row.structure).asJsonObject.has("menu")) {
-							menuJson = parser.parse(row.structure).asJsonObject.getAsJsonObject("menu")
-							invalidateOptionsMenu()
-						} else {
-							menuJson = JsonObject()
-						}
-						
-						loginWeb = layoutBuilder.getUniqueViewId("loginWeb")
-						if (loginWeb != 0 && view.findViewById(loginWeb) != null) {
-							loginWebView = view.find<SHPTWebView>(loginWeb)
-							loginWebView.setWebViewClient(SHPTWebViewClient())
-						}
-						
-						
-						val loginProgressId = layoutBuilder.getUniqueViewId("loginProgress")
-						if (view.findViewById(loginProgressId) != null) {
-							loginProgress = view.find<AppProgressBar>(loginProgressId)
-						}
-					}
-					
+		
+		try {
+			
+			async(context = UI) {
+				val jsonLayout: Layout = bg {
+					getLayout("srcmlogin")!!
+				}.await()
+				
+				
+				val styles: Styles = bg {
+					getStyles()!!
+				}.await()
+				
+				val layoutBuilder = LAYOUT_BUILDER_FACTORY
+				mainLayout.removeAllViews()
+				
+				val parser = JsonParser()
+				val view = layoutBuilder.build(mainLayout, parser.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, Styles())
+				
+				mainLayout.addView(view as View)
+				
+				setUpEssential(
+					view = view,
+					layoutBuilder = layoutBuilder,
+					viewJson = parser.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
+					dataJson = JsonObject(),
+					activity = this@SRCMLogin
+				)
+				
+				if (parser.parse(jsonLayout.structure).asJsonObject.has("menu")) {
+					menuJson = parser.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("menu")
+					invalidateOptionsMenu()
+				} else {
+					menuJson = JsonObject()
 				}
+				
+				loginWeb = layoutBuilder.getUniqueViewId("loginWeb")
+				if (loginWeb != 0 && view.findViewById(loginWeb) != null) {
+					loginWebView = view.find<SHPTWebView>(loginWeb)
+					loginWebView.setWebViewClient(SHPTWebViewClient())
+				}
+				
+				
+				val loginProgressId = layoutBuilder.getUniqueViewId("loginProgress")
+				if (view.findViewById(loginProgressId) != null) {
+					loginProgress = view.find<AppProgressBar>(loginProgressId)
+				}
+				
 			}
+		} catch (e: Exception) {
+			toast(e.localizedMessage)
 		}
 	}
 	
@@ -184,9 +184,9 @@ class SRCMLogin : AppCompatActivity() {
 		override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
 			alert("Error : " + error!!.description) {
 				
-				noButton {
+				negativeButton("Close", {
 					finish()
-				}
+				})
 			}.show()
 			
 			super.onReceivedError(view, request, error)

@@ -443,6 +443,7 @@
                     "hint": "First Name",
                     "id": "firstName",
                     "text": "~{{user.name}}",
+                    "style": "formet",
                     "tag": "firstName"
                   },
                   {
@@ -451,6 +452,7 @@
                     "layout_height": "wrap_content",
                     "hint": "Last Name",
                     "id": "lastName",
+                    "style": "formet",
                     "tag": "lastName"
                   },
                   {
@@ -458,6 +460,7 @@
                     "layout_width": "match_parent",
                     "layout_height": "wrap_content",
                     "hint": "Email",
+                    "style": "formet",
                     "id": "email",
                     "tag": "email"
                   },
@@ -467,6 +470,8 @@
                     "layout_height": "wrap_content",
                     "hint": "Phone Number",
                     "id": "phone",
+                    "inputType": "PHONE",
+                    "style": "formet",
                     "tag": "phone"
                   },
                   {
@@ -475,12 +480,15 @@
                     "layout_height": "wrap_content",
                     "hint": "Mobile Number",
                     "id": "mobile",
-                    "tag": "mobile"
+                    "inputType": "PHONE",
+                    "tag": "mobile",
+                    "style": "formet"
                   },
                   {
                     "type": "AutoCompleteTextView",
                     "layout_width": "match_parent",
                     "layout_height": "wrap_content",
+                    "style": "formet",
                     "hint": "Country",
                     "data": [
                       "India",
@@ -494,11 +502,21 @@
                     "tag": "country"
                   },
                   {
-                    "type": "Button",
+                    "type": "Ripple",
+                    "layout_margin": "10dp",
+                    "id": "submit",
+                    "visibility": "visible",
                     "layout_width": "match_parent",
                     "layout_height": "wrap_content",
-                    "text": "Submit",
-                    "id": "submit"
+                    "children": [
+                      {
+                        "type": "Button",
+                        "layout_width": "match_parent",
+                        "text": "Submit",
+                        "style": "buttonBlue",
+                        "layout_height": "40dp"
+                      }
+                    ]
                   }
                 ]
               }
@@ -604,6 +622,49 @@
           }
         ]
       }
+    }
+  },
+  "system": {
+    "payment": {
+      "processors": [
+        {
+          "id": "SHPT",
+          "type": "INSTAMOJO",
+          "config": [
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "id": "HEARTFULNESS",
+          "type": "INSTAMOJO",
+          "config": [
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "style": {
+    "formet": {
+      "background": "@drawable/et",
+      "layout_height": "40dp",
+      "paddingLeft": "5dp",
+      "paddingRight": "5dp",
+      "layout_margin": "10dp"
+    },
+    "buttonBlue": {
+      "background": "#2196F3",
+      "textColor": "#FFFFFF"
     }
   }
 }
