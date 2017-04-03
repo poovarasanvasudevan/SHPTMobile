@@ -16,16 +16,19 @@
 
 package com.poovarasan.blade.parser.custom;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
+import com.poovarasan.blade.EventType;
 import com.poovarasan.blade.parser.Attributes;
 import com.poovarasan.blade.parser.Parser;
 import com.poovarasan.blade.parser.WrappableParser;
 import com.poovarasan.blade.processor.DrawableResourceProcessor;
+import com.poovarasan.blade.processor.EventProcessor;
 import com.poovarasan.blade.processor.StringAttributeProcessor;
 import com.poovarasan.blade.toolbox.Styles;
 import com.poovarasan.blade.view.BladeCheckBox;
@@ -58,9 +61,16 @@ public class CheckBoxParser<T extends CheckBox> extends WrappableParser<T> {
 
         addHandler(Attributes.CheckBox.Checked, new StringAttributeProcessor<T>() {
             @Override
-            public void handle(String attributeKey, String attributeValue, T view) {
+            public void handle(String attributeKey, String attributeValue, CheckBox view) {
                 view.setChecked(Boolean.parseBoolean(attributeValue));
             }
         });
+        addHandler(Attributes.CheckBox.OnCheck, new EventProcessor<T>() {
+            @Override
+            public void setOnEventListener(T view, JsonElement attributeValue) {
+                fireEvent((BladeView) view, EventType.OnChecked, attributeValue);
+            }
+        });
+
     }
 }
