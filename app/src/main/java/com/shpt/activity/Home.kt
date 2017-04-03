@@ -6,10 +6,8 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.Menu
@@ -19,35 +17,31 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.mcxiaoke.koi.adapter.QuickAdapter
 import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.onTextChange
 import com.mcxiaoke.koi.ext.quickAdapterOf
 import com.mcxiaoke.koi.ext.toast
-import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.*
+import com.shpt.core.app.BaseActivity
 import com.shpt.core.config.*
 import com.shpt.core.models.Layout
 import com.shpt.core.models.ProductSearch
-import com.shpt.core.serviceevent.ConnectionServiceEvent
-import com.shpt.core.serviceevent.NotificationEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
+import kotlinx.coroutines.experimental.async
 import logMessage
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
-import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.parseSingle
-import org.jetbrains.anko.db.select
+import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.design.navigationView
 import org.jetbrains.anko.support.v4.drawerLayout
 import java.net.URL
 
 
-class Home : AppCompatActivity() {
+class Home : BaseActivity() {
 	
 	var menuJson: JsonObject = JsonObject()
 	lateinit var productSearchList: ListView
@@ -212,66 +206,66 @@ class Home : AppCompatActivity() {
 		setSupportActionBar(find<Toolbar>(R.id.toolbar))
 		supportActionBar!!.elevation = 0f
 		try {
-			doAsync {
-				DATABASE.use {
-					select("Layout").where("page = {pageName}", "pageName" to "home").exec {
-						val rowParser = classParser<Layout>()
-						val row = parseSingle(rowParser)
-						uiThread {
-							
-							val layoutBuilder = LAYOUT_BUILDER_FACTORY
-							
-							val parser = JsonParser()
-							val view = layoutBuilder.build(find<RelativeLayout>(R.id.mainLayout1), parser.parse(row.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, Styles())
-							find<RelativeLayout>(R.id.mainLayout1).removeAllViews()
-							find<RelativeLayout>(R.id.mainLayout1).addView(view as View)
-							
-							
-							setUpEssential(
-								layoutBuilder,
-								view,
-								parser.parse(row.structure).asJsonObject.getAsJsonObject("main"),
-								JsonObject(),
-								this@Home
-							)
-							
-							if (parser.parse(row.structure).asJsonObject.has("menu")) {
-								menuJson = parser.parse(row.structure).asJsonObject.getAsJsonObject("menu")
-								invalidateOptionsMenu()
-							} else {
-								menuJson = JsonObject()
-							}
-							
-							
-							val actionBarDrawerToggle = object : ActionBarDrawerToggle(this@Home, find<DrawerLayout>(R.id.drawer), find<Toolbar>(R.id.toolbar), R.string.drawer_open, R.string.drawer_close) {
-								
-								override fun onDrawerClosed(drawerView: View) {
-									super.onDrawerClosed(drawerView)
-								}
-								
-								override fun onDrawerOpened(drawerView: View) {
-									super.onDrawerOpened(drawerView)
-								}
-								
-							}
-							find<DrawerLayout>(R.id.drawer).setDrawerListener(actionBarDrawerToggle)
-							actionBarDrawerToggle.syncState()
-							
-							
-							
-							find<NavigationView>(R.id.navView).setNavigationItemSelectedListener {
-								
-								find<DrawerLayout>(R.id.drawer).closeDrawers()
-								when (it.itemId) {
-									
-								}
-								true
-							}
-						}
-						
-					}
+			
+			async(context = kotlinx.coroutines.experimental.android.UI) {
+				
+				var jsonLayout: Layout = bg {
+					getLayout("home")!!
+				}.await()
+				
+				val layoutBuilder = LAYOUT_BUILDER_FACTORY
+				
+				val view = layoutBuilder.build(
+					find<RelativeLayout>(R.id.mainLayout1),
+					PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
+					JsonObject(),
+					0,
+					STYLES.await())
+				
+				find<RelativeLayout>(R.id.mainLayout1).removeAllViews()
+				find<RelativeLayout>(R.id.mainLayout1).addView(view as View)
+				
+				
+				setUpEssential(
+					layoutBuilder,
+					view,
+					PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
+					JsonObject(),
+					this@Home
+				)
+				
+				if (PARSER.parse(jsonLayout.structure).asJsonObject.has("menu")) {
+					menuJson = PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("menu")
+					invalidateOptionsMenu()
+				} else {
+					menuJson = JsonObject()
 				}
 				
+				
+				val actionBarDrawerToggle = object : ActionBarDrawerToggle(this@Home, find<DrawerLayout>(R.id.drawer), find<Toolbar>(R.id.toolbar), R.string.drawer_open, R.string.drawer_close) {
+					
+					override fun onDrawerClosed(drawerView: View) {
+						super.onDrawerClosed(drawerView)
+					}
+					
+					override fun onDrawerOpened(drawerView: View) {
+						super.onDrawerOpened(drawerView)
+					}
+					
+				}
+				find<DrawerLayout>(R.id.drawer).setDrawerListener(actionBarDrawerToggle)
+				actionBarDrawerToggle.syncState()
+				
+				
+				
+				find<NavigationView>(R.id.navView).setNavigationItemSelectedListener {
+					
+					find<DrawerLayout>(R.id.drawer).closeDrawers()
+					when (it.itemId) {
+						
+					}
+					true
+				}
 			}
 		} catch (e: Exception) {
 			toast(e.cause.toString())
@@ -317,11 +311,9 @@ class Home : AppCompatActivity() {
 	
 	override fun onStart() {
 		super.onStart()
-		BUS.register(this);
 	}
 	
 	override fun onStop() {
-		BUS.unregister(this);
 		super.onStop()
 	}
 	
@@ -333,18 +325,6 @@ class Home : AppCompatActivity() {
 		find<TextView>(R.id.statusText).text = event.message
 	}
 	
-	@Subscribe public fun notificationEvent(event: NotificationEvent) {
-		toast(event.message)
-	}
 	
-	@Subscribe public fun connectionStatus(event: ConnectionServiceEvent) {
-		if (event.status) {
-			handleConnectionError()
-			postEvent(find<TextView>(R.id.event), ContextCompat.getColor(applicationContext, R.color.md_green_400), event.message)
-		} else {
-			handleConnectionError()
-			postEvent(find<TextView>(R.id.event), ContextCompat.getColor(applicationContext, R.color.md_red_500), event.message)
-		}
-	}
 	
 }

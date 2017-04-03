@@ -6,6 +6,7 @@ import android.content.Intent
 import com.mcxiaoke.koi.ext.isConnected
 import com.shpt.core.config.BUS
 import com.shpt.core.serviceevent.ConnectionServiceEvent
+import logMessage
 
 
 /**
@@ -20,6 +21,8 @@ import com.shpt.core.serviceevent.ConnectionServiceEvent
 
 class InternetConnectionWatcher : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+    
+        logMessage("Status Changes")
         if (context.isConnected()) {
             BUS.post(ConnectionServiceEvent(true, "Connected to Internet"))
         } else {

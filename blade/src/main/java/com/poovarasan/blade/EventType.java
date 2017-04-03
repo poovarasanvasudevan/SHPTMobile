@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Flipkart Internet Pvt. Ltd.
+ * Copyright 2016 Poovarasan Vasudevan.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package com.poovarasan.blade;
 
 /**
- * Created by prateek.dixit on 1/21/15.
+ * Created by poovarasan vasudevan on 1/21/15.
  */
 public enum EventType {
     OnClick,

@@ -1,18 +1,17 @@
 package com.shpt.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.toast
-import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
+import com.shpt.core.app.BaseActivity
 import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.config.PARSER
+import com.shpt.core.config.STYLES
 import com.shpt.core.getLayout
-import com.shpt.core.getStyles
 import com.shpt.core.models.Layout
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.core.setUpEssential
@@ -23,7 +22,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.coroutines.experimental.bg
 
 
-class Login : AppCompatActivity() {
+class Login : BaseActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -32,13 +31,10 @@ class Login : AppCompatActivity() {
 		try {
 			
 			async(context = UI) {
+				
+				//fetching Json
 				val jsonLayout: Layout = bg {
 					getLayout("login")!!
-				}.await()
-				
-				
-				val styles: Styles = bg {
-					getStyles()!!
 				}.await()
 				
 				
@@ -52,7 +48,7 @@ class Login : AppCompatActivity() {
 					JsonObject()
 					,
 					0,
-					styles)
+					STYLES.await())
 				
 				mainLayout.addView(view as View)
 				
@@ -72,6 +68,13 @@ class Login : AppCompatActivity() {
 		
 	}
 	
+	override fun onStart() {
+		super.onStart()
+	}
+	
+	override fun onStop() {
+		super.onStop()
+	}
 	@Subscribe fun retryServiceEvent(event: RetryServiceEvent) {
 		find<TextView>(R.id.statusText).text = event.message
 	}

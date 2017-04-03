@@ -9,7 +9,6 @@ import com.poovarasan.blade.builder.LayoutBuilder;
  * @project SHPT
  * @on 22/3/17 at 6:58 PM
  */
-
 public interface Module {
     public void register(LayoutBuilder layoutBuilder);
 }

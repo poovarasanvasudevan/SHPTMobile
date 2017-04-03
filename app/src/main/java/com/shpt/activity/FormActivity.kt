@@ -1,7 +1,6 @@
 package com.shpt.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -10,23 +9,22 @@ import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.toast
 import com.poovarasan.androidverify.Form
 import com.poovarasan.androidverify.InputValidator
-import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
+import com.shpt.core.app.BaseActivity
 import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.config.PARSER
 import com.shpt.core.config.REST
+import com.shpt.core.config.STYLES
 import com.shpt.core.data.Constant
 import com.shpt.core.ext.getArray
 import com.shpt.core.ext.getString
 import com.shpt.core.getLayout
-import com.shpt.core.getStyles
 import com.shpt.core.models.Layout
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.core.setUpEssential
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
-import logMessage
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.doAsync
@@ -34,7 +32,7 @@ import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.uiThread
 
 
-class FormActivity : AppCompatActivity() {
+class FormActivity : BaseActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -54,11 +52,6 @@ class FormActivity : AppCompatActivity() {
 				}.await()
 				
 				
-				val styles: Styles = bg {
-					getStyles()!!
-				}.await()
-				
-				
 				if (PARSER.parse(jsonLayout.structure).asJsonObject.has(formName)) {
 					
 					val form = PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject(formName)
@@ -72,9 +65,7 @@ class FormActivity : AppCompatActivity() {
 					mainLayout.removeAllViews()
 					
 					
-					
-					logMessage("Style : ${styles.toString()}")
-					val view = layoutBuilder.build(mainLayout, layout, data, 0, styles)
+					val view = layoutBuilder.build(mainLayout, layout, data, 0, STYLES.await())
 					mainLayout.addView(view as View)
 					
 					
@@ -216,6 +207,14 @@ class FormActivity : AppCompatActivity() {
 			toast(e.cause.toString())
 		}
 		
+	}
+	
+	override fun onStart() {
+		super.onStart()
+	}
+	
+	override fun onStop() {
+		super.onStop()
 	}
 	
 	@Subscribe fun retryServiceEvent(event: RetryServiceEvent) {

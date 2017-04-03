@@ -2,7 +2,6 @@ package com.shpt.activity
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -15,18 +14,19 @@ import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.startActivity
 import com.mcxiaoke.koi.ext.toast
 import com.mcxiaoke.koi.log.logi
-import com.poovarasan.blade.toolbox.Styles
 import com.poovarasan.bladeappcompat.widget.AppProgressBar
 import com.shpt.R
-import com.shpt.core.*
-import com.shpt.core.config.BUS
+import com.shpt.core.app.BaseActivity
 import com.shpt.core.config.Config
 import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
+import com.shpt.core.config.STYLES
 import com.shpt.core.data.Constant
+import com.shpt.core.getLayout
+import com.shpt.core.handleMenu
 import com.shpt.core.models.Layout
 import com.shpt.core.prefs.Prefs
-import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.RetryServiceEvent
+import com.shpt.core.setUpEssential
 import com.shpt.uiext.SHPTWebView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.experimental.android.UI
@@ -36,7 +36,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.coroutines.experimental.bg
 
-class SRCMLogin : AppCompatActivity() {
+class SRCMLogin : BaseActivity() {
 	
 	var menuJson: JsonObject = JsonObject()
 	var loginWeb: Int = 0
@@ -48,18 +48,12 @@ class SRCMLogin : AppCompatActivity() {
 	
 	override fun onStart() {
 		super.onStart()
-		BUS.register(this);
 	}
 	
 	override fun onStop() {
-		BUS.unregister(this);
 		super.onStop()
 	}
 	
-	@Subscribe
-	public fun connectionStatus(event: ConnectionServiceEvent) {
-		handleConnectionError()
-	}
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -79,15 +73,11 @@ class SRCMLogin : AppCompatActivity() {
 				}.await()
 				
 				
-				val styles: Styles = bg {
-					getStyles()!!
-				}.await()
-				
 				val layoutBuilder = LAYOUT_BUILDER_FACTORY
 				mainLayout.removeAllViews()
 				
 				val parser = JsonParser()
-				val view = layoutBuilder.build(mainLayout, parser.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, Styles())
+				val view = layoutBuilder.build(mainLayout, parser.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, STYLES.await())
 				
 				mainLayout.addView(view as View)
 				

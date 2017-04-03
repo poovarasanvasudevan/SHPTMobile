@@ -2,13 +2,13 @@ package com.shpt.core
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.startActivity
 import com.shpt.activity.Login
 import com.shpt.activity.SRCMLogin
 import org.jetbrains.anko.activityManager
 import org.jetbrains.anko.alert
+import org.jetbrains.anko.appcompat.v7.Appcompat
 import java.io.UnsupportedEncodingException
 import java.net.URL
 import java.net.URLDecoder
@@ -28,13 +28,16 @@ fun Activity.goToLoginPage() = startActivity<Login>()
 fun Context.isServiceRunning(serviceClass: Class<*>): Boolean = activityManager.getRunningServices(Integer.MAX_VALUE).any { serviceClass.name == it.service.className }
 fun Context.handleConnectionError() {
 	
-	val alert1 = alert("Not Connected to Internet. Retry again?") {
+	val alert1 = alert(Appcompat, "Not Connected to Internet. Retry again?") {
 		
 		positiveButton("Yes", {
 			handleConnectionError()
 		})
 		
-		negativeButton("No", DialogInterface::dismiss)
+		negativeButton("No", {
+			System.exit(0)
+			this.build().dismiss()
+		})
 		
 	}
 	if (!isConnected()) alert1.show() else alert1.build().dismiss();

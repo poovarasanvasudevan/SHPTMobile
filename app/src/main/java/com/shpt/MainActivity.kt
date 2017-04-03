@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // setContentView(R.layout.activity_main)
-
+    
         relativeLayout {
 
             lparams {
@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: JsonObject?) {
-
             logMessage(result.toString())
 
             if (Prefs.with(this@MainActivity).contains(Config.COOKIE)) {
