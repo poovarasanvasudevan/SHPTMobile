@@ -6,6 +6,7 @@ import com.mcxiaoke.koi.ext.isConnected
 import com.shpt.core.config.BUS
 import com.shpt.core.config.CONTEXT
 import com.shpt.core.config.Config
+import com.shpt.core.config.config
 import com.shpt.core.handleConnectionError
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.rest.Rest
@@ -28,7 +29,7 @@ fun Context.getAdapter(): Rest {
 	
 	if (Prefs.with(this).contains(Config.COOKIE)) {
 		
-		Log.i("cookies", Prefs.with(this).read(Config.COOKIE))
+		Log.i("cookies", config(Config.COOKIE))
 		
 		
 		val client = OkHttpClient.Builder()

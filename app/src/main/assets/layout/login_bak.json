@@ -95,7 +95,7 @@
                         "event": [
                           {
                             "event": "ActivityGoToEvent",
-                            "activity": "FormActivity",
+                              "activity": "Home",
                             "data": {
                               "formName": "eventRegister"
                             }

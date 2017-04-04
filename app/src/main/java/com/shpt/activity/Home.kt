@@ -1,7 +1,5 @@
 package com.shpt.activity
 
-import android.app.SearchManager
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -11,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ListView
 import android.widget.RelativeLayout
@@ -43,12 +42,13 @@ import java.net.URL
 
 class Home : BaseActivity() {
 	
-	var menuJson: JsonObject = JsonObject()
 	lateinit var productSearchList: ListView
 	lateinit var productSearchAdapter: QuickAdapter<ProductSearch>
 	
+	lateinit var jsonLayout: Layout
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		logMessage("Create Home")
 		
 		productSearchAdapter = quickAdapterOf<ProductSearch>(android.R.layout.simple_list_item_1) {
 			binder, data ->
@@ -209,9 +209,12 @@ class Home : BaseActivity() {
 			
 			async(context = kotlinx.coroutines.experimental.android.UI) {
 				
-				var jsonLayout: Layout = bg {
+				jsonLayout = bg {
 					getLayout("home")!!
 				}.await()
+				
+				logMessage(jsonLayout.structure);
+				super.init(jsonLayout)
 				
 				val layoutBuilder = LAYOUT_BUILDER_FACTORY
 				
@@ -233,14 +236,6 @@ class Home : BaseActivity() {
 					JsonObject(),
 					this@Home
 				)
-				
-				if (PARSER.parse(jsonLayout.structure).asJsonObject.has("menu")) {
-					menuJson = PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("menu")
-					invalidateOptionsMenu()
-				} else {
-					menuJson = JsonObject()
-				}
-				
 				
 				val actionBarDrawerToggle = object : ActionBarDrawerToggle(this@Home, find<DrawerLayout>(R.id.drawer), find<Toolbar>(R.id.toolbar), R.string.drawer_open, R.string.drawer_close) {
 					
@@ -273,6 +268,17 @@ class Home : BaseActivity() {
 		
 	}
 	
+	override fun onSaveInstanceState(outState: Bundle?) {
+		super.onSaveInstanceState(outState)
+		
+		outState!!.putString("layout", jsonLayout.structure)
+	}
+	
+	override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+		super.onRestoreInstanceState(savedInstanceState)
+		super.refreshMenu(savedInstanceState!!.getString("layout"))
+	}
+	
 	fun updateSearch(term: String) {
 		doAsync {
 			val result: JsonArray = PARSER.parse(REST.getProductSearch(Config.SEARCH_PRODUCT, term).execute().body().string()).asJsonArray
@@ -292,31 +298,39 @@ class Home : BaseActivity() {
 		}
 	}
 	
-	override fun onNewIntent(intent: Intent) {
-		setIntent(intent)
-		
-		if (Intent.ACTION_SEARCH == intent.action) {
-			logMessage("query" + intent.getStringExtra(SearchManager.QUERY))
-		}
-	}
 	
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-		menuInflater.inflate(R.menu.default_menu, menu)
-		if (menu != null) {
-			menu.clear()
-			handleMenu(menuJson, menu, find<NavigationView>(R.id.navView).menu, this@Home)
-		}
 		return super.onCreateOptionsMenu(menu)
 	}
 	
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+		return super.onOptionsItemSelected(item)
+	}
+	
+	override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+		return super.onPrepareOptionsMenu(menu)
+	}
+	
 	override fun onStart() {
+		logMessage("home start")
 		super.onStart()
 	}
 	
+	override fun onPause() {
+		logMessage("home pause")
+		super.onPause()
+	}
+	
 	override fun onStop() {
+		logMessage("home stop")
 		super.onStop()
 	}
 	
+	
+	override fun onResume() {
+		logMessage("home resume")
+		super.onResume()
+	}
 	/******************************************************************************
 	 * Events Moniter Background Tasks
 	 * It emits from BUS and based on Object EVents it will takes actions

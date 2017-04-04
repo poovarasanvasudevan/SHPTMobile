@@ -20,6 +20,8 @@ class MQTTServiceMoniter : BroadcastReceiver() {
 	override fun onReceive(context: Context, intent: Intent) {
 		if (context.isConnected()) {
 			connectMqtt()
+			//connectDeepstream()
 		}
+		
 	}
 }

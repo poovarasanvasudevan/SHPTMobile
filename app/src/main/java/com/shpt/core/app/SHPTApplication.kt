@@ -7,6 +7,8 @@ import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.config.Configuration
 import com.birbit.android.jobqueue.log.CustomLogger
 import com.poovarasan.androidverify.App
+import com.poovarasan.deepstream.DeepstreamClient
+import com.shpt.core.mqtt.Deepstream
 import com.shpt.core.mqtt.MQTT
 import com.shpt.core.mqtt.connectMqtt
 import org.eclipse.paho.android.service.MqttAndroidClient
@@ -32,6 +34,9 @@ class SHPTApplication : Application() {
 		lateinit var context: Context
 			private set
 		
+		lateinit var deepstream: DeepstreamClient
+			private set
+		
 		lateinit var mqtt: MqttAndroidClient
 			private set
 	}
@@ -44,10 +49,11 @@ class SHPTApplication : Application() {
 		jobinstance = JobManager(configureJobManager())
 		context = this.applicationContext
 		mqtt = MQTT.getMQTTClient(applicationContext)!!
-		
+		deepstream = Deepstream.getClient()
 		
 		App.setContext(this);
 		connectMqtt();
+		
 	}
 	
 	private fun configureJobManager(): Configuration {

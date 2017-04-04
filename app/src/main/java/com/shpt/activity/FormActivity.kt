@@ -1,6 +1,8 @@
 package com.shpt.activity
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -50,6 +52,9 @@ class FormActivity : BaseActivity() {
 				val jsonLayout: Layout = bg {
 					getLayout("forms")!!
 				}.await()
+				
+				
+				super.init(jsonLayout)
 				
 				
 				if (PARSER.parse(jsonLayout.structure).asJsonObject.has(formName)) {
@@ -208,6 +213,20 @@ class FormActivity : BaseActivity() {
 		}
 		
 	}
+	
+	
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		return super.onCreateOptionsMenu(menu)
+	}
+	
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+		return super.onOptionsItemSelected(item)
+	}
+	
+	override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+		return super.onPrepareOptionsMenu(menu)
+	}
+	
 	
 	override fun onStart() {
 		super.onStart()

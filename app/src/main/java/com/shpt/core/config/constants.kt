@@ -6,6 +6,7 @@ import com.birbit.android.jobqueue.Params
 import com.google.gson.JsonParser
 import com.poovarasan.blade.builder.DataParsingLayoutBuilder
 import com.poovarasan.blade.toolbox.Styles
+import com.poovarasan.deepstream.DeepstreamClient
 import com.shpt.core.api.getAdapter
 import com.shpt.core.app.SHPTApplication
 import com.shpt.core.db.DatabaseOpenHelper
@@ -70,6 +71,9 @@ val REST: Rest
 
 val MQTT_OBJ: MqttAndroidClient
 	get() = SHPTApplication.mqtt
+
+val DEEPSTREAM: DeepstreamClient
+	get() = SHPTApplication.deepstream
 
 val STYLES: Deferred<Styles> = bg {
 	getStyles()!!

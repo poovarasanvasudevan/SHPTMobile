@@ -84,6 +84,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: JsonObject?) {
+    
+    
             if (Prefs.with(this@MainActivity).contains(Config.COOKIE)) {
                 startActivity<SRCMLogin>()
 	            overridePendingTransition(R.anim.fadein, R.anim.fadeout);

@@ -2,12 +2,15 @@ package com.shpt.core.mqtt
 
 import android.util.Log
 import com.mcxiaoke.koi.ext.isConnected
+import com.poovarasan.deepstream.ConnectionState
 import com.shpt.core.config.CONTEXT
+import com.shpt.core.config.DEEPSTREAM
 import com.shpt.core.config.MQTT_OBJ
 import logMessage
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttToken
 import org.eclipse.paho.client.mqttv3.MqttException
+
 
 /**
  * Created by poovarasanv on 27/3/17.
@@ -33,6 +36,22 @@ fun connectMqtt() {
 			}
 		}
 	} catch (e: MqttException) {
+		logMessage(e.localizedMessage)
+	}
+}
+
+fun connectDeepstream() {
+	try {
+		if (DEEPSTREAM.connectionState != ConnectionState.OPEN) {
+			if (CONTEXT.isConnected()) {
+				val result = DEEPSTREAM.login()
+				if (result.loggedIn()) {
+					logMessage("Log in success!")
+				}
+			}
+		}
+		
+	} catch (e: Exception) {
 		logMessage(e.localizedMessage)
 	}
 }

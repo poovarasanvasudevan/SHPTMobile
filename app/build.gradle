@@ -63,7 +63,6 @@ dependencies {
     compile 'org.jetbrains.anko:anko-sqlite:0.9.1a'
 
     compile 'com.birbit:android-priority-jobqueue:2.0.1'
-    compile 'com.evernote:android-job:1.1.7'
 
     compile 'org.greenrobot:eventbus:3.0.0'
 
@@ -76,6 +75,7 @@ dependencies {
     compile project(':blade-cardview')
     compile project(':blade-design')
     compile project(':android-verify')
+    compile project(':deepstream')
 }
 repositories {
     mavenCentral()

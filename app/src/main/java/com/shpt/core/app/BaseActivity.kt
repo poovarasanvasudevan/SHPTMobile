@@ -1,9 +1,17 @@
 package com.shpt.core.app
 
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.toast
+import com.shpt.R
 import com.shpt.core.config.BUS
+import com.shpt.core.config.PARSER
 import com.shpt.core.handleConnectionError
+import com.shpt.core.handleMenu
+import com.shpt.core.models.Layout
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.NotificationEvent
 import org.greenrobot.eventbus.Subscribe
@@ -19,6 +27,38 @@ import org.greenrobot.eventbus.Subscribe
  */
 
 open class BaseActivity : AppCompatActivity() {
+	
+	
+	var layoutJson: Layout? = null
+	var menuJson: JsonObject? = null
+	
+	
+	fun init(layout: Layout) {
+		layoutJson = layout
+		
+		if (PARSER.parse(layout.structure).asJsonObject.has("menu")) {
+			menuJson = PARSER.parse(layout.structure).asJsonObject.getAsJsonObject("menu")
+			invalidateOptionsMenu()
+		} else {
+			menuJson = JsonObject()
+		}
+	}
+	
+	fun refreshMenu(layouts: String) {
+		val layout = Gson().fromJson(layouts, Layout::class.java)
+		if (PARSER.parse(layout.structure).asJsonObject.has("menu")) {
+			menuJson = PARSER.parse(layout.structure).asJsonObject.getAsJsonObject("menu")
+			invalidateOptionsMenu()
+		} else {
+			menuJson = JsonObject()
+		}
+	}
+	
+	override fun onResume() {
+		//invalidateOptionsMenu()
+		super.onResume()
+	}
+	
 	
 	override fun onStart() {
 		super.onStart()
@@ -36,5 +76,33 @@ open class BaseActivity : AppCompatActivity() {
 	
 	@Subscribe public fun connectionStatus(event: ConnectionServiceEvent) {
 		handleConnectionError()
+	}
+	
+	
+	override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+		menuInflater.inflate(R.menu.default_menu, menu)
+		if (menu != null && menuJson != null) {
+			menu.clear()
+			handleMenu(menuJson!!, menu, null, this)
+		}
+		return super.onPrepareOptionsMenu(menu)
+	}
+	
+	
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		menuInflater.inflate(R.menu.default_menu, menu)
+		if (menu != null && menuJson != null) {
+			menu.clear()
+			handleMenu(menuJson!!, menu, null, this)
+		}
+		return super.onCreateOptionsMenu(menu)
+	}
+	
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+		when (item!!.itemId) {
+			android.R.id.home -> finish()
+		}
+		
+		return super.onOptionsItemSelected(item)
 	}
 }

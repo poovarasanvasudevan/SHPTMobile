@@ -22,7 +22,6 @@ import com.shpt.core.config.PARSER
 import com.shpt.core.config.STYLES
 import com.shpt.core.data.Constant
 import com.shpt.core.getLayout
-import com.shpt.core.handleMenu
 import com.shpt.core.models.Layout
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.serviceevent.RetryServiceEvent
@@ -37,13 +36,9 @@ import org.jetbrains.anko.coroutines.experimental.bg
 
 class SRCMLogin : BaseActivity() {
 	
-	var menuJson: JsonObject = JsonObject()
 	var loginWeb: Int = 0
 	lateinit var loginWebView: SHPTWebView
 	lateinit var loginProgress: AppProgressBar
-	
-	var menuTop: Menu? = null
-	
 	
 	override fun onStart() {
 		super.onStart()
@@ -71,6 +66,8 @@ class SRCMLogin : BaseActivity() {
 					getLayout("srcmlogin")!!
 				}.await()
 				
+				super.init(jsonLayout)
+				
 				
 				val layoutBuilder = LAYOUT_BUILDER_FACTORY
 				mainLayout.removeAllViews()
@@ -87,12 +84,7 @@ class SRCMLogin : BaseActivity() {
 					activity = this@SRCMLogin
 				)
 				
-				if (PARSER.parse(jsonLayout.structure).asJsonObject.has("menu")) {
-					menuJson = PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("menu")
-					invalidateOptionsMenu()
-				} else {
-					menuJson = JsonObject()
-				}
+				
 				
 				loginWeb = layoutBuilder.getUniqueViewId("loginWeb")
 				if (loginWeb != 0 && view.findViewById(loginWeb) != null) {
@@ -200,32 +192,16 @@ class SRCMLogin : BaseActivity() {
 		
 	}
 	
-	
-	override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-		menuInflater.inflate(R.menu.default_menu, menu)
-		if (menu != null) {
-			menu.clear()
-			handleMenu(menuJson, menu, null, this@SRCMLogin)
-		}
-		return super.onPrepareOptionsMenu(menu)
-	}
-	
-	
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-		menuInflater.inflate(R.menu.default_menu, menu)
-		if (menu != null) {
-			menu.clear()
-			handleMenu(menuJson, menu, null, this@SRCMLogin)
-		}
 		return super.onCreateOptionsMenu(menu)
 	}
 	
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-		when (item!!.itemId) {
-			android.R.id.home -> finish()
-		}
-		
 		return super.onOptionsItemSelected(item)
+	}
+	
+	override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+		return super.onPrepareOptionsMenu(menu)
 	}
 	
 	@Subscribe fun retryServiceEvent(event: RetryServiceEvent) {
