@@ -3,7 +3,6 @@ package com.shpt.core.app
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.toast
 import com.shpt.R
@@ -31,7 +30,7 @@ open class BaseActivity : AppCompatActivity() {
 	
 	var layoutJson: Layout? = null
 	var menuJson: JsonObject? = null
-	
+	var sidebarMenu: Menu? = null
 	
 	fun init(layout: Layout) {
 		layoutJson = layout
@@ -44,8 +43,12 @@ open class BaseActivity : AppCompatActivity() {
 		}
 	}
 	
-	fun refreshMenu(layouts: String) {
-		val layout = Gson().fromJson(layouts, Layout::class.java)
+	fun sidebar(menu: Menu) {
+		this.sidebarMenu = menu
+	}
+	
+	fun refreshMenu(layout: Layout) {
+		
 		if (PARSER.parse(layout.structure).asJsonObject.has("menu")) {
 			menuJson = PARSER.parse(layout.structure).asJsonObject.getAsJsonObject("menu")
 			invalidateOptionsMenu()
@@ -83,7 +86,7 @@ open class BaseActivity : AppCompatActivity() {
 		menuInflater.inflate(R.menu.default_menu, menu)
 		if (menu != null && menuJson != null) {
 			menu.clear()
-			handleMenu(menuJson!!, menu, null, this)
+			handleMenu(menuJson!!, menu, if (sidebarMenu == null) null else sidebarMenu, this)
 		}
 		return super.onPrepareOptionsMenu(menu)
 	}
@@ -93,7 +96,7 @@ open class BaseActivity : AppCompatActivity() {
 		menuInflater.inflate(R.menu.default_menu, menu)
 		if (menu != null && menuJson != null) {
 			menu.clear()
-			handleMenu(menuJson!!, menu, null, this)
+			handleMenu(menuJson!!, menu, if (sidebarMenu == null) null else sidebarMenu, this)
 		}
 		return super.onCreateOptionsMenu(menu)
 	}

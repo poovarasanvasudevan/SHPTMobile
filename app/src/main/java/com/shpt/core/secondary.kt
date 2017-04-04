@@ -6,10 +6,13 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.find
+import com.poovarasan.blade.EventType
 import com.poovarasan.blade.builder.DataParsingLayoutBuilder
 import com.shpt.R
+import com.shpt.core.event.fireEvent
 import org.jetbrains.anko.searchManager
 
 
@@ -28,8 +31,13 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 		val menuItems = toolBarMenu.getAsJsonArray("children")
 		
 		menuItems.forEach {
+			
+			val currentElement: JsonElement = it
+			
 			var searchable = false
 			val menuItem = menu.add(if (it.asJsonObject.has("title")) it.asJsonObject.get("title").asString else "Default Title")
+			
+			
 			
 			if (it.asJsonObject.has("showaction")) {
 				when (it.asJsonObject.get("showaction").asString) {
@@ -69,10 +77,17 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 				
 			}
 			
-			menuItem.setOnMenuItemClickListener {
-				
-				true
+			if (it.asJsonObject.has("onClick")) {
+				menuItem.setOnMenuItemClickListener {
+					fireEvent(
+						type = EventType.OnClick,
+						values = currentElement.asJsonObject.get("onClick"),
+						context = act
+					)
+					true
+				}
 			}
+			
 		}
 	}
 	
@@ -84,6 +99,8 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 		sidebarMenuObj.clear()
 		menuItems.forEach {
 			if (it.asJsonObject.has("children")) {
+				val currentElement: JsonElement = it
+				
 				val submenu = sidebarMenuObj.addSubMenu(if (it.asJsonObject.has("title")) it.asJsonObject.get("title").asString else "Default Title")
 				val children = it.asJsonObject.getAsJsonArray("children")
 				
@@ -105,14 +122,22 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 						}
 					}
 					
-					menuItem.setOnMenuItemClickListener {
-						true
+					if (it.asJsonObject.has("onClick")) {
+						menuItem.setOnMenuItemClickListener {
+							fireEvent(
+								type = EventType.OnClick,
+								values = currentElement.asJsonObject.get("onClick"),
+								context = act
+							)
+							true
+						}
 					}
 				}
 				
 			} else {
 				
 				val menuItem = sidebarMenuObj.add(if (it.asJsonObject.has("title")) it.asJsonObject.get("title").asString else "Default Title")
+				val currentElement: JsonElement = it
 				
 				if (it.asJsonObject.has("visibility")) {
 					if (it.asJsonObject.get("visibility").asString != "visible") {
@@ -128,8 +153,15 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 					}
 				}
 				
-				menuItem.setOnMenuItemClickListener {
-					true
+				if (it.asJsonObject.has("onClick")) {
+					menuItem.setOnMenuItemClickListener {
+						fireEvent(
+							type = EventType.OnClick,
+							values = currentElement.asJsonObject.get("onClick"),
+							context = act
+						)
+						true
+					}
 				}
 			}
 		}

@@ -214,7 +214,9 @@ class Home : BaseActivity() {
 				}.await()
 				
 				logMessage(jsonLayout.structure);
+				
 				super.init(jsonLayout)
+				super.sidebar(find<NavigationView>(R.id.navView).menu)
 				
 				val layoutBuilder = LAYOUT_BUILDER_FACTORY
 				
@@ -270,13 +272,12 @@ class Home : BaseActivity() {
 	
 	override fun onSaveInstanceState(outState: Bundle?) {
 		super.onSaveInstanceState(outState)
-		
-		outState!!.putString("layout", jsonLayout.structure)
+		outState!!.putParcelable("layout", jsonLayout)
 	}
 	
 	override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
 		super.onRestoreInstanceState(savedInstanceState)
-		super.refreshMenu(savedInstanceState!!.getString("layout"))
+		super.refreshMenu(savedInstanceState!!.getParcelable<Layout>("layout"))
 	}
 	
 	fun updateSearch(term: String) {
@@ -331,6 +332,7 @@ class Home : BaseActivity() {
 		logMessage("home resume")
 		super.onResume()
 	}
+	
 	/******************************************************************************
 	 * Events Moniter Background Tasks
 	 * It emits from BUS and based on Object EVents it will takes actions
@@ -338,7 +340,5 @@ class Home : BaseActivity() {
 	@Subscribe public fun retryServiceEvent(event: RetryServiceEvent) {
 		find<TextView>(R.id.statusText).text = event.message
 	}
-	
-	
 	
 }
