@@ -9,7 +9,6 @@ import android.view.View
 import android.webkit.*
 import android.widget.TextView
 import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.mcxiaoke.koi.ext.find
 import com.mcxiaoke.koi.ext.startActivity
 import com.mcxiaoke.koi.ext.toast
@@ -19,6 +18,7 @@ import com.shpt.R
 import com.shpt.core.app.BaseActivity
 import com.shpt.core.config.Config
 import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
+import com.shpt.core.config.PARSER
 import com.shpt.core.config.STYLES
 import com.shpt.core.data.Constant
 import com.shpt.core.getLayout
@@ -31,7 +31,6 @@ import com.shpt.uiext.SHPTWebView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
-import logMessage
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -43,7 +42,7 @@ class SRCMLogin : BaseActivity() {
 	lateinit var loginWebView: SHPTWebView
 	lateinit var loginProgress: AppProgressBar
 	
-	lateinit var menuTop: Menu
+	var menuTop: Menu? = null
 	
 	
 	override fun onStart() {
@@ -59,7 +58,7 @@ class SRCMLogin : BaseActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 		
-		logMessage("Hello")
+		
 		if (intent.hasExtra(Constant.PARCEL)) {
 			toast(intent.extras.getString(Constant.PARCEL))
 		}
@@ -76,21 +75,20 @@ class SRCMLogin : BaseActivity() {
 				val layoutBuilder = LAYOUT_BUILDER_FACTORY
 				mainLayout.removeAllViews()
 				
-				val parser = JsonParser()
-				val view = layoutBuilder.build(mainLayout, parser.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, STYLES.await())
+				val view = layoutBuilder.build(mainLayout, PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"), JsonObject(), 0, STYLES.await())
 				
 				mainLayout.addView(view as View)
 				
 				setUpEssential(
 					view = view,
 					layoutBuilder = layoutBuilder,
-					viewJson = parser.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
+					viewJson = PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
 					dataJson = JsonObject(),
 					activity = this@SRCMLogin
 				)
 				
-				if (parser.parse(jsonLayout.structure).asJsonObject.has("menu")) {
-					menuJson = parser.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("menu")
+				if (PARSER.parse(jsonLayout.structure).asJsonObject.has("menu")) {
+					menuJson = PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("menu")
 					invalidateOptionsMenu()
 				} else {
 					menuJson = JsonObject()

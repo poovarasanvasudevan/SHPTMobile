@@ -2,8 +2,11 @@ package com.shpt.core.api
 
 import android.content.Context
 import android.util.Log
+import com.mcxiaoke.koi.ext.isConnected
 import com.shpt.core.config.BUS
+import com.shpt.core.config.CONTEXT
 import com.shpt.core.config.Config
+import com.shpt.core.handleConnectionError
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.rest.Rest
 import com.shpt.core.serviceevent.RetryServiceEvent
@@ -13,6 +16,7 @@ import okhttp3.Response
 import retrofit2.Retrofit
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+
 
 /**
  * Created by poovarasanv on 6/2/17.
@@ -94,6 +98,25 @@ class RetryInterceptor : Interceptor {
 		}
 		return response
 	}
+}
+
+
+class ConnectivityInterceptor : Interceptor {
+	
+	@Throws(IOException::class)
+	override fun intercept(chain: Interceptor.Chain): Response {
+		if (!CONTEXT.isConnected()) {
+			CONTEXT.handleConnectionError()
+			return Response.Builder()
+				.code(600) //Simply put whatever value you want to designate to aborted request.
+				.request(chain.request())
+				.build()
+		}
+		
+		val builder = chain.request().newBuilder()
+		return chain.proceed(builder.build())
+	}
+	
 }
 
 class CacheInterceptor : Interceptor {

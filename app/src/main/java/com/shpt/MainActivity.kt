@@ -15,7 +15,6 @@ import com.shpt.core.config.DATABASE
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.progressLine
 import com.shpt.core.serviceevent.RetryServiceEvent
-import logMessage
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.delete
@@ -24,7 +23,6 @@ import readJson
 
 
 class MainActivity : AppCompatActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,8 +84,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: JsonObject?) {
-            logMessage(result.toString())
-
             if (Prefs.with(this@MainActivity).contains(Config.COOKIE)) {
                 startActivity<SRCMLogin>()
 	            overridePendingTransition(R.anim.fadein, R.anim.fadeout);

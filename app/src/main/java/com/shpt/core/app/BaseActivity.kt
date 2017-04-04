@@ -6,7 +6,6 @@ import com.shpt.core.config.BUS
 import com.shpt.core.handleConnectionError
 import com.shpt.core.serviceevent.ConnectionServiceEvent
 import com.shpt.core.serviceevent.NotificationEvent
-import logMessage
 import org.greenrobot.eventbus.Subscribe
 
 /**
@@ -36,7 +35,6 @@ open class BaseActivity : AppCompatActivity() {
 	}
 	
 	@Subscribe public fun connectionStatus(event: ConnectionServiceEvent) {
-		logMessage("status Changes")
 		handleConnectionError()
 	}
 }

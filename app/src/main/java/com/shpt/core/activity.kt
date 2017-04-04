@@ -48,6 +48,7 @@ fun Context.handleConnectionError() {
 fun splitQuery(url: URL): Map<String, String> {
 	val query_pairs = LinkedHashMap<String, String>()
 	val query = url.getQuery()
+	
 	val pairs = query.split("&".toRegex()).dropLastWhile(String::isEmpty).toTypedArray()
 	for (pair in pairs) {
 		val idx = pair.indexOf("=")
