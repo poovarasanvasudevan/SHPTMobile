@@ -46,10 +46,13 @@ class EventCallback(activity: Context) : LayoutBuilderCallback {
 	}
 	
 	override fun onEvent(view: BladeView, value: JsonElement, eventType: EventType): View {
-		fireEvent(type = eventType, values = value, context = act)
-		
-		Log.d("event", value.toString())
-		return view as View
+		fireEvent(
+			view = view as View,
+			type = eventType,
+			values = value,
+			context = act
+		)
+		return view
 	}
 	
 	override fun onPagerAdapterRequired(parent: BladeView, children: List<BladeView>, layout: JsonObject): PagerAdapter? {

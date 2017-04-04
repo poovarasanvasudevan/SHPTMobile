@@ -168,7 +168,6 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 	}
 }
 
-
 fun handleSecondary(json: JsonObject, act: Activity, layoutBuilder: DataParsingLayoutBuilder, view: View) {
 	if (json.has("menu")) {
 		

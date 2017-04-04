@@ -327,7 +327,6 @@ class Home : BaseActivity() {
 		super.onStop()
 	}
 	
-	
 	override fun onResume() {
 		logMessage("home resume")
 		super.onResume()

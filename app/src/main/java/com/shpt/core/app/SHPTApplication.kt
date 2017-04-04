@@ -11,6 +11,7 @@ import com.poovarasan.deepstream.DeepstreamClient
 import com.shpt.core.mqtt.Deepstream
 import com.shpt.core.mqtt.MQTT
 import com.shpt.core.mqtt.connectMqtt
+import me.tatarka.support.job.JobScheduler
 import org.eclipse.paho.android.service.MqttAndroidClient
 
 
@@ -39,6 +40,9 @@ class SHPTApplication : Application() {
 		
 		lateinit var mqtt: MqttAndroidClient
 			private set
+		
+		lateinit var jobScheduler: JobScheduler
+			private set
 	}
 	
 	
@@ -50,9 +54,10 @@ class SHPTApplication : Application() {
 		context = this.applicationContext
 		mqtt = MQTT.getMQTTClient(applicationContext)!!
 		deepstream = Deepstream.getClient()
+		jobScheduler = JobScheduler.getInstance(applicationContext)
 		
 		App.setContext(this);
-		connectMqtt();
+		connectMqtt()
 		
 	}
 	

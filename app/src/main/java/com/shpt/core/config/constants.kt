@@ -16,6 +16,7 @@ import com.shpt.core.prefs.Prefs
 import com.shpt.core.rest.Rest
 import com.shpt.job.Priority
 import kotlinx.coroutines.experimental.Deferred
+import me.tatarka.support.job.JobScheduler
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.greenrobot.eventbus.EventBus
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -78,3 +79,6 @@ val DEEPSTREAM: DeepstreamClient
 val STYLES: Deferred<Styles> = bg {
 	getStyles()!!
 }
+
+val JOB_SCHEDULER: JobScheduler
+	get() = JobScheduler.getInstance(CONTEXT)
