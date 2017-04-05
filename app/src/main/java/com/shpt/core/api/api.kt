@@ -3,6 +3,7 @@ package com.shpt.core.api
 import android.content.Context
 import android.util.Log
 import com.mcxiaoke.koi.ext.isConnected
+import com.shpt.BuildConfig
 import com.shpt.core.config.BUS
 import com.shpt.core.config.CONTEXT
 import com.shpt.core.config.Config
@@ -39,6 +40,7 @@ fun Context.getAdapter(): Rest {
 			.addInterceptor(CookieInterceptor(Prefs.with(this).read(Config.COOKIE)))
 			.addInterceptor(CacheInterceptor())
 			.addInterceptor(RetryInterceptor())
+			.addInterceptor(HeaderMakerInterceptor())
 			.build()
 		
 		
@@ -57,6 +59,7 @@ fun Context.getAdapter(): Rest {
 			.readTimeout(1, TimeUnit.MINUTES)
 			.addInterceptor(CacheInterceptor())
 			.addInterceptor(RetryInterceptor())
+			.addInterceptor(HeaderMakerInterceptor())
 			.build()
 		val retrofit = Retrofit.Builder()
 			.baseUrl(Config.BASE)
@@ -101,6 +104,21 @@ class RetryInterceptor : Interceptor {
 	}
 }
 
+class HeaderMakerInterceptor : Interceptor {
+	override fun intercept(chain: Interceptor.Chain?): Response {
+		val original = chain!!.request()
+		
+		// Request customization: add request headers
+		val requestBuilder = original.newBuilder()
+			.addHeader("APP-VERSION", BuildConfig.VERSION_NAME)
+			.addHeader("BUILD-VERSION", config("BUILD-VERSION"))
+			.addHeader("USER-EMAIL", config("USER-EMAIL"))
+		
+		val request = requestBuilder.build()
+		return chain.proceed(request)
+	}
+	
+}
 
 class ConnectivityInterceptor : Interceptor {
 	

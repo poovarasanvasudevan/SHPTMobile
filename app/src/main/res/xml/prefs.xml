@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Notifications">
+        <CheckBoxPreference
+                android:title="Allow New Product Notifications"
+                android:defaultValue="true"
+                android:summary="This option if selected will allow the application to notify you all important updates of latest products."
+                android:key="newProductNotification"/>
+
+        <CheckBoxPreference
+                android:title="Allow Order Notifications"
+                android:defaultValue="true"
+                android:summary="This option if selected will allow the application to notify you all important updates of your Order."
+                android:key="newOrderNotification"/>
+
+        <RingtonePreference
+                android:title="Notification Ringtone"
+                android:summary="Notification Ringtone for SHPT Application"
+                android:key="notificationTone"/>
+
+        <CheckBoxPreference
+                android:title="Vibrate On Notifications"
+                android:defaultValue="true"
+                android:summary="Vibrate Phone on Notification Receives"
+                android:key="vibrateNotification"/>
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="Location">
+        <SwitchPreference
+                android:title="Share Location"
+                android:defaultValue="false"
+                android:summary="Allow this Application to share your location for the purpose of tracking Order and Subscription"
+                android:key="locationTracking"/>
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="Updates">
+        <SwitchPreference
+                android:title="Check Updates"
+                android:defaultValue="true"
+                android:summary="Allow this Application to Check for Newer Updates Automatically"
+                android:key="updateTracking"/>
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="About">
+        <Preference
+                android:title="Version"
+                android:summary="Version Of shpt.in Application"
+                android:key="version"/>
+
+        <Preference
+                android:key="buildNumber"
+                android:title="Build Number"/>
+    </PreferenceCategory>
+</PreferenceScreen>

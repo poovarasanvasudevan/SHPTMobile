@@ -22,19 +22,21 @@ import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.onTextChange
 import com.mcxiaoke.koi.ext.quickAdapterOf
 import com.mcxiaoke.koi.ext.toast
+import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.*
 import com.shpt.core.app.BaseActivity
-import com.shpt.core.config.*
+import com.shpt.core.config.Config
+import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
+import com.shpt.core.config.PARSER
+import com.shpt.core.config.REST
 import com.shpt.core.models.Layout
 import com.shpt.core.models.ProductSearch
 import com.shpt.core.serviceevent.RetryServiceEvent
-import kotlinx.coroutines.experimental.async
 import logMessage
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
-import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.design.navigationView
 import org.jetbrains.anko.support.v4.drawerLayout
 import java.net.URL
@@ -207,61 +209,62 @@ class Home : BaseActivity() {
 		supportActionBar!!.elevation = 0f
 		try {
 			
-			async(context = kotlinx.coroutines.experimental.android.UI) {
+			doAsync {
 				
-				jsonLayout = bg {
-					getLayout("home")!!
-				}.await()
+				//fetching Json
+				jsonLayout = getLayout("home")!!
+				val styles: Styles = getStyles()!!
 				
-				logMessage(jsonLayout.structure);
-				
-				super.init(jsonLayout)
-				super.sidebar(find<NavigationView>(R.id.navView).menu)
-				
-				val layoutBuilder = LAYOUT_BUILDER_FACTORY
-				
-				val view = layoutBuilder.build(
-					find<RelativeLayout>(R.id.mainLayout1),
-					PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
-					JsonObject(),
-					0,
-					STYLES.await())
-				
-				find<RelativeLayout>(R.id.mainLayout1).removeAllViews()
-				find<RelativeLayout>(R.id.mainLayout1).addView(view as View)
-				
-				
-				setUpEssential(
-					layoutBuilder,
-					view,
-					PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
-					JsonObject(),
-					this@Home
-				)
-				
-				val actionBarDrawerToggle = object : ActionBarDrawerToggle(this@Home, find<DrawerLayout>(R.id.drawer), find<Toolbar>(R.id.toolbar), R.string.drawer_open, R.string.drawer_close) {
+				uiThread {
 					
-					override fun onDrawerClosed(drawerView: View) {
-						super.onDrawerClosed(drawerView)
-					}
+					super.init(jsonLayout)
+					super.sidebar(find<NavigationView>(R.id.navView).menu)
 					
-					override fun onDrawerOpened(drawerView: View) {
-						super.onDrawerOpened(drawerView)
-					}
+					val layoutBuilder = LAYOUT_BUILDER_FACTORY
 					
-				}
-				find<DrawerLayout>(R.id.drawer).setDrawerListener(actionBarDrawerToggle)
-				actionBarDrawerToggle.syncState()
-				
-				
-				
-				find<NavigationView>(R.id.navView).setNavigationItemSelectedListener {
+					val view = layoutBuilder.build(
+						find<RelativeLayout>(R.id.mainLayout1),
+						PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
+						JsonObject(),
+						0,
+						styles)
 					
-					find<DrawerLayout>(R.id.drawer).closeDrawers()
-					when (it.itemId) {
+					find<RelativeLayout>(R.id.mainLayout1).removeAllViews()
+					find<RelativeLayout>(R.id.mainLayout1).addView(view as View)
+					
+					
+					setUpEssential(
+						layoutBuilder,
+						view,
+						PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
+						JsonObject(),
+						this@Home
+					)
+					
+					val actionBarDrawerToggle = object : ActionBarDrawerToggle(this@Home, find<DrawerLayout>(R.id.drawer), find<Toolbar>(R.id.toolbar), R.string.drawer_open, R.string.drawer_close) {
+						
+						override fun onDrawerClosed(drawerView: View) {
+							super.onDrawerClosed(drawerView)
+						}
+						
+						override fun onDrawerOpened(drawerView: View) {
+							super.onDrawerOpened(drawerView)
+						}
 						
 					}
-					true
+					find<DrawerLayout>(R.id.drawer).setDrawerListener(actionBarDrawerToggle)
+					actionBarDrawerToggle.syncState()
+					
+					
+					
+					find<NavigationView>(R.id.navView).setNavigationItemSelectedListener {
+						
+						find<DrawerLayout>(R.id.drawer).closeDrawers()
+						when (it.itemId) {
+							
+						}
+						true
+					}
 				}
 			}
 		} catch (e: Exception) {

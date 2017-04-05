@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewManager
 import android.widget.ImageView
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.find
+import com.mcxiaoke.koi.utils.lollipopOrNewer
 import com.mikepenz.iconics.view.IconicsButton
 import com.mikepenz.iconics.view.IconicsImageView
 import com.poovarasan.blade.builder.DataParsingLayoutBuilder
@@ -117,7 +119,7 @@ fun View.setVisibility(visibility: Int) {
 	val view = this
 	
 	this.animate()
-		.translationY(this.getHeight().toFloat())
+		.translationY(this.height.toFloat())
 		.alpha(0.0f)
 		.setDuration(300)
 		.setListener(object : AnimatorListenerAdapter() {
@@ -125,7 +127,7 @@ fun View.setVisibility(visibility: Int) {
 				super.onAnimationEnd(animation)
 				view.visibility = visibility
 			}
-		});
+		})
 }
 
 
@@ -258,7 +260,7 @@ fun getStyles(): Styles? {
 
 fun getLayout(layoutName: String): Layout? {
 	
-	var layout: Layout? = null;
+	var layout: Layout? = null
 	
 	DATABASE.use {
 		select("Layout").where("page = {pageName}", "pageName" to layoutName).exec {
@@ -271,5 +273,24 @@ fun getLayout(layoutName: String): Layout? {
 		layout = Layout(123, "", JsonObject().toString())
 	}
 	
-	return layout;
+	return layout
+}
+
+fun Activity.themedColor(color: String = "colorPrimary"): Int {
+	var colorAttr: Int? = null
+	
+	if (lollipopOrNewer()) {
+		when (color) {
+			"colorPrimary"     -> colorAttr = android.R.attr.colorPrimary
+			"colorPrimaryDark" -> colorAttr = android.R.attr.colorPrimaryDark
+			"colorAccent"      -> colorAttr = android.R.attr.colorAccent
+			else               -> colorAttr = android.R.attr.colorPrimary
+		}
+	} else {
+		colorAttr = CONTEXT.resources.getIdentifier(color, "attr", CONTEXT.packageName)
+	}
+	val outValue = TypedValue()
+	
+	this.theme.resolveAttribute(colorAttr, outValue, true)
+	return outValue.data
 }

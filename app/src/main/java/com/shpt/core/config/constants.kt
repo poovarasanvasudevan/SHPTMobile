@@ -5,21 +5,16 @@ import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.Params
 import com.google.gson.JsonParser
 import com.poovarasan.blade.builder.DataParsingLayoutBuilder
-import com.poovarasan.blade.toolbox.Styles
 import com.poovarasan.deepstream.DeepstreamClient
 import com.shpt.core.api.getAdapter
 import com.shpt.core.app.SHPTApplication
 import com.shpt.core.db.DatabaseOpenHelper
 import com.shpt.core.getLayoutBuilder
-import com.shpt.core.getStyles
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.rest.Rest
 import com.shpt.job.Priority
-import kotlinx.coroutines.experimental.Deferred
-import me.tatarka.support.job.JobScheduler
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.greenrobot.eventbus.EventBus
-import org.jetbrains.anko.coroutines.experimental.bg
 
 /**
  * Created by poovarasanv on 24/3/17.
@@ -75,10 +70,3 @@ val MQTT_OBJ: MqttAndroidClient
 
 val DEEPSTREAM: DeepstreamClient
 	get() = SHPTApplication.deepstream
-
-val STYLES: Deferred<Styles> = bg {
-	getStyles()!!
-}
-
-val JOB_SCHEDULER: JobScheduler
-	get() = JobScheduler.getInstance(CONTEXT)

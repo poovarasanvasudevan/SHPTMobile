@@ -2,19 +2,19 @@ package com.shpt
 
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
-import color
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.startActivity
 import com.shpt.activity.Login
 import com.shpt.activity.SRCMLogin
+import com.shpt.core.app.BaseActivity
 import com.shpt.core.config.Config
 import com.shpt.core.config.DATABASE
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.progressLine
 import com.shpt.core.serviceevent.RetryServiceEvent
+import com.shpt.core.themedColor
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.delete
@@ -22,11 +22,12 @@ import org.jetbrains.anko.db.insert
 import readJson
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		// setContentView(R.layout.activity_main)
+		
 		
 		relativeLayout {
 			
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 			}
 			
 			progressLine {
-				barColor = color(R.color.colorPrimary)
+				barColor = themedColor(color = "colorPrimary")
 				barWidth = dip(3)
 			}.lparams {
 				width = dip(40)

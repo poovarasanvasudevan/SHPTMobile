@@ -2,13 +2,19 @@ package com.shpt.core
 
 import android.app.Activity
 import android.content.Context
+import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.isConnected
 import com.mcxiaoke.koi.ext.startActivity
 import com.shpt.activity.Login
 import com.shpt.activity.SRCMLogin
+import com.shpt.core.config.CONTEXT
+import com.shpt.core.config.DATABASE
 import org.jetbrains.anko.activityManager
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.insert
+import readJson
 import java.io.UnsupportedEncodingException
 import java.net.URL
 import java.net.URLDecoder
@@ -55,4 +61,19 @@ fun splitQuery(url: URL): Map<String, String> {
 		query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"))
 	}
 	return query_pairs
+}
+
+
+fun updateKernel(): JsonObject {
+	val returnJson = CONTEXT.readJson()
+	DATABASE.use {
+		delete("Layout")
+		delete("Settings")
+		
+		for ((key) in returnJson.entrySet()) {
+			insert("Layout", "page" to key, "structure" to returnJson.getAsJsonObject(key).toString())
+		}
+	}
+	
+	return returnJson
 }

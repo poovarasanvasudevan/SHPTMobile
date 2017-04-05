@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.toast
+import com.shpt.R
 import com.shpt.core.data.Constant
 
 /**
@@ -15,28 +16,31 @@ import com.shpt.core.data.Constant
  */
 
 class ActivityGoToEvent : EventBase {
-    override fun beforeExecute(ctx: Context, params: JsonObject): Boolean {
-        return true;
-    }
-
-    override fun afterExecute(ctx: Context, params: JsonObject, output: JsonObject) {
-    }
-
-    override fun execute(ctx: Context, params: JsonObject): JsonObject {
-        try {
-            val activityName: Class<Activity> = Class.forName("com.shpt.activity.${params.get("activity").asString}") as Class<Activity>
-
-            val intent = Intent(ctx, activityName)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            if (params.has("data")) {
-                intent.putExtra(Constant.PARCEL, params.get("data").toString())
-            }
-            ctx.startActivity(intent)
-        } catch (e: Exception) {
-            ctx.toast("Oops : ${e.cause.toString()}")
-        }
-        return JsonObject()
-    }
-
+	override fun beforeExecute(ctx: Context, params: JsonObject): Boolean {
+		return true;
+	}
+	
+	override fun afterExecute(ctx: Context, params: JsonObject, output: JsonObject) {
+	}
+	
+	override fun execute(ctx: Context, params: JsonObject): JsonObject {
+		try {
+			val activityName: Class<Activity> = Class.forName("com.shpt.activity.${params.get("activity").asString}") as Class<Activity>
+			
+			val intent = Intent(ctx, activityName)
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			if (params.has("data")) {
+				intent.putExtra(Constant.PARCEL, params.get("data").toString())
+			}
+			ctx.startActivity(intent)
+			if (ctx is Activity)
+				(ctx as Activity).overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+			
+		} catch (e: Exception) {
+			ctx.toast("Oops : ${e.cause.toString()}")
+		}
+		return JsonObject()
+	}
+	
 }

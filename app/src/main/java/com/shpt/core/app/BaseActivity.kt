@@ -1,9 +1,11 @@
 package com.shpt.core.app
 
+import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.google.gson.JsonObject
+import com.mcxiaoke.koi.ext.getActivity
 import com.mcxiaoke.koi.ext.toast
 import com.shpt.R
 import com.shpt.core.config.BUS
@@ -31,6 +33,10 @@ open class BaseActivity : AppCompatActivity() {
 	var layoutJson: Layout? = null
 	var menuJson: JsonObject? = null
 	var sidebarMenu: Menu? = null
+	
+	fun act(): Activity {
+		return getActivity()
+	}
 	
 	fun init(layout: Layout) {
 		layoutJson = layout
@@ -81,6 +87,10 @@ open class BaseActivity : AppCompatActivity() {
 		handleConnectionError()
 	}
 	
+	override fun onBackPressed() {
+		super.onBackPressed()
+	}
+	
 	
 	override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 		menuInflater.inflate(R.menu.default_menu, menu)
@@ -103,7 +113,9 @@ open class BaseActivity : AppCompatActivity() {
 	
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 		when (item!!.itemId) {
-			android.R.id.home -> finish()
+			android.R.id.home -> {
+				finish()
+			}
 		}
 		
 		return super.onOptionsItemSelected(item)
