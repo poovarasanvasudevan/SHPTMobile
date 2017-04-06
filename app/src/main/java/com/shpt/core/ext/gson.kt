@@ -12,6 +12,7 @@ import com.google.gson.JsonObject
 
 
 fun JsonObject.getString(pattern: String): String {
+	
 	return this.get(pattern).asString
 }
 

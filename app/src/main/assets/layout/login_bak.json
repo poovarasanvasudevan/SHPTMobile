@@ -1,697 +1,867 @@
 {
-  "splash": {
-    "main": {
-      "type": "ProgressWheel",
-      "layout_width": "40dp",
-      "layout_centerHorizontal": "true",
-      "layout_marginBottom": "60dp",
-      "barColor": "#2196F3",
-      "barWidth": "3dp",
-      "layout_alignParentBottom": "true",
-      "layout_height": "40dp"
-    }
-  },
-  "login": {
-    "main": {
-      "type": "RelativeLayout",
-      "layout_width": "match_parent",
-      "layout_height": "match_parent",
-      "children": [
-        {
-          "type": "AppBarLayout",
-          "layout_width": "match_parent",
-          "layout_height": "wrap_content",
-          "id": "appbar",
-          "elevation": "4dp",
-          "children": [
-            {
-              "type": "Toolbar",
-              "id": "toolbar",
-              "title": "Login",
-              "layout_width": "match_parent",
-              "layout_height": "56dp"
-            }
-          ]
-        },
-        {
-          "type": "RelativeLayout",
-          "layout_width": "match_parent",
-          "layout_height": "match_parent",
-          "layout_below": "appbar",
-          "children": [
-            {
-              "type": "LinearLayout",
-              "orientation": "vertical",
-              "layout_above": "card",
-              "layout_width": "match_parent",
-              "layout_height": "wrap_content",
-              "children": [
-                {
-                  "type": "ScrollView",
-                  "layout_width": "match_parent",
-                  "layout_height": "match_parent",
-                  "children": [
-                    {
-                      "type": "JustifiedTextView",
-                      "layout_width": "match_parent",
-                      "layout_height": "wrap_content",
-                      "text": "\t\t\t\t\t\t\t but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "CardView",
-              "id": "card",
-              "layout_width": "match_parent",
-              "layout_height": "wrap_content",
-              "layout_alignParentBottom": "true",
-              "children": [
-                {
-                  "type": "LinearLayout",
-                  "layout_width": "match_parent",
-                  "orientation": "vertical",
-                  "layout_height": "wrap_content",
-                  "children": [
-                    {
-                      "type": "Ripple",
-                      "layout_margin": "16dp",
-                      "id": "srcmloginbtn",
-                      "visibility": "visible",
-                      "layout_width": "match_parent",
-                      "layout_height": "wrap_content",
-                      "children": [
-                        {
-                          "type": "Button",
-                          "layout_width": "match_parent",
-                          "text": "Login with My SRCM",
-                          "background": "#2196F3",
-                          "textColor": "#FFFFFF",
-                          "layout_height": "40dp"
-                        }
-                      ],
-                      "onClick": {
-                        "event": [
-                          {
-                            "event": "ActivityGoToEvent",
-                              "activity": "Home",
-                            "data": {
-                              "formName": "eventRegister"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+    "splash": {
+        "main": {
+            "type": "ProgressWheel",
+            "layout_width": "40dp",
+            "layout_centerHorizontal": "true",
+            "layout_marginBottom": "60dp",
+            "barColor": "#2196F3",
+            "barWidth": "3dp",
+            "layout_alignParentBottom": "true",
+            "layout_height": "40dp"
         }
-      ]
-    }
-  },
-  "srcmlogin": {
-    "main": {
-      "type": "RelativeLayout",
-      "layout_width": "match_parent",
-      "layout_height": "match_parent",
-      "children": [
-        {
-          "type": "AppBarLayout",
-          "id": "appbar",
-          "elevation": "4dp",
-          "layout_width": "match_parent",
-          "layout_height": "wrap_content",
-          "children": [
-            {
-              "type": "Toolbar",
-              "id": "toolbar",
-              "title": "SRCM Login",
-              "layout_width": "match_parent",
-              "layout_height": "56dp"
-            }
-          ]
-        },
-        {
-          "type": "RelativeLayout",
-          "layout_width": "match_parent",
-          "layout_height": "match_parent",
-          "layout_below": "appbar",
-          "children": [
-            {
-              "type": "Web",
-              "id": "loginWeb",
-              "layout_width": "match_parent",
-              "layout_height": "match_parent",
-              "url": "http://localhost:8092/index.php?route=mobile/api/loginMe"
-            },
-            {
-              "type": "AppCompatProgressBar",
-              "layout_width": "40dp",
-              "id": "loginProgress",
-              "layout_centerHorizontal": "true",
-              "layout_centerVertical": "true",
-              "barColor": "#2196F3",
-              "barWidth": "3dp",
-              "layout_height": "40dp"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "home": {
-    "menu": {
-      "toolbar": {
-        "children": [
-          {
-            "icon": "gmd_notifications",
-            "showaction": "always",
-            "title": "Notification",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_shopping_cart",
-            "showaction": "always",
-            "title": "Shopping Cart",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "",
-            "title": "Settings",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "",
-            "title": "About us",
-            "event": "",
-            "visibility": "visible"
-          }
-        ]
-      },
-      "sidebar": {
-        "children": [
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "My Account",
-            "event": "",
-            "visibility": "visible"
-          },
-          {
-            "icon": "gmd_people",
-            "title": "Account Information",
-            "event": "",
-            "visibility": "visible",
-            "children": [
-              {
-                "icon": "gmd_people",
-                "title": "My Account",
-                "event": "",
-                "visibility": "visible"
-              },
-              {
-                "icon": "gmd_people",
-                "title": "My Account",
-                "event": "",
-                "visibility": "visible"
-              },
-              {
-                "icon": "gmd_people",
-                "title": "My Account",
-                "event": "",
-                "visibility": "visible"
-              },
-              {
-                "icon": "gmd_people",
-                "title": "My Account",
-                "event": "",
-                "visibility": "visible"
-              },
-              {
-                "icon": "gmd_people",
-                "title": "My Account",
-                "event": "",
-                "visibility": "visible"
-              },
-              {
-                "icon": "gmd_people",
-                "title": "My Account",
-                "event": "",
-                "visibility": "visible"
-              }
-            ]
-          }
-        ]
-      }
     },
-    "main": {
-      "type": "ScrollView",
-      "layout_width": "match_parent",
-      "layout_width": "match_parent",
-      "children": [
-        {
-          "type": "LinearLayout",
-          "layout_width": "match_parent",
-          "orientation": "vertical",
-          "layout_width": "match_parent",
-          "children": [
-            {
-              "type": "Pager",
-              "layout_width": "match_parent",
-              "layout_height": "150dp",
-              "padding": "3dp",
-              "layout": {
-                "layout_main": [
-                  {
-                    "main": {
-                      "type": "LinearLayout",
-                      "background": "#000000",
-                      "layout_width": "match_parent",
-                      "layout_margin": "3dp",
-                      "layout_height": "match_parent"
-                    }
-                  },
-                  {
-                    "main": {
-                      "type": "LinearLayout",
-                      "background": "#000000",
-                      "layout_width": "match_parent",
-                      "layout_margin": "3dp",
-                      "layout_height": "match_parent"
-                    }
-                  },
-                  {
-                    "main": {
-                      "type": "LinearLayout",
-                      "background": "#000000",
-                      "layout_width": "match_parent",
-                      "layout_margin": "3dp",
-                      "layout_height": "match_parent"
-                    }
-                  },
-                  {
-                    "main": {
-                      "type": "LinearLayout",
-                      "background": "#000000",
-                      "layout_width": "match_parent",
-                      "layout_margin": "3dp",
-                      "layout_height": "match_parent"
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "type": "BigProduct",
-              "layout_width": "match_parent",
-              "layout_width": "wrap_content",
-              "productid": "2433"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "forms": {
-    "eventRegister": {
-      "main": {
-        "type": "RelativeLayout",
-        "layout_width": "match_parent",
-        "layout_height": "match_parent",
-        "children": [
-          {
-            "type": "AppBarLayout",
-            "id": "appbar",
-            "elevation": "4dp",
-            "layout_width": "match_parent",
-            "layout_height": "wrap_content",
-            "children": [
-              {
-                "type": "Toolbar",
-                "id": "toolbar",
-                "title": "Event Register Form",
-                "layout_width": "match_parent",
-                "layout_height": "56dp"
-              }
-            ]
-          },
-          {
+    "login": {
+        "main": {
             "type": "RelativeLayout",
-            "layout_below": "appbar",
             "layout_width": "match_parent",
             "layout_height": "match_parent",
             "children": [
-              {
-                "type": "ScrollView",
-                "layout_below": "appbar",
-                "layout_above": "card",
+                {
+                    "type": "AppBarLayout",
+                    "layout_width": "match_parent",
+                    "layout_height": "wrap_content",
+                    "id": "appbar",
+                    "elevation": "4dp",
+                    "children": [
+                        {
+                            "type": "Toolbar",
+                            "id": "toolbar",
+                            "title": "Login",
+                            "layout_width": "match_parent",
+                            "layout_height": "56dp"
+                        }
+                    ]
+                },
+                {
+                    "type": "RelativeLayout",
+                    "layout_width": "match_parent",
+                    "layout_height": "match_parent",
+                    "layout_below": "appbar",
+                    "children": [
+                        {
+                            "type": "LinearLayout",
+                            "orientation": "vertical",
+                            "layout_above": "card",
+                            "layout_width": "match_parent",
+                            "layout_height": "wrap_content",
+                            "children": [
+                                {
+                                    "type": "ScrollView",
+                                    "layout_width": "match_parent",
+                                    "layout_height": "match_parent",
+                                    "children": [
+                                        {
+                                            "type": "JustifiedTextView",
+                                            "layout_width": "match_parent",
+                                            "layout_height": "wrap_content",
+                                            "text": "\t\t\t\t\t\t\t but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "CardView",
+                            "id": "card",
+                            "layout_width": "match_parent",
+                            "layout_height": "wrap_content",
+                            "layout_alignParentBottom": "true",
+                            "children": [
+                                {
+                                    "type": "LinearLayout",
+                                    "layout_width": "match_parent",
+                                    "orientation": "vertical",
+                                    "layout_height": "wrap_content",
+                                    "children": [
+                                        {
+                                            "type": "Ripple",
+                                            "layout_margin": "16dp",
+                                            "id": "srcmloginbtn",
+                                            "visibility": "visible",
+                                            "layout_width": "match_parent",
+                                            "layout_height": "wrap_content",
+                                            "children": [
+                                                {
+                                                    "type": "Button",
+                                                    "layout_width": "match_parent",
+                                                    "text": "Login with My SRCM",
+                                                    "background": "#2196F3",
+                                                    "textColor": "#FFFFFF",
+                                                    "layout_height": "40dp"
+                                                }
+                                            ],
+                                            "onClick": {
+                                                "event": [
+                                                    {
+                                                        "event": "ActivityGoToEvent",
+                                                        "activity": "Home",
+                                                        "data": {
+                                                            "formName": "eventRegister"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "srcmlogin": {
+        "main": {
+            "type": "RelativeLayout",
+            "layout_width": "match_parent",
+            "layout_height": "match_parent",
+            "children": [
+                {
+                    "type": "AppBarLayout",
+                    "id": "appbar",
+                    "elevation": "4dp",
+                    "layout_width": "match_parent",
+                    "layout_height": "wrap_content",
+                    "children": [
+                        {
+                            "type": "Toolbar",
+                            "id": "toolbar",
+                            "title": "SRCM Login",
+                            "layout_width": "match_parent",
+                            "layout_height": "56dp"
+                        }
+                    ]
+                },
+                {
+                    "type": "RelativeLayout",
+                    "layout_width": "match_parent",
+                    "layout_height": "match_parent",
+                    "layout_below": "appbar",
+                    "children": [
+                        {
+                            "type": "Web",
+                            "id": "loginWeb",
+                            "layout_width": "match_parent",
+                            "layout_height": "match_parent",
+                            "url": "http://localhost:8092/index.php?route=mobile/api/loginMe"
+                        },
+                        {
+                            "type": "AppCompatProgressBar",
+                            "layout_width": "40dp",
+                            "id": "loginProgress",
+                            "layout_centerHorizontal": "true",
+                            "layout_centerVertical": "true",
+                            "barColor": "#2196F3",
+                            "barWidth": "3dp",
+                            "layout_height": "40dp"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "home": {
+        "menu": {
+            "toolbar": {
+                "children": [
+                    {
+                        "icon": "gmd_notifications",
+                        "showaction": "always",
+                        "title": "Notification",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "gmd_shopping_cart",
+                        "showaction": "always",
+                        "title": "Shopping Cart",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "",
+                        "title": "Settings",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "SettingActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "",
+                        "title": "About us",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "sidebar": {
+                "children": [
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible"
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible"
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible"
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible"
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible"
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible",
+                        "onClick": {
+                            "event": [
+                                {
+                                    "event": "ActivityGoToEvent",
+                                    "activity": "FormActivity",
+                                    "data": {
+                                        "formName": "eventRegister"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "My Account",
+                        "event": "",
+                        "visibility": "visible"
+                    },
+                    {
+                        "icon": "gmd_people",
+                        "title": "Account Information",
+                        "event": "",
+                        "visibility": "visible",
+                        "children": [
+                            {
+                                "icon": "gmd_people",
+                                "title": "My Account",
+                                "event": "",
+                                "visibility": "visible"
+                            },
+                            {
+                                "icon": "gmd_people",
+                                "title": "My Account",
+                                "event": "",
+                                "visibility": "visible"
+                            },
+                            {
+                                "icon": "gmd_people",
+                                "title": "My Account",
+                                "event": "",
+                                "visibility": "visible",
+                                "onClick": {
+                                    "event": [
+                                        {
+                                            "event": "ActivityGoToEvent",
+                                            "activity": "FormActivity",
+                                            "data": {
+                                                "formName": "eventRegister"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "icon": "gmd_people",
+                                "title": "My Account",
+                                "event": "",
+                                "visibility": "visible",
+                                "onClick": {
+                                    "event": [
+                                        {
+                                            "event": "ActivityGoToEvent",
+                                            "activity": "FormActivity",
+                                            "data": {
+                                                "formName": "eventRegister"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "icon": "gmd_people",
+                                "title": "My Account",
+                                "event": "",
+                                "visibility": "visible",
+                                "onClick": {
+                                    "event": [
+                                        {
+                                            "event": "ActivityGoToEvent",
+                                            "activity": "FormActivity",
+                                            "data": {
+                                                "formName": "eventRegister"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "icon": "gmd_people",
+                                "title": "My Account",
+                                "event": "",
+                                "visibility": "visible"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "main": {
+            "type": "ScrollView",
+            "layout_width": "match_parent",
+            "layout_height": "match_parent",
+            "children": [
+                {
+                    "type": "LinearLayout",
+                    "layout_width": "match_parent",
+                    "orientation": "vertical",
+                    "layout_height": "match_parent",
+                    "children": [
+                        {
+                            "type": "Pager",
+                            "layout_width": "match_parent",
+                            "layout_height": "150dp",
+                            "padding": "3dp",
+                            "layout": {
+                                "layout_main": [
+                                    {
+                                        "main": {
+                                            "type": "LinearLayout",
+                                            "background": "#000000",
+                                            "layout_width": "match_parent",
+                                            "layout_margin": "3dp",
+                                            "layout_height": "match_parent"
+                                        }
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "LinearLayout",
+                                            "background": "#000000",
+                                            "layout_width": "match_parent",
+                                            "layout_margin": "3dp",
+                                            "layout_height": "match_parent"
+                                        }
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "LinearLayout",
+                                            "background": "#000000",
+                                            "layout_width": "match_parent",
+                                            "layout_margin": "3dp",
+                                            "layout_height": "match_parent"
+                                        }
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "LinearLayout",
+                                            "background": "#000000",
+                                            "layout_width": "match_parent",
+                                            "layout_margin": "3dp",
+                                            "layout_height": "match_parent"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "forms": {
+        "eventRegister": {
+            "main": {
+                "type": "RelativeLayout",
                 "layout_width": "match_parent",
                 "layout_height": "match_parent",
                 "children": [
-                  {
-                    "type": "LinearLayout",
-                    "layout_width": "match_parent",
-                    "layout_height": "match_parent",
-                    "orientation": "vertical",
-                    "children": [
-                      {
-                        "type": "EditText",
-                        "layout_width": "match_parent",
-                        "layout_height": "wrap_content",
-                        "hint": "First Name",
-                        "id": "firstName",
-                        "text": "~{{user.name}}",
-                        "style": "formet",
-                        "tag": "firstName"
-                      },
-                      {
-                        "type": "EditText",
-                        "layout_width": "match_parent",
-                        "layout_height": "wrap_content",
-                        "hint": "Last Name",
-                        "id": "lastName",
-                        "style": "formet",
-                        "tag": "lastName"
-                      },
-                      {
-                        "type": "EditText",
-                        "layout_width": "match_parent",
-                        "layout_height": "wrap_content",
-                        "hint": "Email",
-                        "style": "formet",
-                        "id": "email",
-                        "inputType": "EMAIL",
-                        "tag": "email"
-                      },
-                      {
-                        "type": "EditText",
-                        "layout_width": "match_parent",
-                        "layout_height": "wrap_content",
-                        "hint": "Phone Number",
-                        "id": "phone",
-                        "inputType": "PHONE",
-                        "style": "formet",
-                        "tag": "phone"
-                      },
-                      {
-                        "type": "EditText",
-                        "layout_width": "match_parent",
-                        "layout_height": "wrap_content",
-                        "hint": "Mobile Number",
-                        "id": "mobile",
-                        "inputType": "PHONE",
-                        "tag": "mobile",
-                        "style": "formet"
-                      },
-                      {
-                        "type": "AutoCompleteTextView",
-                        "layout_width": "match_parent",
-                        "layout_height": "wrap_content",
-                        "style": "formet",
-                        "hint": "Country",
-                        "data": [
-                          "India",
-                          "USA",
-                          "China",
-                          "Japan",
-                          "Korea",
-                          "Australia"
-                        ],
-                        "id": "country",
-                        "tag": "country"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "CardView",
-                "id": "card",
-                "layout_width": "match_parent",
-                "layout_height": "wrap_content",
-                "layout_alignParentBottom": "true",
-                "children": [
-                  {
-                    "type": "LinearLayout",
-                    "layout_width": "match_parent",
-                    "orientation": "vertical",
-                    "layout_height": "wrap_content",
-                    "children": [
-                      {
-                        "type": "Ripple",
-                        "layout_margin": "10dp",
-                        "id": "submit",
-                        "visibility": "visible",
+                    {
+                        "type": "AppBarLayout",
+                        "id": "appbar",
+                        "elevation": "4dp",
                         "layout_width": "match_parent",
                         "layout_height": "wrap_content",
                         "children": [
-                          {
-                            "type": "Button",
-                            "layout_width": "match_parent",
-                            "text": "Submit",
-                            "style": "buttonBlue",
-                            "layout_height": "40dp"
-                          }
+                            {
+                                "type": "Toolbar",
+                                "id": "toolbar",
+                                "title": "Event Register Form",
+                                "layout_width": "match_parent",
+                                "layout_height": "56dp"
+                            }
                         ]
-                      }
-                    ]
-                  }
+                    },
+                    {
+                        "type": "RelativeLayout",
+                        "layout_below": "appbar",
+                        "layout_width": "match_parent",
+                        "layout_height": "match_parent",
+                        "children": [
+                            {
+                                "type": "ScrollView",
+                                "layout_below": "appbar",
+                                "layout_above": "card",
+                                "layout_width": "match_parent",
+                                "layout_height": "match_parent",
+                                "children": [
+                                    {
+                                        "type": "LinearLayout",
+                                        "layout_width": "match_parent",
+                                        "layout_height": "match_parent",
+                                        "orientation": "vertical",
+                                        "children": [
+                                            {
+                                                "type": "EditText",
+                                                "layout_width": "match_parent",
+                                                "layout_height": "wrap_content",
+                                                "hint": "First Name",
+                                                "id": "firstName",
+                                                "text": "~{{user.name}}",
+                                                "style": "formet",
+                                                "tag": "firstName"
+                                            },
+                                            {
+                                                "type": "EditText",
+                                                "layout_width": "match_parent",
+                                                "layout_height": "wrap_content",
+                                                "hint": "Last Name",
+                                                "id": "lastName",
+                                                "style": "formet",
+                                                "tag": "lastName"
+                                            },
+                                            {
+                                                "type": "EditText",
+                                                "layout_width": "match_parent",
+                                                "layout_height": "wrap_content",
+                                                "hint": "Email",
+                                                "style": "formet",
+                                                "id": "email",
+                                                "inputType": "EMAIL",
+                                                "tag": "email"
+                                            },
+                                            {
+                                                "type": "EditText",
+                                                "layout_width": "match_parent",
+                                                "layout_height": "wrap_content",
+                                                "hint": "Phone Number",
+                                                "id": "phone",
+                                                "inputType": "PHONE",
+                                                "style": "formet",
+                                                "tag": "phone"
+                                            },
+                                            {
+                                                "type": "EditText",
+                                                "layout_width": "match_parent",
+                                                "layout_height": "wrap_content",
+                                                "hint": "Mobile Number",
+                                                "id": "mobile",
+                                                "inputType": "PHONE",
+                                                "tag": "mobile",
+                                                "style": "formet"
+                                            },
+                                            {
+                                                "type": "AutoCompleteTextView",
+                                                "layout_width": "match_parent",
+                                                "layout_height": "wrap_content",
+                                                "style": "formet",
+                                                "hint": "Country",
+                                                "data": [
+                                                    "India",
+                                                    "USA",
+                                                    "China",
+                                                    "Japan",
+                                                    "Korea",
+                                                    "Australia"
+                                                ],
+                                                "id": "country",
+                                                "tag": "country"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "CardView",
+                                "id": "card",
+                                "layout_width": "match_parent",
+                                "layout_height": "wrap_content",
+                                "layout_alignParentBottom": "true",
+                                "children": [
+                                    {
+                                        "type": "LinearLayout",
+                                        "layout_width": "match_parent",
+                                        "orientation": "vertical",
+                                        "layout_height": "wrap_content",
+                                        "children": [
+                                            {
+                                                "type": "Ripple",
+                                                "layout_margin": "10dp",
+                                                "id": "submit",
+                                                "visibility": "visible",
+                                                "layout_width": "match_parent",
+                                                "layout_height": "wrap_content",
+                                                "children": [
+                                                    {
+                                                        "type": "Button",
+                                                        "layout_width": "match_parent",
+                                                        "text": "Submit",
+                                                        "style": "buttonBlue",
+                                                        "layout_height": "40dp"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
-              }
-            ]
-          }
-        ]
-      },
-      "data": {
-        "user": {
-          "name": "Poovarasan"
-        }
-      },
-      "validator": {
-        "validateOnClickButton": "#submit",
-        "validateOptions": [
-          {
-            "id": "#firstName",
-            "creteria": [
-              {
-                "type": "REQUIRED",
-                "errorMessage": "First Name is Required"
-              },
-              {
-                "type": "MINLENGTH",
-                "value": 10,
-                "errorMessage": "First Name should be Of Minimum of 10 Character"
-              },
-              {
-                "type": "MAXLENGTH",
-                "value": 30,
-                "errorMessage": "First Name Max of 30 Characters"
-              }
-            ]
-          },
-          {
-            "id": "#lastName",
-            "creteria": [
-              {
-                "type": "REQUIRED",
-                "errorMessage": "Last Name is Required"
-              }
-            ]
-          },
-          {
-            "id": "#email",
-            "creteria": [
-              {
-                "type": "REQUIRED",
-                "errorMessage": "Email is Required"
-              },
-              {
-                "type": "EMAIL",
-                "errorMessage": "Email Should be Valid"
-              }
-            ]
-          },
-          {
-            "id": "#phone",
-            "creteria": [
-              {
-                "type": "REQUIRED",
-                "errorMessage": "Phone Number is Required"
-              },
-              {
-                "type": "PHONE",
-                "errorMessage": "It Should be valid Phone number"
-              }
-            ]
-          },
-          {
-            "id": "#mobile",
-            "creteria": [
-              {
-                "type": "REQUIRED",
-                "errorMessage": "Mobile Number is Required"
-              },
-              {
-                "type": "REGEX",
-                "value": "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
-                "errorMessage": "It Should be valid Mobile number"
-              }
-            ]
-          }
-        ]
-      },
-      "configuration": {
-        "formSubmitURL": "http://google.com",
-        "cancelable": false,
-        "formTagParams": [
-          "@firstName",
-          "@lastName",
-          "@email",
-          "@phone",
-          "@mobile",
-          "@country"
-        ],
-        "responseSuccessAttr": "",
-        "responseFailureAttr": "",
-        "attachParams": [
-          {
-            "key": "key",
-            "value": "value"
-          }
-        ]
-      }
-    }
-  },
-  "system": {
-    "payment": {
-      "processors": [
-        {
-          "id": "SHPT",
-          "type": "INSTAMOJO",
-          "config": [
-            {
             },
-            {
+            "data": {
+                "user": {
+                    "name": "Poovarasan"
+                }
             },
-            {
+            "validator": {
+                "validateOnClickButton": "#submit",
+                "validateOptions": [
+                    {
+                        "id": "#firstName",
+                        "creteria": [
+                            {
+                                "type": "REQUIRED",
+                                "errorMessage": "First Name is Required"
+                            },
+                            {
+                                "type": "MINLENGTH",
+                                "value": 10,
+                                "errorMessage": "First Name should be Of Minimum of 10 Character"
+                            },
+                            {
+                                "type": "MAXLENGTH",
+                                "value": 30,
+                                "errorMessage": "First Name Max of 30 Characters"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "#lastName",
+                        "creteria": [
+                            {
+                                "type": "REQUIRED",
+                                "errorMessage": "Last Name is Required"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "#email",
+                        "creteria": [
+                            {
+                                "type": "REQUIRED",
+                                "errorMessage": "Email is Required"
+                            },
+                            {
+                                "type": "EMAIL",
+                                "errorMessage": "Email Should be Valid"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "#phone",
+                        "creteria": [
+                            {
+                                "type": "REQUIRED",
+                                "errorMessage": "Phone Number is Required"
+                            },
+                            {
+                                "type": "PHONE",
+                                "errorMessage": "It Should be valid Phone number"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "#mobile",
+                        "creteria": [
+                            {
+                                "type": "REQUIRED",
+                                "errorMessage": "Mobile Number is Required"
+                            },
+                            {
+                                "type": "REGEX",
+                                "value": "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+                                "errorMessage": "It Should be valid Mobile number"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "configuration": {
+                "formSubmitURL": "http://google.com",
+                "cancelable": false,
+                "formTagParams": [
+                    "@firstName",
+                    "@lastName",
+                    "@email",
+                    "@phone",
+                    "@mobile",
+                    "@country"
+                ],
+                "responseSuccessAttr": "",
+                "responseFailureAttr": "",
+                "attachParams": [
+                    {
+                        "key": "key",
+                        "value": "value"
+                    }
+                ]
             }
-          ]
-        },
-        {
-          "id": "HEARTFULNESS",
-          "type": "INSTAMOJO",
-          "config": [
-            {
-            },
-            {
-            },
-            {
-            }
-          ]
         }
-      ]
-    }
-  },
-  "style": {
-    "formet": {
-      "background": "@drawable/et",
-      "layout_height": "40dp",
-      "paddingLeft": "5dp",
-      "paddingRight": "5dp",
-      "layout_margin": "10dp"
     },
-    "buttonBlue": {
-      "background": "#2196F3",
-      "textColor": "#FFFFFF"
+    "system": {
+        "payment": {
+            "processors": [
+                {
+                    "id": "SHPT",
+                    "type": "INSTAMOJO",
+                    "config": [
+                        {
+                        },
+                        {
+                        },
+                        {
+                        }
+                    ]
+                },
+                {
+                    "id": "HEARTFULNESS",
+                    "type": "INSTAMOJO",
+                    "config": [
+                        {
+                        },
+                        {
+                        },
+                        {
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "style": {
+        "formet": {
+            "background": "@drawable/et",
+            "layout_height": "40dp",
+            "paddingLeft": "5dp",
+            "paddingRight": "5dp",
+            "layout_margin": "10dp"
+        },
+        "buttonBlue": {
+            "background": "#2196F3",
+            "textColor": "#FFFFFF"
+        }
     }
-  }
 }

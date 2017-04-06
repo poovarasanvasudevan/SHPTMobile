@@ -1,5 +1,6 @@
 package com.shpt.core.rest
 
+import com.shpt.BuildConfig
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -36,6 +37,10 @@ interface Rest {
 	@POST
 	@FormUrlEncoded
 	fun submitForm(@Url url: String, @FieldMap params: MutableMap<String, String>): Call<ResponseBody>
+	
+	@GET
+	fun checkUpdate(@Url url: String, @Query("package") string: String = BuildConfig.APPLICATION_ID): Call<ResponseBody>
+	
 	
 	@POST
 	@FormUrlEncoded

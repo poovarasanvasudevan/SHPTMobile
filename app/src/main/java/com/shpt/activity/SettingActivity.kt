@@ -1,24 +1,32 @@
 package com.shpt.activity
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.support.v7.widget.Toolbar
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
-import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.isConnected
+import com.mcxiaoke.koi.utils.marshmallowOrNewer
 import com.shpt.BuildConfig
 import com.shpt.R
-import com.shpt.core.updateKernel
+import com.shpt.core.config.Config
+import com.shpt.core.config.JOB_MANAGER
+import com.shpt.core.config.PARSER
+import com.shpt.core.config.REST
+import com.shpt.core.ext.PermissionCallback
+import com.shpt.core.ext.PermissionHelper
+import com.shpt.job.KernelUpdateJobScheduler
 import com.shpt.widget.AppCompatPreferenceActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.Appcompat
+import java.util.*
+
 
 /**
  * Created by poovarasanv on 5/4/17.
@@ -29,12 +37,15 @@ import org.jetbrains.anko.appcompat.v7.Appcompat
 
 class SettingActivity : AppCompatPreferenceActivity() {
 	
+	var permissionHelper: PermissionHelper? = null
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		
 		setupActionBar()
 		supportActionBar.title = "Settings"
 		
+		
+		permissionHelper = PermissionHelper(this)
 		addPreferencesFromResource(R.xml.prefs)
 		val horizontalMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 			2f, resources.displayMetrics).toInt()
@@ -51,7 +62,51 @@ class SettingActivity : AppCompatPreferenceActivity() {
 		
 		val locationTracking = findPreference("locationTracking") as SwitchPreference
 		locationTracking.setOnPreferenceChangeListener { preference, newValue ->
-			toast(newValue.toString())
+			val isTrue = newValue.toString().toBoolean()
+			var returnResult = false;
+			if (isTrue && marshmallowOrNewer()) {
+				if (!permissionHelper!!.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION) && !permissionHelper!!.isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+					permissionHelper!!.requestPermissions(arrayOf(
+						Manifest.permission.ACCESS_FINE_LOCATION,
+						Manifest.permission.ACCESS_COARSE_LOCATION
+					), object : PermissionCallback {
+						override fun onResponseReceived(mapPermissionGrants: HashMap<String, PermissionHelper.PermissionGrant>) {
+							val fine = mapPermissionGrants.get(Manifest.permission.ACCESS_FINE_LOCATION)
+							val coarse = mapPermissionGrants.get(Manifest.permission.ACCESS_COARSE_LOCATION)
+							
+							when (fine) {
+								PermissionHelper.PermissionGrant.GRANTED   -> {
+									returnResult = true
+									toast("Location Enabled")
+								}
+								
+								PermissionHelper.PermissionGrant.DENIED    -> {
+									returnResult = false
+									toast("Permission Denied")
+								}
+								
+								PermissionHelper.PermissionGrant.NEVERSHOW -> {
+									returnResult = false
+									alert(Appcompat, "You are not able to Grant Permission here. Press Ok to Grant Permission from App Setting.", "Error") {
+										yesButton {
+											toast("Enable location Permission")
+											permissionHelper!!.openApplicationSettings()
+										}
+										
+										noButton {
+											returnResult = false
+											this.build().dismiss()
+										}
+									}.show()
+								}
+							}
+						}
+					})
+				}
+			} else {
+				returnResult = true
+				toast("Location Sharing Disabled...")
+			}
 			true
 		}
 		
@@ -60,9 +115,12 @@ class SettingActivity : AppCompatPreferenceActivity() {
 		
 		
 		version.setOnPreferenceClickListener {
-			indeterminateProgressDialog("Checking for Updates...") {
-				
-			}.show()
+			val pg = indeterminateProgressDialog("Checking for Updates...")
+			pg.show()
+			checkAppUpdate()
+			if (pg.isShowing) {
+				pg.dismiss()
+			}
 			true
 		}
 		
@@ -76,21 +134,42 @@ class SettingActivity : AppCompatPreferenceActivity() {
 		
 	}
 	
+	fun checkAppUpdate() {
+		doAsync {
+			val returnJson = REST.checkUpdate(Config.UPDATE_CHECKER, "com.sahajvani.app").execute()
+			
+			uiThread {
+				if (returnJson.isSuccessful) {
+					val returnGson = PARSER.parse(returnJson.body().string()).asJsonObject
+					
+					if (returnGson.has("package_name") && returnGson.has("status")) {
+						if (returnGson.get("version").asString.toFloat() > BuildConfig.VERSION_NAME.toFloat()) {
+							alert(Appcompat, "New Version Available", "Update") {
+								yesButton {
+									toast("Update")
+									this.build().dismiss()
+								}
+								
+								noButton {
+									this.build().dismiss()
+								}
+							}.show()
+						}
+					}
+				}
+				
+			}
+		}
+	}
+	
 	fun doKernelUpdate() {
 		if (isConnected()) {
 			val progressBar = indeterminateProgressDialog("Syncing to Latest Build...")
 			progressBar.show()
-			doAsync {
-				val returnJson: JsonObject = updateKernel()
-				uiThread {
-					if (progressBar.isShowing) {
-						progressBar.setMessage("Syncing Success...")
-						progressBar.dismiss()
-						
-						toast("Syncing Success...")
-					}
-				}
-			}
+			JOB_MANAGER.addJobInBackground(KernelUpdateJobScheduler()) { progressBar.setMessage("Syncing Data...") }
+			progressBar.dismiss()
+			toast("Syncing Success...")
+			
 		} else {
 			alert(Appcompat, "Internet not available. Retry?", "Error") {
 				yesButton {
@@ -116,12 +195,6 @@ class SettingActivity : AppCompatPreferenceActivity() {
 		return isXLargeTablet(this)
 	}
 	
-	class MyPreferenceFragment : PreferenceFragment() {
-		override fun onCreate(savedInstanceState: Bundle?) {
-			super.onCreate(savedInstanceState)
-			addPreferencesFromResource(R.xml.prefs)
-		}
-	}
 	
 	/**
 	 * Helper method to determine if the device has an extra-large screen. For
@@ -142,8 +215,11 @@ class SettingActivity : AppCompatPreferenceActivity() {
 				finish()
 			}
 		}
-		
 		return super.onOptionsItemSelected(item)
+	}
+	
+	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+		permissionHelper!!.onRequestPermissionsResult(permissions, grantResults)
 	}
 	
 	override fun onBackPressed() {

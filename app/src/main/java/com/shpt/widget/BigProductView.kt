@@ -7,10 +7,7 @@ import android.support.annotation.RequiresApi
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.shpt.R
-import com.shpt.core.ImageSize
-import com.shpt.core.addToCart
-import com.shpt.core.ripple
-import com.shpt.core.setSHPTImageURL
+import com.shpt.core.*
 import com.shpt.core.util.TextDecorator
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
@@ -73,7 +70,7 @@ open class BigProductView : LinearLayout {
 
                                 linearLayout {
                                     orientation = HORIZONTAL
-                                    val productImage = imageView {
+                                    val productImage = fresco {
                                         setSHPTImageURL(productJson.get("image").asString, ImageSize.MEDIUM)
 
                                     }.lparams {

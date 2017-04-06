@@ -6,22 +6,42 @@ import com.google.gson.JsonParser
 
 import com.shpt.core.config.Config
 import com.shpt.core.config.REST
+import java.io.IOException
 
 
 fun Context.readJson(): JsonObject {
-    val layoutString: String = REST.getLayout(Config.LAYOUT_BASE).execute().body().string()
+	//val layoutString: String = REST.getLayout(Config.LAYOUT_BASE).execute().body().string()
+	val layoutString: String = loadJSONFromAsset()!!
+	
+	val parser = JsonParser()
+	return parser.parse(layoutString).asJsonObject
+}
 
-    val parser = JsonParser()
-    return parser.parse(layoutString).asJsonObject
+
+fun Context.loadJSONFromAsset(): String? {
+	var json: String? = null
+	try {
+		val iis = this.getAssets().open("layout/login_bak.json")
+		val size = iis.available()
+		val buffer = ByteArray(size)
+		iis.read(buffer)
+		iis.close()
+		json = String(buffer)
+	} catch (ex: IOException) {
+		ex.printStackTrace()
+		return null
+	}
+	
+	return json
 }
 
 fun Context.readProduct(productId: Int): JsonObject {
-    val productDetail: String = REST.getProductDetail(Config.GET_PRODUCT, productId).execute().body().string()
-    val parser = JsonParser()
-    return parser.parse(productDetail).asJsonObject
-
+	val productDetail: String = REST.getProductDetail(Config.GET_PRODUCT, productId).execute().body().string()
+	val parser = JsonParser()
+	return parser.parse(productDetail).asJsonObject
+	
 }
 
 fun Context.color(@ColorRes color: Int): Int {
-    return ContextCompat.getColor(this, color)
+	return ContextCompat.getColor(this, color)
 }

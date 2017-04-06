@@ -4,11 +4,14 @@ import android.content.Context
 import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.Params
 import com.google.gson.JsonParser
+import com.jayway.jsonpath.JsonPath
+import com.jayway.jsonpath.ParseContext
 import com.poovarasan.blade.builder.DataParsingLayoutBuilder
 import com.poovarasan.deepstream.DeepstreamClient
 import com.shpt.core.api.getAdapter
 import com.shpt.core.app.SHPTApplication
 import com.shpt.core.db.DatabaseOpenHelper
+import com.shpt.core.ext.PermissionHelper
 import com.shpt.core.getLayoutBuilder
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.rest.Rest
@@ -70,3 +73,10 @@ val MQTT_OBJ: MqttAndroidClient
 
 val DEEPSTREAM: DeepstreamClient
 	get() = SHPTApplication.deepstream
+
+
+val PERMISSION_HELPER: PermissionHelper
+	get() = SHPTApplication.permissionHelper
+
+val JPATH: ParseContext
+	get() = JsonPath.using(com.shpt.core.app.SHPTApplication.jpathConfig)

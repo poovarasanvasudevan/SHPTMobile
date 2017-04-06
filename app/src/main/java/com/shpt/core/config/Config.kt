@@ -24,6 +24,9 @@ object Config {
     var SERVER = "http://localhost:1337/parse"
     var CLIENT_KEY = "2ead5328dda34e688816040a0e78948a"
     var TEST_MODE = true
+	
+	
+	var UPDATE_CHECKER = "http://carreto.pt/tools/android-store-version/"
 
 //    var CIVICRM_URL = config("CIVICRM_URL")
 }

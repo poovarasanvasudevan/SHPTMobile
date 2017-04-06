@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mcxiaoke.koi.ext.find
+import com.mcxiaoke.koi.ext.pxToDp
 import com.mcxiaoke.koi.utils.lollipopOrNewer
 import com.mikepenz.iconics.view.IconicsButton
 import com.mikepenz.iconics.view.IconicsImageView
@@ -49,6 +50,7 @@ import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseSingle
 import org.jetbrains.anko.db.select
+import org.jetbrains.anko.displayMetrics
 
 /**
  * Created by poovarasanv on 17/1/17.
@@ -70,7 +72,7 @@ fun registerCustomView(builder: LayoutBuilder) {
 	
 	
 	val imageviewParser = builder.getHandler("FrameLayout") as Parser<ImageView>
-	builder.registerHandler("Image", ImageViewParser(imageviewParser))
+	builder.registerHandler("Image", FrescoParser(imageviewParser))
 	
 	
 	val justifiedviewParser = builder.getHandler("FrameLayout") as Parser<JustifiedTextView>
@@ -111,7 +113,7 @@ fun ImageView.setImageURL(imageUrl: String) {
 		.error(R.drawable.no_image)
 		.animate(R.anim.zoomin)
 		.into(this)
-	
+
 }
 
 fun View.setVisibility(visibility: Int) {
@@ -170,6 +172,7 @@ fun ImageView.setSHPTImageURL(imageURL: String, imageSize: ImageSize = ImageSize
 	
 }
 
+
 fun ViewManager.progressLine(theme: Int = 0) = progressLine(theme) {}
 fun ViewManager.progressLine(theme: Int = 0, init: AppProgressBar.() -> Unit) = ankoView(::AppProgressBar, theme, init)
 
@@ -187,6 +190,9 @@ inline fun ViewManager.iconButton(theme: Int = 0, init: IconicsButton.() -> Unit
 
 inline fun ViewManager.shadow(theme: Int) = shadow(theme) {}
 inline fun ViewManager.shadow(theme: Int = 0, init: Shadow.() -> Unit) = ankoView(::Shadow, theme, init)
+
+inline fun ViewManager.fresco(theme: Int) = shadow(theme) {}
+inline fun ViewManager.fresco(theme: Int = 0, init: ImageView.() -> Unit) = ankoView(::ImageView, theme, init)
 
 
 fun getLayoutBuilder(): DataParsingLayoutBuilder {
@@ -293,4 +299,17 @@ fun Activity.themedColor(color: String = "colorPrimary"): Int {
 	
 	this.theme.resolveAttribute(colorAttr, outValue, true)
 	return outValue.data
+}
+
+
+fun wpercent(percentage: Float): Float {
+	val dm = CONTEXT.displayMetrics
+	val totalWidth = dm.widthPixels.pxToDp()
+	return (totalWidth * percentage) / 100
+}
+
+fun hpercent(percentage: Float): Float {
+	val dm = CONTEXT.displayMetrics
+	val totalWidth = dm.heightPixels.pxToDp()
+	return (totalWidth * percentage) / 100
 }

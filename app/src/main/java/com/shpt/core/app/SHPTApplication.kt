@@ -6,12 +6,17 @@ import android.util.Log
 import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.config.Configuration
 import com.birbit.android.jobqueue.log.CustomLogger
+import com.jayway.jsonpath.Option
+import com.jayway.jsonpath.spi.json.GsonJsonProvider
+import com.jayway.jsonpath.spi.mapper.GsonMappingProvider
 import com.poovarasan.androidverify.App
 import com.poovarasan.deepstream.DeepstreamClient
+import com.shpt.core.ext.PermissionHelper
 import com.shpt.core.mqtt.Deepstream
 import com.shpt.core.mqtt.MQTT
 import com.shpt.core.mqtt.connectMqtt
 import org.eclipse.paho.android.service.MqttAndroidClient
+import java.util.*
 
 
 /**
@@ -40,7 +45,11 @@ class SHPTApplication : Application() {
 		lateinit var mqtt: MqttAndroidClient
 			private set
 		
+		lateinit var permissionHelper: PermissionHelper
+			private set
 		
+		lateinit var jpathConfig: com.jayway.jsonpath.Configuration
+			private set
 	}
 	
 	
@@ -52,10 +61,23 @@ class SHPTApplication : Application() {
 		context = this.applicationContext
 		mqtt = MQTT.getMQTTClient(applicationContext)!!
 		deepstream = Deepstream.getClient()
+		permissionHelper = PermissionHelper(this)
+		jpathConfig = jPathConfiguration()
 		
 		App.setContext(this);
 		connectMqtt()
 		
+	}
+	
+	private fun jPathConfiguration(): com.jayway.jsonpath.Configuration {
+		val conf = com.jayway.jsonpath.Configuration.builder()
+			.jsonProvider(GsonJsonProvider())
+			.mappingProvider(GsonMappingProvider())
+			.options(EnumSet.noneOf(Option::class.java))
+			.build()
+		
+		
+		return conf
 	}
 	
 	private fun configureJobManager(): Configuration {
@@ -85,7 +107,7 @@ class SHPTApplication : Application() {
 			.minConsumerCount(1)    //always keep at least one consumer alive
 			.maxConsumerCount(3)    //up to 3 consumers at a time
 			.loadFactor(3)          //3 jobs per consumer
-			.consumerKeepAlive(120)//wait 2 minute
+			.consumerKeepAlive(120) //wait 2 minute
 			.build()
 		
 		return configuration;
