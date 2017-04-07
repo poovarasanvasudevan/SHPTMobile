@@ -93,11 +93,11 @@ open class BaseActivity : AppCompatActivity() {
 	
 	
 	override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-		menuInflater.inflate(R.menu.default_menu, menu)
-		if (menu != null && menuJson != null) {
-			menu.clear()
-			handleMenu(menuJson!!, menu, if (sidebarMenu == null) null else sidebarMenu, this)
-		}
+//		menuInflater.inflate(R.menu.default_menu, menu)
+//		if (menu != null && menuJson != null) {
+//			menu.clear()
+//			handleMenu(menuJson!!, menu, if (sidebarMenu == null) null else sidebarMenu, this)
+//		}
 		return super.onPrepareOptionsMenu(menu)
 	}
 	

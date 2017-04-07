@@ -2,18 +2,14 @@ package com.shpt.core
 
 import android.app.Activity
 import android.support.v7.widget.SearchView
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.mcxiaoke.koi.ext.find
 import com.poovarasan.blade.EventType
-import com.poovarasan.blade.builder.DataParsingLayoutBuilder
-import com.shpt.R
+import com.shpt.core.config.JPATH
 import com.shpt.core.event.fireEvent
-import com.shpt.parser.data.AppDataParser
 import org.jetbrains.anko.searchManager
 
 
@@ -27,13 +23,10 @@ import org.jetbrains.anko.searchManager
 
 fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activity) {
 	
-	AppDataParser.printJson(json)
+	//AppDataParser.printJson2(json)
 	
 	if (json.has("toolbar")) {
-		
-		val toolBarMenu = json.getAsJsonObject("toolbar")
-		val menuItems = toolBarMenu.getAsJsonArray("children")
-		
+		val menuItems = JPATH.parse(json).read<JsonArray>("$.toolbar.children")
 		menuItems.forEach {
 			
 			val currentElement: JsonElement = it
@@ -95,9 +88,7 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 		}
 	}
 	if (json.has("sidebar") && sidebarMenuObj != null) {
-		val sidebarMenu = json.getAsJsonObject("sidebar")
-		val menuItems = sidebarMenu.getAsJsonArray("children")
-		
+		val menuItems = JPATH.parse(json).read<JsonArray>("$.sidebar.children")
 		sidebarMenuObj.clear()
 		menuItems.forEach {
 			if (it.asJsonObject.has("children")) {
@@ -126,6 +117,7 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 					
 					if (it.asJsonObject.has("onClick")) {
 						menuItem.setOnMenuItemClickListener {
+							
 							fireEvent(
 								type = EventType.OnClick,
 								values = currentElement.asJsonObject.get("onClick"),
@@ -167,27 +159,5 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 				}
 			}
 		}
-	}
-}
-
-fun handleSecondary(json: JsonObject, act: Activity, layoutBuilder: DataParsingLayoutBuilder, view: View) {
-	if (json.has("menu")) {
-		
-		val menu = json.get("menu").asJsonObject
-		if (menu.has("toolbar")) {
-			val toolbarMenu = menu.get("toolbar").asJsonObject
-			
-			if (toolbarMenu.has("toolbarid")) {
-				if (toolbarMenu.get("toolbarid").asString == "default") {
-					if (act.find<Toolbar>(R.id.toolbar) != null) {
-						
-					}
-				} else {
-					
-				}
-			}
-		}
-		
-		
 	}
 }
