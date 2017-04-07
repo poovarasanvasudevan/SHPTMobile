@@ -13,6 +13,7 @@ import com.poovarasan.blade.EventType
 import com.poovarasan.blade.builder.DataParsingLayoutBuilder
 import com.shpt.R
 import com.shpt.core.event.fireEvent
+import com.shpt.parser.data.AppDataParser
 import org.jetbrains.anko.searchManager
 
 
@@ -25,6 +26,9 @@ import org.jetbrains.anko.searchManager
 
 
 fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activity) {
+	
+	AppDataParser.printJson(json)
+	
 	if (json.has("toolbar")) {
 		
 		val toolBarMenu = json.getAsJsonObject("toolbar")
@@ -90,8 +94,6 @@ fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activit
 			
 		}
 	}
-	
-	
 	if (json.has("sidebar") && sidebarMenuObj != null) {
 		val sidebarMenu = json.getAsJsonObject("sidebar")
 		val menuItems = sidebarMenu.getAsJsonArray("children")

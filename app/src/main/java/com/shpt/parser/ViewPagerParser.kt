@@ -67,7 +67,6 @@ class ViewPagerParser(wrappedParser: Parser<ViewPager>) : WrappableParser<ViewPa
          * @author Poovarasan Vasudevan
          *
          * */
-
         addHandler(Attributes.Attribute("layout_url"), object : StringAttributeProcessor<ViewPager>() {
             override fun handle(p0: String?, p1: String?, p2: ViewPager?) {
                 try {

@@ -21,14 +21,18 @@ public class AppCardView extends CardView implements BladeView {
 
     public AppCardView(Context context) {
         super(context);
+
+        init();
     }
 
     public AppCardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public AppCardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     @Override
@@ -39,5 +43,9 @@ public class AppCardView extends CardView implements BladeView {
     @Override
     public void setViewManager(BladeViewManager bladeViewManager) {
         this.bladeViewManager = bladeViewManager;
+    }
+
+    public void init() {
+        super.setRadius(0f);
     }
 }
