@@ -30,8 +30,6 @@ fun config(key: String): String = Prefs
 	.with(CONTEXT)
 	.read(key)
 
-val CONFIG: Config
-	get() = Config
 
 
 val LAYOUT_BUILDER_FACTORY: DataParsingLayoutBuilder

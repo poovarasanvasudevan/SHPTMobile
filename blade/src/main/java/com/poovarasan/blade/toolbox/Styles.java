@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Styles
  *
- * @author Aditya Sharat
+ * @author Poovarasan Vasudevan
  */
 public class Styles extends HashMap<String, Map<String, JsonElement>> {
 

@@ -10,16 +10,13 @@ import com.shpt.activity.Login
 import com.shpt.activity.SRCMLogin
 import com.shpt.core.app.BaseActivity
 import com.shpt.core.config.Config
-import com.shpt.core.config.DATABASE
 import com.shpt.core.prefs.Prefs
 import com.shpt.core.progressLine
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.core.themedColor
+import com.shpt.core.updateKernel
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.*
-import org.jetbrains.anko.db.delete
-import org.jetbrains.anko.db.insert
-import readJson
 
 
 class MainActivity : BaseActivity() {
@@ -71,16 +68,7 @@ class MainActivity : BaseActivity() {
 	
 	inner class DownloadKernel : AsyncTask<Void, Void, JsonObject>() {
 		override fun doInBackground(vararg params: Void?): JsonObject {
-			val returnJson = readJson()
-			DATABASE.use {
-				delete("Layout")
-				delete("Settings")
-				
-				for ((key) in returnJson.entrySet()) {
-					insert("Layout", "page" to key, "structure" to returnJson.getAsJsonObject(key).toString())
-				}
-			}
-			
+			val returnJson = updateKernel()
 			return returnJson
 		}
 		

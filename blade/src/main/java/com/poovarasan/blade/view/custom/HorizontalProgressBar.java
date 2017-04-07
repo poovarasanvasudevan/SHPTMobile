@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 /**
  * HorizontalProgressBar
  *
- * @author Aditya Sharat
+ * @author Poovarasan Vasudevan
  */
 public class HorizontalProgressBar extends ProgressBar {
     public HorizontalProgressBar(Context context) {

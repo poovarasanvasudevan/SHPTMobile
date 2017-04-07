@@ -20,12 +20,14 @@ import com.shpt.core.config.REST
 import com.shpt.core.data.Constant
 import com.shpt.core.ext.getArray
 import com.shpt.core.ext.getString
+import com.shpt.core.getGlobalData
 import com.shpt.core.getLayout
 import com.shpt.core.getStyles
 import com.shpt.core.models.Layout
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.core.setUpEssential
 import kotlinx.android.synthetic.main.activity_main.*
+import logMessage
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.indeterminateProgressDialog
@@ -50,7 +52,7 @@ class FormActivity : BaseActivity() {
 				//fetching Json
 				val jsonLayout: Layout = getLayout("forms")!!
 				val styles: Styles = getStyles()!!
-				
+				val data = getGlobalData()
 				uiThread {
 					super.init(jsonLayout)
 					
@@ -59,7 +61,8 @@ class FormActivity : BaseActivity() {
 						
 						val form = PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject(formName)
 						val layout = form.getAsJsonObject("main");
-						val data = if (form.has("data")) form.getAsJsonObject("data") else JsonObject()
+						data.add("local", if (form.has("data")) form.getAsJsonObject("data") else JsonObject())
+						
 						val validator = if (form.has("validator")) form.getAsJsonObject("validator") else JsonObject()
 						val configuration = if (form.has("configuration")) form.getAsJsonObject("configuration") else JsonObject()
 						
@@ -67,11 +70,12 @@ class FormActivity : BaseActivity() {
 						val layoutBuilder = LAYOUT_BUILDER_FACTORY
 						mainLayout.removeAllViews()
 						
-						
 						val view = layoutBuilder.build(mainLayout, layout, data, 0, styles)
 						mainLayout.addView(view as View)
 						
 						
+						
+						logMessage(data.toString())
 						setUpEssential(
 							layoutBuilder,
 							view,

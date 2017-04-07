@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewManager
+import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -36,6 +37,7 @@ import com.shpt.core.callback.EventCallback
 import com.shpt.core.config.CONTEXT
 import com.shpt.core.config.Config
 import com.shpt.core.config.DATABASE
+import com.shpt.core.config.PARSER
 import com.shpt.core.formatter.SessionFormattor
 import com.shpt.core.models.Layout
 import com.shpt.mobile.widget.Ripple
@@ -71,8 +73,6 @@ fun registerCustomView(builder: LayoutBuilder) {
 	builder.registerHandler("Web", WebViewParser(webviewParser))
 	
 	
-	val imageviewParser = builder.getHandler("FrameLayout") as Parser<ImageView>
-	builder.registerHandler("Image", FrescoParser(imageviewParser))
 	
 	
 	val justifiedviewParser = builder.getHandler("FrameLayout") as Parser<JustifiedTextView>
@@ -96,6 +96,14 @@ fun registerCustomView(builder: LayoutBuilder) {
 	val bigProductParser = builder.getHandler("FrameLayout") as Parser<BigProductView>
 	builder.registerHandler("BigProduct", BigProductViewParser(bigProductParser))
 	
+	
+	val shptAutoComplete = builder.getHandler("FrameLayout") as Parser<AutoCompleteTextView>
+	builder.registerHandler("SHPTAutoComplete", AutoCompleteParser(shptAutoComplete))
+	
+	
+	val imageviewParser = builder.getHandler("FrameLayout") as Parser<ImageView>
+	builder.registerHandler("URLImage", ImageViewParser(imageviewParser))
+	
 }
 
 fun postEvent(tv: TextView, bgColor: Int, msg: String) {
@@ -113,7 +121,6 @@ fun ImageView.setImageURL(imageUrl: String) {
 		.error(R.drawable.no_image)
 		.animate(R.anim.zoomin)
 		.into(this)
-
 }
 
 fun View.setVisibility(visibility: Int) {
@@ -262,6 +269,29 @@ fun getStyles(): Styles? {
 	}
 	
 	return styles
+}
+
+
+fun getGlobalData(): JsonObject {
+	var globalData: JsonObject? = null
+	
+	
+	DATABASE.use {
+		select("Layout").where("page = {pageName}", "pageName" to "global_data").exec {
+			val rowParser = classParser<Layout>()
+			val row = parseSingle(rowParser)
+			globalData = PARSER.parse(row.structure).asJsonObject
+		}
+	}
+	
+	if (globalData == null) {
+		globalData = JsonObject()
+	}
+	
+	val fullData = JsonObject()
+	fullData.add("global_data", globalData)
+	
+	return fullData
 }
 
 fun getLayout(layoutName: String): Layout? {

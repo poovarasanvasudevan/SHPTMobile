@@ -41,6 +41,8 @@ interface Rest {
 	@GET
 	fun checkUpdate(@Url url: String, @Query("package") string: String = BuildConfig.APPLICATION_ID): Call<ResponseBody>
 	
+	@GET
+	fun get(@Url url: String): Call<ResponseBody>
 	
 	@POST
 	@FormUrlEncoded

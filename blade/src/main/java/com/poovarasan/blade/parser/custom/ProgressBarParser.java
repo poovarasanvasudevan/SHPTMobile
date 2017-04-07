@@ -45,7 +45,7 @@ import com.poovarasan.blade.view.BladeProgressBar;
 import com.poovarasan.blade.view.BladeView;
 
 /**
- * @author Aditya Sharat
+ * @author Poovarasan Vasudevan
  */
 public class ProgressBarParser<T extends ProgressBar> extends WrappableParser<T> {
 

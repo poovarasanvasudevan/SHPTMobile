@@ -214,18 +214,19 @@ class Home : BaseActivity() {
 				//fetching Json
 				jsonLayout = getLayout("home")!!
 				val styles: Styles = getStyles()!!
-				
+				val data = getGlobalData()
 				uiThread {
 					
+					val parser = PARSER.parse(jsonLayout.structure).asJsonObject
 					super.init(jsonLayout)
 					super.sidebar(find<NavigationView>(R.id.navView).menu)
 					
 					val layoutBuilder = LAYOUT_BUILDER_FACTORY
-					
+					data.add("local", if (parser.has("data")) parser.getAsJsonObject("data") else JsonObject())
 					val view = layoutBuilder.build(
 						find<RelativeLayout>(R.id.mainLayout1),
-						PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
-						JsonObject(),
+						parser.getAsJsonObject("main"),
+						data,
 						0,
 						styles)
 					

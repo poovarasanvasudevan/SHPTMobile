@@ -67,7 +67,7 @@ dependencies {
 
     compile 'org.jetbrains.anko:anko-sqlite:0.9.1a'
     compile 'com.birbit:android-priority-jobqueue:2.0.1'
-    compile 'com.jayway.jsonpath:json-path:2.2.0'
+
 
 
     compile 'org.greenrobot:eventbus:3.0.0'

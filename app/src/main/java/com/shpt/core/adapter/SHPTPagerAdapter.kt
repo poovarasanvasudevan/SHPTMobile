@@ -12,11 +12,13 @@ import com.google.gson.JsonObject
 import com.poovarasan.blade.toolbox.Styles
 import com.shpt.R
 import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
-import logMessage
+import com.shpt.core.getGlobalData
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 /**
  * Created by poovarasanv on 9/2/17.
-
+ 
  * @author poovarasanv
  * *
  * @project SHPT
@@ -25,42 +27,46 @@ import logMessage
  */
 
 class SHPTPagerAdapter(private val layoutJson: JsonArray, private val context: Context) : PagerAdapter() {
-
-    lateinit var mainLayout : RelativeLayout
-
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
-    override fun getCount(): Int {
-        return layoutJson.size()
-    }
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-
-        val thisJson: JsonObject? = layoutJson.get(position).asJsonObject
-
-        val layout: JsonObject = if (thisJson!!.getAsJsonObject("main") == null) JsonObject() else thisJson.getAsJsonObject("main")
-        val dataJson: JsonObject? = if (thisJson.getAsJsonObject("data") == null) JsonObject() else thisJson.getAsJsonObject("data")
-
-
-        val imageLayout = inflater.inflate(R.layout.activity_main, container, false)
-        mainLayout = imageLayout.findViewById(R.id.mainLayout) as RelativeLayout
-
-        logMessage(thisJson.toString())
-        val layoutBuilder = LAYOUT_BUILDER_FACTORY
-        mainLayout.removeAllViews()
-        val view = layoutBuilder.build(mainLayout, layout, dataJson, 0, Styles())
-
-        mainLayout.addView(view as View)
-
-        container.addView(mainLayout)
-        return imageLayout
-    }
-    override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
-        container.removeView(obj as View)
-    }
-    override fun isViewFromObject(view: View, obj: Any): Boolean {
-        return view == obj
-    }
-    override fun restoreState(state: Parcelable?, loader: ClassLoader?) {}
-    override fun saveState(): Parcelable? {
-        return null
-    }
+	
+	lateinit var mainLayout: RelativeLayout
+	
+	private val inflater: LayoutInflater = LayoutInflater.from(context)
+	override fun getCount(): Int {
+		return layoutJson.size()
+	}
+	
+	override fun instantiateItem(container: ViewGroup, position: Int): Any {
+		val imageLayout = inflater.inflate(R.layout.activity_main, container, false)
+		
+		doAsync {
+			val data = getGlobalData()
+			uiThread {
+				mainLayout = imageLayout.findViewById(R.id.mainLayout) as RelativeLayout
+				val thisJson: JsonObject? = layoutJson.get(position).asJsonObject
+				val layout: JsonObject = if (thisJson!!.getAsJsonObject("main") == null) JsonObject() else thisJson.getAsJsonObject("main")
+				data.add("local", if (thisJson.getAsJsonObject("data") == null) JsonObject() else thisJson.getAsJsonObject("data"))
+				val layoutBuilder = LAYOUT_BUILDER_FACTORY
+				mainLayout.removeAllViews()
+				val view = layoutBuilder.build(mainLayout, layout, data, 0, Styles())
+				mainLayout.addView(view as View)
+				container.addView(mainLayout)
+			}
+		}
+		
+		
+		return imageLayout
+	}
+	
+	override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
+		container.removeView(obj as View)
+	}
+	
+	override fun isViewFromObject(view: View, obj: Any): Boolean {
+		return view == obj
+	}
+	
+	override fun restoreState(state: Parcelable?, loader: ClassLoader?) {}
+	override fun saveState(): Parcelable? {
+		return null
+	}
 }

@@ -13,6 +13,7 @@ import com.shpt.R
 import com.shpt.core.app.BaseActivity
 import com.shpt.core.config.LAYOUT_BUILDER_FACTORY
 import com.shpt.core.config.PARSER
+import com.shpt.core.getGlobalData
 import com.shpt.core.getLayout
 import com.shpt.core.getStyles
 import com.shpt.core.models.Layout
@@ -38,18 +39,19 @@ class Login : BaseActivity() {
 				//fetching Json
 				val jsonLayout: Layout = getLayout("login")!!
 				val styles: Styles = getStyles()!!
-				
+				val data = getGlobalData()
 				uiThread {
 					super.init(jsonLayout)
 					
+					val parser = PARSER.parse(jsonLayout.structure).asJsonObject
 					val layoutBuilder = LAYOUT_BUILDER_FACTORY
 					mainLayout.removeAllViews()
 					
-					
+					data.add("local", if (parser.has("data")) parser.getAsJsonObject("data") else JsonObject())
 					val view = layoutBuilder.build(
 						mainLayout,
-						PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
-						JsonObject(),
+						parser.getAsJsonObject("main"),
+						data,
 						0,
 						styles)
 					

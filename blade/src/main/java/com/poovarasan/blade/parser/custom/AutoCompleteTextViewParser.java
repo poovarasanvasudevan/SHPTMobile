@@ -51,5 +51,8 @@ public class AutoCompleteTextViewParser extends WrappableParser<AutoCompleteText
                 view.setAdapter(arrayAdapter);
             }
         });
+
     }
+
+
 }

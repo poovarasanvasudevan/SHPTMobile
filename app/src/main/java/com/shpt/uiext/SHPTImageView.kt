@@ -16,19 +16,11 @@ import com.poovarasan.blade.view.manager.BladeViewManager
  * @on 6/4/17 at 5:19 PM
  */
 
-class FrescoImageView : ImageView, BladeView {
+class SHPTImageView : ImageView, BladeView {
 	
+	constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 	
 	constructor(context: Context) : super(context) {
-		init()
-	}
-	
-	constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-		init()
-	}
-	
-	constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-		init()
 	}
 	
 	private var viewManager: BladeViewManager? = null

@@ -9,6 +9,7 @@ import com.shpt.activity.Login
 import com.shpt.activity.SRCMLogin
 import com.shpt.core.config.CONTEXT
 import com.shpt.core.config.DATABASE
+import com.shpt.core.prefs.Prefs
 import org.jetbrains.anko.activityManager
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
@@ -66,13 +67,28 @@ fun splitQuery(url: URL): Map<String, String> {
 
 fun updateKernel(): JsonObject {
 	val returnJson = CONTEXT.readJson()
+	
+	val jsonPage = returnJson.getAsJsonObject("pages")
+	jsonPage.add("style", returnJson.getAsJsonObject("style"))
+	jsonPage.add("global_data", returnJson.getAsJsonObject("global_data"))
+	
+	val config = returnJson.getAsJsonObject("config")
 	DATABASE.use {
 		delete("Layout")
 		delete("Settings")
 		
-		for ((key) in returnJson.entrySet()) {
-			insert("Layout", "page" to key, "structure" to returnJson.getAsJsonObject(key).toString())
+		for ((key) in jsonPage.entrySet()) {
+			insert("Layout", "page" to key, "structure" to jsonPage.getAsJsonObject(key).toString())
 		}
+		
+		for ((key) in config.entrySet()) {
+			insert("Settings", "settinggroup" to "config", "settingkey" to key, "settingvalue" to config.get(key).asString)
+		}
+	}
+	
+	for ((key) in config.entrySet()) {
+		Prefs.with(CONTEXT)
+			.write(key, config.get(key).asString)
 	}
 	
 	return returnJson

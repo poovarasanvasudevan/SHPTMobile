@@ -42,7 +42,7 @@ import com.poovarasan.blade.view.custom.HorizontalProgressBar;
 /**
  * HorizontalProgressBarParser
  *
- * @author Aditya Sharat
+ * @author Poovarasan Vasudevan
  */
 public class HorizontalProgressBarParser<T extends HorizontalProgressBar> extends WrappableParser<T> {
 
