@@ -49,6 +49,15 @@ open class BaseActivity : AppCompatActivity() {
 		}
 	}
 	
+	fun init(layout: JsonObject) {
+		if (layout.has("menu")) {
+			menuJson = layout.getAsJsonObject("menu")
+			invalidateOptionsMenu()
+		} else {
+			menuJson = JsonObject()
+		}
+	}
+	
 	fun sidebar(menu: Menu) {
 		this.sidebarMenu = menu
 	}

@@ -28,14 +28,14 @@ class ActivityGoToEvent : EventBase {
 			val activityName: Class<Activity> = Class.forName("com.shpt.activity.${params.get("activity").asString}") as Class<Activity>
 			
 			val intent = Intent(ctx, activityName)
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 			if (params.has("data")) {
 				intent.putExtra(Constant.PARCEL, params.get("data").toString())
 			}
 			ctx.startActivity(intent)
 			if (ctx is Activity)
-				(ctx as Activity).overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+				(ctx).overridePendingTransition(R.anim.fadein, R.anim.fadeout)
 			
 		} catch (e: Exception) {
 			ctx.toast("Oops : ${e.cause.toString()}")

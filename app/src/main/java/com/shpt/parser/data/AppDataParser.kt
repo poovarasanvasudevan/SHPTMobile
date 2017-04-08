@@ -24,7 +24,7 @@ class AppDataParser {
 				val ens = (jsonElement as JsonObject).entrySet()
 				if (ens != null) {
 					for ((key, value) in ens) {
-						println(key + " : ")
+						Log.d("GSONPARSE KEY", key)
 						printJson(value)
 					}
 				}
@@ -40,7 +40,5 @@ class AppDataParser {
 				Log.d("GSONPARSE", jsonElement.asString)
 			}
 		}
-		
-		
 	}
 }

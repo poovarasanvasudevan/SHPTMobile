@@ -238,7 +238,7 @@ class Home : BaseActivity() {
 						layoutBuilder,
 						view,
 						PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
-						JsonObject(),
+						data,
 						this@Home
 					)
 					

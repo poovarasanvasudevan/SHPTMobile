@@ -1,6 +1,7 @@
 package com.shpt.core.config
 
 import android.content.Context
+import br.com.goncalves.pugnotification.notification.PugNotification
 import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.Params
 import com.google.gson.JsonParser
@@ -29,7 +30,6 @@ import org.greenrobot.eventbus.EventBus
 fun config(key: String): String = Prefs
 	.with(CONTEXT)
 	.read(key)
-
 
 
 val LAYOUT_BUILDER_FACTORY: DataParsingLayoutBuilder
@@ -78,3 +78,6 @@ val PERMISSION_HELPER: PermissionHelper
 
 val JPATH: ParseContext
 	get() = JsonPath.using(com.shpt.core.app.SHPTApplication.jpathConfig)
+
+val NOTIFICATION: PugNotification
+	get() = PugNotification.with(com.shpt.core.config.CONTEXT)

@@ -10,6 +10,7 @@ import com.google.gson.JsonObject
 import com.poovarasan.blade.EventType
 import com.shpt.core.config.JPATH
 import com.shpt.core.event.fireEvent
+import com.shpt.parser.data.AppDataParser
 import org.jetbrains.anko.searchManager
 
 
@@ -23,7 +24,7 @@ import org.jetbrains.anko.searchManager
 
 fun handleMenu(json: JsonObject, menu: Menu, sidebarMenuObj: Menu?, act: Activity) {
 	
-	//AppDataParser.printJson2(json)
+	AppDataParser.printJson(json)
 	
 	if (json.has("toolbar")) {
 		val menuItems = JPATH.parse(json).read<JsonArray>("$.toolbar.children")

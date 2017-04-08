@@ -27,7 +27,6 @@ import com.shpt.core.models.Layout
 import com.shpt.core.serviceevent.RetryServiceEvent
 import com.shpt.core.setUpEssential
 import kotlinx.android.synthetic.main.activity_main.*
-import logMessage
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.indeterminateProgressDialog
@@ -73,9 +72,6 @@ class FormActivity : BaseActivity() {
 						val view = layoutBuilder.build(mainLayout, layout, data, 0, styles)
 						mainLayout.addView(view as View)
 						
-						
-						
-						logMessage(data.toString())
 						setUpEssential(
 							layoutBuilder,
 							view,

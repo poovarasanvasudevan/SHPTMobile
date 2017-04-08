@@ -92,7 +92,7 @@ class SRCMLogin : BaseActivity() {
 						view = view,
 						layoutBuilder = layoutBuilder,
 						viewJson = PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
-						dataJson = JsonObject(),
+						dataJson = data,
 						activity = this@SRCMLogin
 					)
 					

@@ -177,9 +177,9 @@
                                 "event": [
                                     {
                                         "event": "ActivityGoToEvent",
-                                        "activity": "FormActivity",
+                                        "activity": "JsonActivity",
                                         "data": {
-                                            "formName": "eventRegister"
+                                            "layoutPage": "aboutus"
                                         }
                                     }
                                 ]
@@ -194,11 +194,13 @@
                             "onClick": {
                                 "event": [
                                     {
-                                        "event": "ActivityGoToEvent",
-                                        "activity": "FormActivity",
-                                        "data": {
-                                            "formName": "eventRegister"
-                                        }
+                                        "event": "MethodExecutionEvent",
+                                        "className": "com.shpt.core.event.CoreEvents",
+                                        "methodName": "makeNotification",
+                                        "params": [
+                                            "Notification Title",
+                                            "Notification Text sdggdr"
+                                        ]
                                     }
                                 ]
                             }
@@ -848,6 +850,45 @@
                         }
                     ]
                 }
+            }
+        },
+        "aboutus": {
+            "main": {
+                "type": "RelativeLayout",
+                "layout_width": "match_parent",
+                "layout_height": "match_parent",
+                "children": [
+                    {
+                        "type": "AppBarLayout",
+                        "layout_width": "match_parent",
+                        "layout_height": "wrap_content",
+                        "id": "appbar",
+                        "elevation": "4dp",
+                        "children": [
+                            {
+                                "type": "Toolbar",
+                                "id": "toolbar",
+                                "title": "About SHPT",
+                                "layout_width": "match_parent",
+                                "layout_height": "56dp"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "LinearLayout",
+                        "layout_width": "match_parent",
+                        "layout_height": "match_parent",
+                        "layout_below": "appbar",
+                        "children": [
+                            {
+                                "type": "URLImage",
+                                "layout_width": "match_parent",
+                                "layout_height": "150dp",
+                                "imageURL": "~{{global_data.BANNER_IMAGE}}"
+                            }
+                        ]
+                    }
+                ]
             }
         }
     },

@@ -17,7 +17,7 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" android:fullBackupContent="true">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -28,6 +28,7 @@
         <activity android:name=".activity.Login"/>
         <activity android:name=".activity.SRCMLogin"/>
         <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.JsonActivity"/>
         <activity android:name=".activity.FormActivity"
                   android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
@@ -43,26 +44,29 @@
 
 
         </activity>
+
         <receiver android:name=".core.service.InternetConnectionWatcher">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
         <receiver android:name=".core.service.MQTTServiceStarter">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
         <receiver android:name=".core.service.MQTTServiceMoniter">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <service android:name="org.eclipse.paho.android.service.MqttService">
-        </service>
+
+        <service android:name="org.eclipse.paho.android.service.MqttService"/>
 
 
     </application>

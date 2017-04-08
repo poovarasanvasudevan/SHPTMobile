@@ -62,7 +62,7 @@ class Login : BaseActivity() {
 						layoutBuilder,
 						view,
 						PARSER.parse(jsonLayout.structure).asJsonObject.getAsJsonObject("main"),
-						JsonObject(),
+						data,
 						this@Login
 					)
 				}
